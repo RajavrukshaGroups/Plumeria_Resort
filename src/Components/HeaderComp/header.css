@@ -1,0 +1,126 @@
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 40px; /* More padding for a balanced layout */
+  color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5); /* Subtle transparency */
+  backdrop-filter: blur(10px); /* Modern glass effect */
+}
+
+/* Logo */
+.logo img {
+  height: 50px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo img:hover {
+  transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 20px; /* Adds spacing between the links */
+  max-width: 700px; /* Increased width for better spacing */
+}
+
+.nav-links a {
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  padding: 10px 15px; /* Increased padding */
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap; /* Prevents text from wrapping */
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #f4d025;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  /* transform: translateX(-50%); */
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after {
+  width: 100%; /* Underline effect */
+}
+
+.nav-links a:hover {
+  color: #f4d025;
+}
+
+/* Book Now Button */
+.book-now {
+  background-color: #f4d025;
+  color: black;
+  padding: 10px 25px; /* More padding to match link sizes */
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+.book-now:hover {
+  background-color: #f4d025;
+  box-shadow: 0 0 10px #f4d025;
+  transform: scale(1.05);
+}
+
+/* Mobile Menu Button */
+.menu-icon {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: 15px; /* Slightly reduce spacing for smaller screens */
+    max-width: 600px; /* Reduce width */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 20px;
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+}
