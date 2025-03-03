@@ -14,8 +14,8 @@ const HeaderComponent = () => {
 
       {/* Desktop Navigation */}
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
-        <a href="#">Home</a>
-        <a href="#">About Us</a>
+        <a href="/">Home</a>
+        <a href="aboutus">About Us</a>
         <a href="#">Rooms</a>
         <a href="#">Services</a>
         <a href="#">Pages</a>
