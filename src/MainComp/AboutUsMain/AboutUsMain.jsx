@@ -7,7 +7,7 @@ function AboutUsMain() {
    <>
    {/* HeaderComponent */}
     <HeaderComponent/>
-   <AboutUs/>
+    <AboutUs/>
    </>
   )
 }

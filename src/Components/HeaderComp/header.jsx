@@ -17,7 +17,7 @@ const HeaderComponent = () => {
         <a href="/">Home</a>
         <a href="aboutus">About Us</a>
         <a href="#">Rooms</a>
-        <a href="#">Services</a>
+        <a href="/services">Services</a>
         <a href="/contactus">Contact Us</a>
         <button className="book-now">BOOK NOW</button>
       </nav>

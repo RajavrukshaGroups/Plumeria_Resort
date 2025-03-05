@@ -3,30 +3,53 @@ import ContactUsMain from '../../MainComp/contactUsMain/contactUsMain'
 function ContactUs() {
   return (
   <div>
+   {/* <div className='w-screen h-[400px] bg-slate-800'> 
+    <div className="flex justify-center items-center">
+        <h1 className="text-4xl font-bold text-white">Contact Us</h1>
+    </div>
+        <img 
+        className="w-full h-full object-cover" 
+        src="https://plus.unsplash.com/premium_photo-1661772661721-b16346fe5b0f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+        alt="" 
+    />    
+</div> */}
+<div className='w-screen h-[400px] bg-slate-800 relative'>
+    {/* Centered Heading */}
+    <div className="absolute inset-0 flex justify-center items-center">
+        <h1 className="text-6xl font-bold text-white">Contact Us</h1>
+    </div>
+    
+    {/* Background Image */}
+    <img 
+        className="w-full h-full object-cover" 
+        src="https://plus.unsplash.com/premium_photo-1661772661721-b16346fe5b0f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+        alt="" 
+    />    
+</div>
    <section
-   class="relative z-10 overflow-hidden bg-white  dark:bg-dark py-28 lg:py-[180px] ">
-    <div class="container mx-auto">
-        <div class="flex flex-wrap -mx-4 lg:justify-between">
-            <div class="w-full px-4 lg:w-1/2 xl:w-6/12">
-                <div class="mb-12 max-w-[570px] lg:mb-0">
-                <span class="block mb-4 text-4xl font-semibold text-primary">
+   className=" relative z-10 overflow-hidden bg-white  dark:bg-dark py-2 lg:py-[180px] ">
+    <div className="container mx-auto ">
+        <div className=" flex flex-wrap mt-[-110px]  lg:justify-between">
+            <div style={{background: ' linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,248,142,1) 0%, rgba(255,251,173,1) 1%, rgba(227,227,227,1) 95%)'}} className= " rounded-3xl bg-sky-300  pl-32 pt-10 w-full px-4 lg:w-1/2 xl:w-6/12">
+                <div className="mb-12 mt- max-w-[570px] lg:mb-0">
+                {/* <span className="block mb-4 text-4xl font-semibold text-primary">
                   Contact Us
-                </span>
-               <h2
-                  class="text-dark dark:text-white mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]"
+                </span> */}
+               {/* <h2
+                  className="text-black dark:text-white mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]"
                   >
-                  GET IN TOUCH WITH US
-               </h2>
+                 Contact Us
+               </h2> */}
                <p
-                  class="text-base leading-relaxed text-body-color dark:text-dark-6 mb-9"
+                  className="text-base leading-relaxed text-body-color dark:text-dark-6 mb-9"
                   >
                   {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                   eius tempor incididunt ut labore et dolore magna aliqua. Ut enim
                   adiqua minim veniam quis nostrud exercitation ullamco */}
                </p>
-               <div class="mb-8 flex w-full max-w-[370px]">
+               <div className=" mb-8 flex w-full max-w-[370px]">
                   <div
-                     class="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]"
+                     className="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]"
                      >
                      <svg
                         width="32"
@@ -41,18 +64,18 @@ function ContactUs() {
                            />
                      </svg>
                   </div>
-                  <div class="w-full">
-                     <h4 class="mb-1 text-xl font-bold text-dark dark:text-white">
+                  <div className="w-full">
+                     <h4 className="mb-1 text-xl font-bold text-dark dark:text-white">
                         Our Location
                      </h4>
-                     <p class="text-base text-body-color dark:text-dark-6">
+                     <p className="text-base text-body-color dark:text-dark-6">
                         99 S.t Jomblo Park Pekanbaru 28292. Indonesia
                      </p>
                   </div>
                </div>
-               <div class="mb-8 flex w-full max-w-[370px]">
+               <div className="mb-8 flex w-full max-w-[370px]">
                   <div
-                     class="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]"
+                     className="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]"
                      >
                      <svg
                         width="32"
@@ -82,18 +105,18 @@ function ContactUs() {
                         </defs>
                      </svg>
                   </div>
-                  <div class="w-full">
-                     <h4 class="mb-1 text-xl font-bold text-dark dark:text-white">
+                  <div className="w-full">
+                     <h4 className="mb-1 text-xl font-bold text-dark dark:text-white">
                         Phone Number
                      </h4>
-                     <p class="text-base text-body-color dark:text-dark-6">
-                        (+62)81 414 257 9980
+                     <p className="text-base text-body-color dark:text-dark-6">
+                        (+91)63 669 301 174
                      </p>
                   </div>
                </div>
-               <div class="mb-8 flex w-full max-w-[370px]">
+               <div className="mb-8 flex w-full max-w-[370px]">
                   <div
-                     class="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]"
+                     className="bg-primary/5 text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded sm:h-[70px] sm:max-w-[70px]"
                      >
                      <svg
                         width="32"
@@ -108,61 +131,61 @@ function ContactUs() {
                            />
                      </svg>
                   </div>
-                  <div class="w-full">
-                     <h4 class="mb-1 text-xl font-bold text-dark dark:text-white">
+                  <div className="w-full">
+                     <h4 className="mb-1 text-xl font-bold text-dark dark:text-white">
                         Email Address
                      </h4>
-                     <p class="text-base text-body-color dark:text-dark-6">
-                        info@yourdomain.com
+                     <p className="text-base text-body-color dark:text-dark-6">
+                       plumeriaresort92@gmail.com
                      </p>
                   </div>
                </div>
             </div>
          </div>
-         <div class="w-full px-4 lg:w-1/2 xl:w-5/12">
+         <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
             <div
-               class="relative p-8 bg-white rounded-lg shadow-lg dark:bg-dark-2 sm:p-12"
+               className="relative p-8 bg-white rounded-lg shadow-lg dark:bg-dark-2 sm:p-12"
                >
                <form>
-                  <div class="mb-6">
+                  <div className="mb-6">
                      <input
                         type="text"
                         placeholder="Your Name"
-                        class="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none"
+                        className="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none"
                         />
                   </div>
-                  <div class="mb-6">
+                  <div className="mb-6">
                      <input
                         type="email"
                         placeholder="Your Email"
-                        class="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none"
+                        className="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none"
                         />
                   </div>
-                  <div class="mb-6">
+                  <div className="mb-6">
                      <input
                         type="text"
                         placeholder="Your Phone"
-                        class="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none"
+                        className="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full rounded border py-3 px-[14px] text-base outline-none"
                         />
                   </div>
-                  <div class="mb-6">
+                  <div className="mb-6">
                      <textarea
                         rows="6"
                         placeholder="Your Message"
-                        class="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none"
+                        className="border-stroke dark:border-dark-3 dark:text-dark-6 dark:bg-dark text-body-color focus:border-primary w-full resize-none rounded border py-3 px-[14px] text-base outline-none"
                         ></textarea>
                   </div>
                   <div>
                      <button
                         type="submit"
-                        class="w-full p-3 text-white transition border rounded border-primary bg-primary hover:bg-opacity-90"
+                        className="w-full p-3 bg-sky-400 text-white transition border rounded border-primary bg-primary hover:bg-opacity-90"
                         >
                      Send Message
                      </button>
                   </div>
                </form>
                <div>
-                  <span class="absolute -top-10 -right-9 z-[-1]">
+                  <span className="absolute -top-10 -right-9 z-[-1]">
                      <svg
                         width="100"
                         height="100"
@@ -178,7 +201,7 @@ function ContactUs() {
                            />
                      </svg>
                   </span>
-                  <span class="absolute -right-10 top-[90px] z-[-1]">
+                  <span className="absolute -right-10 top-[90px] z-[-1]">
                      <svg
                         width="34"
                         height="134"
@@ -398,7 +421,7 @@ function ContactUs() {
                            />
                      </svg>
                   </span>
-                  <span class="absolute -left-7 -bottom-7 z-[-1]">
+                  <span className="absolute -left-7 -bottom-7 z-[-1]">
                      <svg
                         width="107"
                         height="134"
@@ -973,7 +996,14 @@ function ContactUs() {
          </div>
       </div>
    </div>
+   <div>
+        <div className='pl-20 pr-20 pt-24'>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.751631716547!2d72.84393091490186!3d19.12867595697499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6e0b7e4d3c3%3A0x4b0e0f4e6c2f9b5a!2sPlumeria%20Resort!5e0!3m2!1sen!2sin!4v1626368842384!5m2!1sen!2sin" width="100%" height="450" style={{border:0}} allowfullscreen="" loading="lazy"></iframe>
+
+        </div>
+    </div>
 </section>
+
 
    </div>
    
