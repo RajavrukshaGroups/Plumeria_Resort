@@ -8,12 +8,12 @@ import Services from "../../Components/Services/services";
 const AllRoute = () => {
   return (
     <Router>
-      <HeaderComponent/>
+      {/* <HeaderComponent/> */}
         <Routes>
             <Route path="/" element={<HomePageMainComponent/>}/>
-            <Route path="/aboutUs" element={<AboutUsMain/>}/>
+            {/* <Route path="/aboutUs" element={<AboutUsMain/>}/>
             <Route path="/contactus" element={<ContactUsMain/>}/>
-            <Route path="/services" element={<Services/>}/>
+            <Route path="/services" element={<Services/>}/> */}
         </Routes>
     </Router>
   )

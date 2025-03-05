@@ -14,7 +14,7 @@ const PriceChart = () => {
 
   const plans = [
     {
-      name: "EP Plan",
+      name: "European Plan",
       image: EPPlan,
       prices: [
         {
@@ -38,10 +38,10 @@ const PriceChart = () => {
           withGST: "Rs. 1770/-",
         },
       ],
-      note: "EP plan does not include any complimentary services.",
+      note: "European Plan does not include any complimentary services.",
     },
     {
-      name: "CP Plan",
+      name: "Continental Plan",
       image: CPPlan,
       prices: [
         {
@@ -65,10 +65,10 @@ const PriceChart = () => {
           withGST: "Rs. 2124/-",
         },
       ],
-      note: "CP plan includes breakfast.",
+      note: "Continental Plan plan includes breakfast.",
     },
     {
-      name: "MAP Plan",
+      name: "Modified American Plan",
       image: MapPlan,
       prices: [
         {
@@ -92,7 +92,7 @@ const PriceChart = () => {
           withGST: "Rs. 2596/-",
         },
       ],
-      note: "MAP plan includes breakfast and dinner.",
+      note: "Modified American Plan includes breakfast and dinner.",
     },
   ];
 
