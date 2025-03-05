@@ -2,6 +2,7 @@ import React from "react";
 import AboutUsImg from "../../assets/plumeriaresortimages/aboutus_img.jpg"; // Ensure you have the correct image path
 import SecondAbout from "../../assets/plumeriaresortimages/about_jpg.jpg";
 import AboutThree from "../../assets/plumeriaresortimages/about.jpg";
+import AboutUsNew from "../../assets/plumeriaresortimages/about_us_new.jpg";
 const AboutUs = () => {
   return (
     <>
@@ -11,7 +12,7 @@ const AboutUs = () => {
         </div>
         <img
           className="w-full h-full object-cover"
-          src="https://images.pexels.com/photos/261156/pexels-photo-261156.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          src={AboutUsNew}
           alt=""
         />
       </div>
@@ -23,7 +24,6 @@ const AboutUs = () => {
         }}
         className="relative bg-[#276472] px-4 py-16 md:px-8 lg:px-16 overflow-hidden "
       >
-        {/* Background map outline */}
         <div className=" absolute inset-0 opacity-10 pointer-events-none">
           <img
             src="/placeholder.svg?height=800&width=1200"
@@ -35,14 +35,8 @@ const AboutUs = () => {
 
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center relative z-10">
-            {/* Left content */}
             <div className="space-y-6">
-              {/* <h3 className="text-Black text-5xl font-bold">ABOUT US</h3> */}
-
-              {/* <h2 className="text-5xl font-bold leading-tight text-black">We can help you feel more comfortable !</h2> */}
-
               <div className="flex items-start gap-4 mt-8">
-                {/* <div className="text-4xl font-serif text-gray-700">M</div> */}
                 <div className="text-gray-700">
                   <p className="mb-4 text-2xl">
                     At our resort, we believe in providing a perfect blend of
@@ -54,14 +48,6 @@ const AboutUs = () => {
                     services ensure every moment of your stay is exceptional.
                     Whether you’re here to explore the
                   </p>
-                  {/* <p className="mb-4">
-                  Ut enim ad minima Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
-                  molestiae consequatur.
-                  </p>
-                <p className="mb-4">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                  totam rem aperiam, eaque ipsa quae ab
-                  </p> */}
                 </div>
               </div>
 
@@ -76,8 +62,6 @@ const AboutUs = () => {
 
               <div className="mt-12 border-t border-gray-300"></div>
             </div>
-
-            {/* Right image grid */}
             <div className="relative">
               <div className="grid grid-cols-2 gap-2 border-2 border-white bg-white p-2">
                 <div className="col-span-2">
@@ -107,15 +91,6 @@ const AboutUs = () => {
                     className="w-full h-48 object-cover"
                   />
                 </div>
-                {/* <div className="col-span-2">
-                <img
-                  src={AboutFour}
-                  alt="Person floating in pool"
-                  width={600}
-                  height={300}
-                  className="w-full h-64 object-cover"
-                  />
-                  </div> */}
               </div>
             </div>
           </div>
