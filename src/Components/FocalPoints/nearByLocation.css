@@ -1,0 +1,158 @@
+.nearby-container {
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  background: url("../../assets/plumeriaresortimages/harangi.webp") no-repeat
+    center center/cover;
+  color: white;
+}
+
+.nearby-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Lighter overlay to reduce fading */
+  z-index: 1;
+}
+
+/* Ensure Text is Above Overlay */
+.nearby-services,
+.nearby-title,
+.service-line {
+  position: relative;
+  z-index: 2;
+}
+
+.service-line {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 1.5rem 0;
+  color: white;
+}
+
+.highlight-text {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+.divider {
+  width: 50%;
+  height: 2px;
+  background: #ffcc00;
+  margin: 1rem auto;
+  border: none;
+}
+
+.nearby-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffd700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual Location Block */
+.location-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid #ffd700; /* Added golden border */
+  padding: 10px; /* Added padding for better spacing */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.location-card:hover {
+  /* transform: scale(1.05); */
+  box-shadow: 0 12px 24px rgba(255, 215, 0, 0.6); /* Golden glow effect */
+}
+
+/* Image */
+.location-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  filter: brightness(1);
+  transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
+  border: 3px solid white; /* White border for contrast */
+}
+
+.location-card:hover .location-image {
+  filter: brightness(1.2); /* Increased brightness on hover */
+  transform: scale(1.02);
+  box-shadow: 0 12px 24px rgba(255, 215, 0, 0.6); /* Golden glow effect */
+}
+
+/* Gradient Overlay */
+.location-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  border-radius: 15px;
+}
+
+/* Location Name */
+.location-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  padding: 1rem;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .location-name {
+    font-size: 1.1rem;
+  }
+  .service-line {
+    font-size: 1.1rem;
+  }
+  .divider {
+    width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .location-name {
+    font-size: 1rem;
+  }
+}

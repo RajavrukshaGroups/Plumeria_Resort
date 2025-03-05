@@ -1,0 +1,89 @@
+.about-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center; /* Ensures both columns have equal height */
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: -1rem;
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  color: #eab308;
+}
+
+.about-text p {
+  position: relative;
+  margin-top: 1rem;
+  padding-left: 1.5rem; /* Space for the vertical line */
+  transition: transform 0.3s ease-in-out;
+}
+
+.about-text p::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 4px;
+  height: 100%;
+  background-color: #eab308; /* Yellow matching the theme */
+  transition: height 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.about-text p:hover::before {
+  height: 100%; /* Makes the line extend on hover */
+  background-color: #ffcc00; /* Lighter yellow for effect */
+}
+
+.about-text p:hover {
+  transform: translateX(5px); /* Slight movement effect */
+}
+
+.about-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(255, 204, 0, 0.6);
+  border: 4px solid #ffcc00;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-container {
+    grid-template-columns: 1fr; /* Stack text and image on smaller screens */
+    text-align: center;
+  }
+
+  .about-image {
+    margin-top: 2rem;
+  }
+}
