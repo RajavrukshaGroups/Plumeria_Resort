@@ -1,0 +1,178 @@
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px;
+    position: relative;
+    color: #fff;
+    gap: 50px;
+    overflow: hidden;
+}
+
+/* Parallax Background */
+.about::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../../assets/plumeriaresortimages/homeimgpool.jpg") center/cover no-repeat;
+    opacity: 0.08;
+    z-index: -2;
+    transform: translateY(-20px);
+}
+
+/* Gradient Overlay */
+.about::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 123, 143, 0.8), rgba(0, 123, 143, 0.4));
+    z-index: -1;
+}
+
+/* Content Styling */
+.about-content {
+    max-width: 50%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeInLeft 1.2s ease-in-out;
+}
+
+.about-subtitle {
+    font-size: 20px;
+    color: #fcd462;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.about-title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.about-text {
+    font-size: 18px;
+    margin: 12px 0;
+    line-height: 1.8;
+    color: #eee;
+}
+
+/* Enhanced Button Styling */
+.about-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 35px;
+    background: linear-gradient(135deg, #fcd462, #ffb74d);
+    color: #222;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 8px 20px rgba(252, 212, 98, 0.3);
+}
+
+.about-btn:hover {
+    background: linear-gradient(135deg, #ffb74d, #fcd462);
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(252, 212, 98, 0.4);
+}
+
+/* Image Section */
+.about-images {
+    position: relative;
+    max-width: 50%;
+    animation: fadeInRight 1.2s ease-in-out;
+}
+
+/* Main Image */
+.image-main {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease-in-out;
+}
+
+.image-main:hover {
+    transform: scale(1.05) rotate(-2deg);
+}
+
+/* Overlapping Image */
+.image-overlay {
+    position: absolute;
+    bottom: -40px;
+    left: -40px;
+    width: 60%;
+    border-radius: 12px;
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.3);
+    transform: rotate(-5deg);
+    transition: transform 0.4s ease-in-out;
+}
+
+.image-overlay:hover {
+    transform: rotate(0deg) scale(1.07);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .about {
+        flex-direction: column;
+        text-align: center;
+        padding: 80px 20px;
+    }
+
+    .about-content {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .about-images {
+        max-width: 100%;
+        margin-top: 40px;
+    }
+
+    .image-overlay {
+        left: 10%;
+        bottom: -30px;
+        width: 65%;
+    }
+}
+
+/* Scroll Animations */
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

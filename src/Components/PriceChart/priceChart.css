@@ -1,0 +1,230 @@
+.modal-price {
+  margin-top: 4rem;
+}
+
+/* Title Section Styling */
+.title-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.title-section h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffd700; /* Gold color */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.title-section p {
+  font-size: 16px;
+  color: #fff;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.8;
+  font-weight: bold;
+}
+
+/* Responsive Container */
+.price-chart-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1rem;
+  background-image: url("../../assets/plumeriaresortimages/homeimgpool.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.price-chart-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.price-chart-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* Card Styles */
+.price-card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+    border 0.3s ease-in-out;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 215, 0, 0.5); /* Gold border */
+  background: rgba(255, 255, 255, 0.05); /* Subtle transparency */
+  backdrop-filter: blur(1px);
+}
+
+.price-card:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 215, 0, 1);
+}
+
+.price-card-image {
+  width: 100%;
+  height: 200px;
+}
+
+.price-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.price-card-content {
+  padding: 1rem;
+  text-align: center;
+}
+.price-card-download {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.price-card-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.price-card-button:hover {
+  background: linear-gradient(135deg, #ffd700, #000);
+}
+
+.price-card-download-button {
+  display: block;
+  width: 50%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  margin: 0 auto; /* Centering */
+  cursor: pointer;
+  text-align: center;
+}
+
+.price-card-download-button:hover {
+  background: linear-gradient(135deg, #ffd700, #000);
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.modal-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.modal-content th,
+.modal-content td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.modal-content th {
+  background: #f8f8f8;
+}
+
+.price-note {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 768px) {
+  .price-chart-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .price-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-section h1 {
+    font-size: 1.5rem;
+  }
+  .title-section p {
+    font-size: 0.85rem;
+  }
+  .price-card-content {
+    padding: 0.5rem;
+  }
+  .price-card-download {
+    padding: 0.5rem;
+  }
+}
