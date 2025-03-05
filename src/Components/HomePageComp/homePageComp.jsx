@@ -4,7 +4,7 @@ import "./homepage.css";
 const HomePageComponent = () => {
   return (
     <div className="home">
-      {/* <HeaderComponent /> */}
+      <HeaderComponent />
       <section className="hero">
         <div className="hero-overlay">
           <h1 className="fade-in">
