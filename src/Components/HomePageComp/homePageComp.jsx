@@ -11,7 +11,7 @@ const HomePageComponent = () => {
             Comfort at Our <span>Luxury</span> <span>Resort</span>
           </h1>
           <p className="fade-in">
-            Nestled in the heart of breathtaking nature, our hotel offers a truly enchanting experience that caters to every aspect of your stay.
+            Nestled in the heart of breathtaking nature, our resort offers a truly enchanting experience that caters to every aspect of your stay.
           </p>
           <button className="accommodation-btn pulse">ACCOMMODATION</button>
         </div>
