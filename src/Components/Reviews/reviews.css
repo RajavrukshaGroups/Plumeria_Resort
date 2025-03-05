@@ -1,0 +1,98 @@
+.reviews-section {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 4rem 1rem;
+  }
+  
+  .reviews-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .reviews-content {
+    position: relative;
+    max-width: 700px;
+    z-index: 1;
+    padding: 2rem;
+  }
+  
+  .reviews-subtitle {
+    font-size: 20px;
+    color: gold;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .reviews-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .star-rating {
+    font-size: 1.5rem;
+    color: gold;
+    margin-bottom: 10px;
+  }
+  
+  .reviews-text {
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .reviews-author {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .reviews-author span {
+    font-weight: normal;
+    opacity: 0.8;
+  }
+  
+  .reviews-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+  
+  .nav-btn:hover {
+    opacity: 1;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .reviews-content {
+      padding: 1rem;
+    }
+    
+    .reviews-title {
+      font-size: 1.5rem;
+    }
+    
+    .reviews-text {
+      font-size: 0.9rem;
+    }
+  }
+  
