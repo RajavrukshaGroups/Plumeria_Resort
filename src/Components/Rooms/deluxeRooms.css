@@ -1,0 +1,227 @@
+.rooms-section {
+  text-align: center;
+  padding: 40px 3%;
+  background: url("../../assets/plumeriaresortimages/meditaion.jpg")
+    center/cover no-repeat;
+  position: relative;
+}
+
+/* Dark Overlay */
+.rooms-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Ensure Content Appears Above Overlay */
+.rooms-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Section Heading */
+.section-tag {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #f4c430;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+/* Rooms Slider */
+.rooms-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  height: 350px;
+  margin-top: 2rem;
+}
+
+/* Room Card */
+.room-card {
+  position: absolute;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+/* Main Room - Larger */
+.main-room {
+  z-index: 2;
+  width: 350px;
+  transform: scale(1.05);
+  opacity: 1;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Previous & Next Rooms - Smaller */
+.prev-room,
+.next-room {
+  width: 350px;
+  cursor: pointer;
+}
+
+.prev-room {
+  left: 0;
+  transform: translateX(-10%) scale(0.85);
+}
+
+.next-room {
+  right: 0;
+  transform: translateX(10%) scale(0.85);
+}
+
+/* Room Image */
+.room-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay */
+.room-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  transition: 0.3s;
+}
+
+/* Room Details */
+.room-details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Price */
+.room-price {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Strikethrough Original Price */
+.original-price {
+  text-decoration: line-through;
+  opacity: 0.7;
+  margin-right: 8px;
+}
+
+/* Room Title */
+.room-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 5px 0 8px;
+}
+
+/* Room Info */
+.room-info {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.room-info span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Navigation Buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 3;
+}
+
+/* Hover Effect */
+.nav-button:hover {
+  background: rgba(255, 215, 0, 0.8);
+  color: black;
+}
+
+/* Left and Right Buttons */
+.nav-button.prev {
+  left: 15px;
+}
+
+.nav-button.next {
+  right: 15px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .rooms-section {
+    padding: 30px 3%;
+  }
+
+  .rooms-slider {
+    height: 320px;
+    max-width: 100%;
+  }
+
+  .main-room {
+    width: 300px;
+  }
+
+  .prev-room,
+  .next-room {
+    display: none;
+  }
+
+  /* Show Navigation Buttons on the Main Image */
+  .main-room .nav-button {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
+  }
+
+  .main-room .nav-button.prev {
+    left: 5%;
+  }
+
+  .main-room .nav-button.next {
+    right: 5%;
+  }
+}

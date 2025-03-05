@@ -19,7 +19,7 @@ const HeaderComponent = () => {
         <a href="#">Rooms</a>
         <a href="#">Services</a>
         <a href="#">Pages</a>
-        <button className="book-now">BOOK NOW</button>
+        <button className="book-now">CONTACT NOW</button>
       </nav>
 
       {/* Mobile Menu Button */}
