@@ -13,7 +13,7 @@ function Services() {
             alt=""
           />
         </div>
-  
+  {/* <div></div> */}
         <div className="relative w-full min-h- bg-sky-50 p-4 md:p-8 lg:px-32 lg:py-12 flex flex-col md:flex-row items-start justify-between overflow-hidden">
           <div className="px-4 sm:px-24 pt-[100px] relative z-10 max-w-5xl w-full lg:w-3/4 xl:w-2/3">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
