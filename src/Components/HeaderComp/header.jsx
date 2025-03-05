@@ -17,15 +17,9 @@ const HeaderComponent = () => {
         <a href="/">Home</a>
         <a href="aboutus">About Us</a>
         <a href="#">Rooms</a>
-<<<<<<< HEAD
         <a href="/services">Services</a>
         <a href="/contactus">Contact Us</a>
         <button className="book-now">BOOK NOW</button>
-=======
-        <a href="#">Services</a>
-        <a href="#">Pages</a>
-        <button className="book-now">CONTACT NOW</button>
->>>>>>> main
       </nav>
 
       {/* Mobile Menu Button */}
