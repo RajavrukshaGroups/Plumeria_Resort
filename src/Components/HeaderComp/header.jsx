@@ -15,11 +15,11 @@ const HeaderComponent = () => {
       {/* Desktop Navigation */}
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
         <a href="/">Home</a>
-        <a href="aboutus">About Us</a>
-        <a href="#">Rooms</a>
-        <a href="/services">Services</a>
-        <a href="/contactus">Contact Us</a>
-        <button className="book-now">BOOK NOW</button>
+        <a href="#">About Us</a>
+        <a href="#">Gallery</a>
+        <a href="#">Services</a>
+        {/* <a href="#">Contact Us</a> */}
+        <button className="book-now">Contact NOW</button>
       </nav>
 
       {/* Mobile Menu Button */}

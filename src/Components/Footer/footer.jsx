@@ -25,10 +25,27 @@ const Footer = () => {
             ordinary.
           </p>
           <div className="social-icons">
-            <FaFacebookF />
-            <FaXTwitter />
-            <FaYoutube />
-            <FaInstagram />
+            <a
+              href="https://www.facebook.com/profile.php?id=61573651893436"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="https://www.youtube.com/@plumeria_Resort"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaYoutube />
+            </a>
+            <a
+              href="https://www.instagram.com/plumeria_resorts/?hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram />
+            </a>
           </div>
         </div>
 
@@ -57,14 +74,17 @@ const Footer = () => {
         <div className="footer-contact">
           <h3>Get in Touch</h3>
           <p>
-            <FaPhoneAlt className="footer-icon" /> (+91) 63669 30174
+            <FaPhoneAlt className="footer-icon" /> (+91) 63669 30172
           </p>
           <p>
             <FaMapMarkerAlt className="footer-icon" /> SH-91 Theppadakandi,
             Basavanahalli, Kushalnagar
           </p>
           <p>
-            <FaClock className="footer-icon" /> Check-in: 12 Noon
+            <FaClock className="footer-icon" /> Check-in: 1 PM
+          </p>
+          <p>
+            <FaClock className="footer-icon" /> Check-out: 11 AM
           </p>
         </div>
       </div>
