@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import plumerialogo from "../../assets/plumeriaresortimages/plumeriaresort_logo.png";
 import "./header.css";
@@ -14,11 +15,10 @@ const HeaderComponent = () => {
 
       {/* Desktop Navigation */}
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
-        <a href="/">Home</a>
-        <a href="#">About Us</a>
-        <a href="#">Gallery</a>
-        <a href="#">Services</a>
-        {/* <a href="#">Contact Us</a> */}
+        <Link to="/">Home</Link>
+        <Link to="/about-us">About Us</Link>
+        <Link to="/gallery">Gallery</Link>
+        <Link to="/facilities">Facilities</Link>
         <button className="book-now">Contact NOW</button>
       </nav>
 

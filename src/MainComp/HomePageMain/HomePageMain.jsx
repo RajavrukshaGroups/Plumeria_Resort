@@ -1,4 +1,5 @@
 import ActivitiesComp from "../../Components/ActivitiesComp/activitiesComp";
+import NearByLocation from "../../Components/FocalPoints/nearByLocation";
 import Footer from "../../Components/Footer/footer";
 import HomePageComp from "../../Components/HomePageComp/homePageComp";
 import PriceChart from "../../Components/PriceChart/priceChart";
@@ -16,8 +17,9 @@ const HomePageMainComponent = () => {
       <DeluxeRooms />
       <VillaRooms />
       <PriceChart />
+      <NearByLocation />
       <Reviews />
-      <Footer/>
+      <Footer />
       {/* <AboutPageMain /> */}
     </div>
   );

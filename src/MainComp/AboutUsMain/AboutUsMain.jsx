@@ -1,6 +1,7 @@
 import React from 'react'
 import AboutUs from '../../Components/AboutUs/AboutUs'
 import HeaderComponent from '../../Components/HeaderComp/header'
+import Footer from '../../Components/Footer/footer'
 
 function AboutUsMain() {
   return (
@@ -8,6 +9,7 @@ function AboutUsMain() {
    {/* HeaderComponent */}
     <HeaderComponent/>
     <AboutUs/>
+    <Footer/>
    </>
   )
 }
