@@ -101,58 +101,7 @@ function Services() {
           </div>
         </div>
   
-        <div className="flex flex-col md:flex-row gap-8 w-full md:w-auto mt-8 md:mt-0">
-            <div
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,248,142,1) 0%, rgba(255,251,173,1) 1%, rgba(227,227,227,1) 95%)",
-              }}
-              className="flex p-5 flex-col rounded-3xl items-center h-auto md:h-[350px] w-full md:w-1/2"
-            >
-              <h1 className="font-bold text-4xl mx-[1px] pb-5">Deluxe Rooms</h1>
-              <ul className="list-disc pl-8">
-                <li className="text-1xl font-bold">
-                  Our Spacious Deluxe Rooms offer an elevated experience with
-                  generous space,
-                </li>
-                <li className="text-1xl font-bold">
-                  designed to provide ultimate comfort and relaxation.
-                </li>
-                <li className="text-1xl font-bold">
-                  These rooms feature larger living areas
-                </li>
-                <li className="text-1xl font-bold">
-                  luxurious furnishings, and stunning views, making them the
-                  perfect choice
-                </li>
-              </ul>
-            </div>
-            <div
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,248,142,1) 0%, rgba(255,251,173,1) 1%, rgba(227,227,227,1) 95%)",
-              }}
-              className="flex p-5 flex-col rounded-3xl items-center h-auto md:h-[350px] w-full md:w-1/2"
-            >
-              <h1 className="font-bold text-4xl mx-[1px] pb-5">Villa Rooms</h1>
-              <ul className="list-disc pl-8">
-                <li className="text-1xl font-bold">
-                  The Individual Villa Rooms provide a more private and intimate
-                  experience,
-                </li>
-                <li className="text-1xl font-bold">
-                  nestled within beautifully landscaped surroundings.
-                </li>
-                <li className="text-1xl font-bold">
-                  Each villa is designed with its own unique charm
-                </li>
-                <li className="text-1xl font-bold">
-                  Our Individual Villa Rooms feature a charming portico,
-                </li>
-              </ul>
-            </div>
-          </div>
-
+      
       
       </>
     );
