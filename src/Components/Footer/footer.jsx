@@ -1,5 +1,8 @@
 import "./footer.css";
+import RRPL_logo from "../../assets/plumeriaresortimages/RRPL_logo.webp";
+import { Link } from "react-router-dom";
 import logo from "../../assets/plumeriaresortimages/plumeriaresort_logo.png";
+import RRPL_Group from "../../assets/plumeriaresortimages/Logo_RRPL_New.png";
 import {
   FaXTwitter,
   FaYoutube,
@@ -56,17 +59,19 @@ const Footer = () => {
               <FaBed className="footer-link-icon" /> Accommodations
             </li>
             <li>
-              <FaImages className="footer-link-icon" /> Photos & Videos
+              <FaImages className="footer-link-icon" />
+              <Link to="/gallery">Photos & Videos</Link>
             </li>
             <li>
-              <FaBellConcierge className="footer-link-icon" /> Services &
-              Amenities
+              <FaBellConcierge className="footer-link-icon" />
+              <Link to="/facilities">Services & Amenities</Link>
             </li>
             <li>
               <FaFileContract className="footer-link-icon" /> Terms & Conditions
             </li>
             <li>
-              <FaEnvelope className="footer-link-icon" /> Contact Us
+              <FaEnvelope className="footer-link-icon" />
+              <Link to="/contact-us">Contact Us</Link>
             </li>
           </ul>
         </div>
@@ -74,7 +79,22 @@ const Footer = () => {
         <div className="footer-contact">
           <h3>Get in Touch</h3>
           <p>
-            <FaPhoneAlt className="footer-icon" /> (+91) 63669 30172
+            <FaPhoneAlt className="footer-icon" />
+            <a
+              href="tel:+916366930172"
+              className="text-white hover:text-yellow-500"
+            >
+              +91 63669 30172
+            </a>
+          </p>
+          <p>
+            <FaEnvelope className="footer-icon" />
+            <a
+              href="mailto:plumeriaresort92@gmail.com"
+              className="text-white hover:text-yellow-500"
+            >
+              plumeriaresort92@gmail.com
+            </a>
           </p>
           <p>
             <FaMapMarkerAlt className="footer-icon" /> SH-91 Theppadakandi,
@@ -87,6 +107,16 @@ const Footer = () => {
             <FaClock className="footer-icon" /> Check-out: 11 AM
           </p>
         </div>
+      </div>
+
+      {/* Centered Group Logo */}
+      <div className="footer-group-logo-container">
+        <img
+          src={RRPL_Group}
+          alt="Rajavruksha Group Logo"
+          className="group-logo"
+        />
+        <p className="footer-group-text">A venture of Rajavruksha Group</p>
       </div>
 
       <div className="footer-bottom">

@@ -1,12 +1,12 @@
 import React from "react";
-import Dubare from "../../assets/plumeriaresortimages/dubare.webp";
+import Dubare from "../../assets/plumeriaresortimages/dubare_new.webp";
 import NisargaDhama from "../../assets/plumeriaresortimages/kaverinisarga.webp";
-import Monastery from "../../assets/plumeriaresortimages/tibetian.webp";
-import Mandalpatti from "../../assets/plumeriaresortimages/mandalpatti.webp";
-import Talakaveri from "../../assets/plumeriaresortimages/talakaveri.webp";
-import Bhagamandala from "../../assets/plumeriaresortimages/Bhagamandala.webp";
-import Harangi from "../../assets/plumeriaresortimages/harangi.webp";
-import Pushpagiri from "../../assets/plumeriaresortimages/pushpagiri.webp";
+import Monastery from "../../assets/plumeriaresortimages/tibetan_new.webp";
+import Mandalpatti from "../../assets/plumeriaresortimages/mandalpatti_new.webp";
+import Talakaveri from "../../assets/plumeriaresortimages/talakaveri_new.webp";
+import Bhagamandala from "../../assets/plumeriaresortimages/Bhagamandala_new.webp";
+import Harangi from "../../assets/plumeriaresortimages/harangi_new.webp";
+import Pushpagiri from "../../assets/plumeriaresortimages/pushpagiri_new.webp";
 import "./nearByLocation.css";
 
 const locations = [

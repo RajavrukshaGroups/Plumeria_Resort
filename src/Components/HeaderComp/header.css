@@ -18,6 +18,7 @@
 .logo img {
   height: 50px;
   transition: transform 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 .logo img:hover {

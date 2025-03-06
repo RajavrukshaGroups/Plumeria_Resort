@@ -20,7 +20,6 @@ const HomePageMainComponent = () => {
       <NearByLocation />
       <Reviews />
       <Footer />
-      {/* <AboutPageMain /> */}
     </div>
   );
 };

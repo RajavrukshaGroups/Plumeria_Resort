@@ -15,19 +15,19 @@ const rooms = [
   {
     id: 1,
     image: VillaRoom1,
-    title: "Villa Room (EP Plan)",
+    title: "Villa Room (European Plan)",
     price: "₹4400 / Day",
   },
   {
     id: 2,
     image: VillaRoom2,
-    title: "Villa Room (CP Plan)",
+    title: "Villa Room (Continental Plan)",
     price: "₹6400 / Day ",
   },
   {
     id: 3,
     image: VillaRoom3,
-    title: "Villa Room (MAP Plan)",
+    title: "Villa Room (Modified American Plan)",
     price: "₹7499 / Day",
   },
 ];
