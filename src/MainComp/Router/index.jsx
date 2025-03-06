@@ -16,9 +16,9 @@ const AllRoute = () => {
       <Routes>
         <Route path="/" element={<HomePageMainComponent />} />
         <Route path="/about-us" element={<AboutUsMain />} />
-        {/* <Route path="/contactus" element={<ContactUsMain />}/> */}
         <Route path="/facilities" element={<ServicesMain />} />
         <Route path="/gallery" element={<GalleryMain />} />
+        <Route path="/contact-us" element={<ContactUsMain />} />
       </Routes>
     </Router>
   );

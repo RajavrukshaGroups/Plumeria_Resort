@@ -11,6 +11,9 @@ import SwimmingPool3 from "../../assets/plumeriaresortimages/swimnight.jpg";
 import Pathway from "../../assets/plumeriaresortimages/pathway.jpg";
 import Meditation from "../../assets/plumeriaresortimages/meditaion.jpg";
 import pathway2 from "../../assets/plumeriaresortimages/aboutus_img.jpg";
+import Restaurant from "../../assets/plumeriaresortimages/cp-plan.jpg";
+import Restaurant2 from "../../assets/plumeriaresortimages/restaurant1.webp";
+import campfire from "../../assets/plumeriaresortimages/campfire.webp";
 
 // Data for categories
 const gallerySections = [
@@ -26,10 +29,10 @@ const gallerySections = [
     title: "Pathway & Meditation Area",
     images: [Pathway, pathway2, Meditation],
   },
-  //   {
-  //     title: "Meditation Area",
-  //     images: [Meditation],
-  //   },
+  {
+    title: "Restaurant & Campfire",
+    images: [Restaurant, campfire],
+  },
 ];
 
 const GalleryComponent = () => {

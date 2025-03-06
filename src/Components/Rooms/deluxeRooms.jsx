@@ -2,7 +2,7 @@ import "./deluxeRooms.css";
 import { useState } from "react";
 import DeluxeRoom1 from "../../assets/plumeriaresortimages/cottagehome.jpg";
 import DeluxeRoom2 from "../../assets/plumeriaresortimages/deluxeRoom2.jpg";
-import DeluxeRoom3 from "../../assets/plumeriaresortimages/homeimg.jpg";
+import DeluxeRoom3 from "../../assets/plumeriaresortimages/deluxeRoomNew1.webp";
 import {
   IconBed,
   IconBath,
@@ -15,19 +15,19 @@ const rooms = [
   {
     id: 1,
     image: DeluxeRoom1,
-    title: "Deluxe Room (EP Plan)",
+    title: "Deluxe Room (European Plan)",
     price: "₹4000 / Day",
   },
   {
     id: 2,
     image: DeluxeRoom2,
-    title: "Deluxe Room (CP Plan)",
+    title: "Deluxe Room (Continental Plan)",
     price: "₹6000 / Day",
   },
   {
     id: 3,
     image: DeluxeRoom3,
-    title: "Deluxe Room (MAP Plan)",
+    title: "Deluxe Room (Modified American Plan)",
     price: "₹7100 / Day",
   },
 ];
