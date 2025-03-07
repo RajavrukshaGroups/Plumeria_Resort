@@ -1,8 +1,8 @@
 import "./deluxeRooms.css";
 import { useState } from "react";
-import VillaRoom1 from "../../assets/plumeriaresortimages/cottagenew.jpg";
-import VillaRoom2 from "../../assets/plumeriaresortimages/villaRoom2.jpg";
-import VillaRoom3 from "../../assets/plumeriaresortimages/villaRoom3.jpg";
+import VillaRoom1 from "../../assets/plumeriaresortimages/cottagehome.jpg";
+import VillaRoom2 from "../../assets/plumeriaresortimages/deluxeRoomNew1.webp";
+import VillaRoom3 from "../../assets/plumeriaresortimages/delRoom6.webp";
 import {
   IconBed,
   IconBath,
@@ -15,19 +15,19 @@ const rooms = [
   {
     id: 1,
     image: VillaRoom1,
-    title: "Villa Room (European Plan)",
+    title: "Villa Room (Lite Plan)",
     price: "₹4400 / Day",
   },
   {
     id: 2,
     image: VillaRoom2,
-    title: "Villa Room (Continental Plan)",
+    title: "Villa Room (Plus Plan)",
     price: "₹6400 / Day ",
   },
   {
     id: 3,
     image: VillaRoom3,
-    title: "Villa Room (Modified American Plan)",
+    title: "Villa Room (Max Plan)",
     price: "₹7499 / Day",
   },
 ];
@@ -49,7 +49,11 @@ const VillaRooms = () => {
 
   return (
     <div className="rooms-section">
+      <p className="section-tag">Best on our Rooms</p>
+      <h2 className="section-title">Our Accommodations</h2>
+
       <div className="rooms-slider">
+        {/* Previous Room (Hidden in Mobile) */}
         <div className="room-card prev-room" onClick={prevSlide}>
           <img
             src={rooms[(currentIndex - 1 + rooms.length) % rooms.length].image}
@@ -61,6 +65,7 @@ const VillaRooms = () => {
           </span>
         </div>
 
+        {/* Main Room - Shows Navigation Arrows in Mobile */}
         <div className="room-card main-room">
           <img
             src={rooms[currentIndex].image}
@@ -83,14 +88,22 @@ const VillaRooms = () => {
               <span>
                 <IconBed size={16} /> 1 Bed
               </span>
-              {/* <span>48 ft²</span> */}
               <span>
                 <IconBath size={16} /> 1 bath
               </span>
             </div>
           </div>
+
+          {/* Arrows for Mobile - Placed inside Main Room */}
+          <span className="nav-button prev mobile-only" onClick={prevSlide}>
+            <IconArrowLeft />
+          </span>
+          <span className="nav-button next mobile-only" onClick={nextSlide}>
+            <IconArrowRight />
+          </span>
         </div>
 
+        {/* Next Room (Hidden in Mobile) */}
         <div className="room-card next-room" onClick={nextSlide}>
           <img
             src={rooms[(currentIndex + 1) % rooms.length].image}
