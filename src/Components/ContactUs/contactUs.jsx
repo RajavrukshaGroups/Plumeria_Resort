@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-import contact from "../../assets/plumeriaresortimages/contact-us.webp";
+import contact from "../../assets/plumeriaresortimages/contact-us-new.jpeg";
 import Loader from "../../Utils/loader"; // Import the Loader component
 import "./contact.css";
 
@@ -17,10 +17,8 @@ const ContactUs = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // State for loader
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData({ ...formData, [name]: value });
 
     // Remove the error message as the user types
@@ -34,7 +32,6 @@ const ContactUs = () => {
     });
   };
 
-  // Form validation
   const validateForm = () => {
     let newErrors = {};
 
@@ -44,7 +41,6 @@ const ContactUs = () => {
     if (!formData.subject.trim()) newErrors.subject = "Subject is required";
     if (!formData.notes.trim()) newErrors.notes = "Notes cannot be empty";
 
-    // Phone number validation
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else if (!/^\d{10}$/.test(formData.phone)) {
@@ -55,7 +51,6 @@ const ContactUs = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -97,9 +92,12 @@ const ContactUs = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-hidden">
+      {" "}
+      {/* Prevent unwanted scrolling */}
       {loading && <Loader />} {/* Show Loader when loading is true */}
-      <div className="w-screen h-[460px] relative">
+      {/* Hero Section */}
+      <div className="w-full h-[460px] relative overflow-hidden">
         <img
           className="w-full h-full object-cover"
           src={contact}
@@ -111,6 +109,7 @@ const ContactUs = () => {
           </h1>
         </div>
       </div>
+      {/* Contact Details & Form */}
       <div className="bg-white text-black py-12 px-6 md:px-20 lg:px-40">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div className="contact-us space-y-6">
@@ -150,6 +149,7 @@ const ContactUs = () => {
             </div>
           </div>
 
+          {/* Contact Form */}
           <div className="bg-white p-6 shadow-lg rounded-lg border border-yellow-500">
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4">
@@ -180,62 +180,58 @@ const ContactUs = () => {
                   )}
                 </div>
               </div>
-              <div>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Phone Number"
-                  className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
-                />
-                {errors.phone && (
-                  <p className="text-red-500 text-sm">{errors.phone}</p>
-                )}
-              </div>
-              <div>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm">{errors.email}</p>
-                )}
-              </div>
-              <div>
-                <input
-                  type="text"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="Subject"
-                  className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
-                />
-                {errors.subject && (
-                  <p className="text-red-500 text-sm">{errors.subject}</p>
-                )}
-              </div>
-              <div>
-                <textarea
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  placeholder="Notes"
-                  className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
-                  rows="4"
-                ></textarea>
-                {errors.notes && (
-                  <p className="text-red-500 text-sm">{errors.notes}</p>
-                )}
-              </div>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Phone Number"
+                className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
+              />
+              {errors.phone && (
+                <p className="text-red-500 text-sm">{errors.phone}</p>
+              )}
+
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                placeholder="Subject"
+                className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
+              />
+              {errors.subject && (
+                <p className="text-red-500 text-sm">{errors.subject}</p>
+              )}
+
+              <textarea
+                name="notes"
+                value={formData.notes}
+                onChange={handleChange}
+                placeholder="Notes"
+                className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
+                rows="4"
+              ></textarea>
+              {errors.notes && (
+                <p className="text-red-500 text-sm">{errors.notes}</p>
+              )}
+
               <button
                 type="submit"
                 className="w-full p-3 bg-black text-white rounded-md font-semibold hover:bg-yellow-600 transition"
-                disabled={loading} // Disable button while loading
+                disabled={loading}
               >
                 {loading ? "Submitting..." : "SUBMIT"}
               </button>
