@@ -26,18 +26,31 @@ import HomeImg from "../../assets/plumeriaresortimages/homeimg.jpg";
 // All activities in a single array
 const activities = [
   { name: "Table Tennis", img: TableTennis, icon: <IconPingPong size={24} /> },
-  { name: "Carrom", img: Carrom, icon: <IconDirectionArrows size={24} /> },
+  // { name: "Carrom", img: Carrom, icon: <IconDirectionArrows size={24} /> },
+  { name: "Camp Fire", img: Campfire, icon: <IconCampfire size={24} /> },
   { name: "Chess", img: Chess, icon: <IconChess size={24} /> },
-  { name: "Darts", img: Darts, icon: <IconChartRadar size={24} /> },
-  { name: "Badminton", img: Badminton, icon: <IconPingPong size={24} /> },
-  { name: "Cricket", img: Cricket, icon: <IconCricket size={24} /> },
+  // { name: "Darts", img: Darts, icon: <IconChartRadar size={24} /> },
   {
     name: "Volleyball",
     img: Volleyball,
     icon: <IconBallVolleyball size={24} />,
   },
   { name: "Kids Pool", img: Pool, icon: <IconSwimming size={24} /> },
-  { name: "Camp Fire", img: Campfire, icon: <IconCampfire size={24} /> },
+
+  { name: "Darts", img: Darts, icon: <IconChartRadar size={24} /> },
+  { name: "Badminton", img: Badminton, icon: <IconPingPong size={24} /> },
+
+  { name: "Cricket", img: Cricket, icon: <IconCricket size={24} /> },
+  // { name: "Darts", img: Darts, icon: <IconChartRadar size={24} /> },
+
+  { name: "Carrom", img: Carrom, icon: <IconDirectionArrows size={24} /> },
+  // {
+  //   name: "Volleyball",
+  //   img: Volleyball,
+  //   icon: <IconBallVolleyball size={24} />,
+  // },
+  // { name: "Kids Pool", img: Pool, icon: <IconSwimming size={24} /> },
+  // { name: "Camp Fire", img: Campfire, icon: <IconCampfire size={24} /> },
 ];
 
 const ActivitiesComp = () => {
@@ -78,7 +91,11 @@ const ActivitiesComp = () => {
       <div className="activities-content">
         {/* Image Display (No Overlay) */}
         <div className="image-container">
-          <img src={activeImage} alt="Activity" className={`activity-image ${isFading ? "fade-out" : ""}`} />
+          <img
+            src={activeImage}
+            alt="Activity"
+            className={`activity-image ${isFading ? "fade-out" : ""}`}
+          />
         </div>
 
         {/* Buttons Grid (3 per row) */}
@@ -87,7 +104,9 @@ const ActivitiesComp = () => {
             <button
               key={index}
               onClick={() => handleButtonClick(index)}
-              className={`activity-button ${index === activeIndex ? "active-button" : ""}`}
+              className={`activity-button ${
+                index === activeIndex ? "active-button" : ""
+              }`}
             >
               {activity.icon}
               {activity.name}

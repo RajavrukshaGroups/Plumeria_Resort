@@ -55,9 +55,9 @@ const Footer = () => {
         <div className="footer-links">
           <h3>Information Links</h3>
           <ul>
-            <li>
+            {/* <li>
               <FaBed className="footer-link-icon" /> Accommodations
-            </li>
+            </li> */}
             <li>
               <FaImages className="footer-link-icon" />
               <Link to="/gallery">Photos & Videos</Link>
