@@ -1,8 +1,8 @@
 import "./deluxeRooms.css";
 import { useState } from "react";
-import DeluxeRoom1 from "../../assets/plumeriaresortimages/cottagehome.jpg";
-import DeluxeRoom2 from "../../assets/plumeriaresortimages/deluxeRoom2.jpg";
-import DeluxeRoom3 from "../../assets/plumeriaresortimages/deluxeRoomNew1.webp";
+import DeluxeRoom1 from "../../assets/plumeriaresortimages/homeimg.jpg";
+import DeluxeRoom2 from "../../assets/plumeriaresortimages/delRoom3.jpg";
+import DeluxeRoom3 from "../../assets/plumeriaresortimages/delRoom2.jpg";
 import {
   IconBed,
   IconBath,
@@ -15,23 +15,22 @@ const rooms = [
   {
     id: 1,
     image: DeluxeRoom1,
-    title: "Deluxe Room (European Plan)",
+    title: "Deluxe Room (Lite Plan)",
     price: "₹4000 / Day",
   },
   {
     id: 2,
     image: DeluxeRoom2,
-    title: "Deluxe Room (Continental Plan)",
+    title: "Deluxe Room (Plus Plan)",
     price: "₹6000 / Day",
   },
   {
     id: 3,
     image: DeluxeRoom3,
-    title: "Deluxe Room (Modified American Plan)",
+    title: "Deluxe Room (Max Plan)",
     price: "₹7100 / Day",
   },
 ];
-
 
 const DeluxeRooms = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,9 +49,11 @@ const DeluxeRooms = () => {
 
   return (
     <div className="rooms-section">
-      <p className="section-tag" style={{fontSize:"20px"}}>Best on our Rooms</p>
-      <h2 className="section-title" style={{fontSize:"36px"}}>Our Accommodations</h2>
+      <p className="section-tag">Best on our Rooms</p>
+      <h2 className="section-title">Our Accommodations</h2>
+
       <div className="rooms-slider">
+        {/* Previous Room (Hidden in Mobile) */}
         <div className="room-card prev-room" onClick={prevSlide}>
           <img
             src={rooms[(currentIndex - 1 + rooms.length) % rooms.length].image}
@@ -64,6 +65,7 @@ const DeluxeRooms = () => {
           </span>
         </div>
 
+        {/* Main Room - Shows Navigation Arrows in Mobile */}
         <div className="room-card main-room">
           <img
             src={rooms[currentIndex].image}
@@ -86,14 +88,22 @@ const DeluxeRooms = () => {
               <span>
                 <IconBed size={16} /> 1 Bed
               </span>
-              {/* <span>48 ft²</span> */}
               <span>
                 <IconBath size={16} /> 1 bath
               </span>
             </div>
           </div>
+
+          {/* Arrows for Mobile - Placed inside Main Room */}
+          <span className="nav-button prev mobile-only" onClick={prevSlide}>
+            <IconArrowLeft />
+          </span>
+          <span className="nav-button next mobile-only" onClick={nextSlide}>
+            <IconArrowRight />
+          </span>
         </div>
 
+        {/* Next Room (Hidden in Mobile) */}
         <div className="room-card next-room" onClick={nextSlide}>
           <img
             src={rooms[(currentIndex + 1) % rooms.length].image}

@@ -64,13 +64,16 @@ const ContactUs = () => {
     setLoading(true); // Show loader when submitting
 
     try {
-      const response = await fetch("http://localhost:4000/plumeriacontact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://servermain.rajavrukshagroup.in/plumeriacontact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         alert("Message sent successfully!");

@@ -233,3 +233,9 @@
     right: 5%;
   }
 }
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}

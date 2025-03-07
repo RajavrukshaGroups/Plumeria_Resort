@@ -2,11 +2,16 @@ import { useState } from "react";
 import EPPlan from "../../assets/plumeriaresortimages/pathway.jpg";
 import CPPlan from "../../assets/plumeriaresortimages/cp-plan.jpg";
 import MapPlan from "../../assets/plumeriaresortimages/meditaion.jpg";
-import ResortBrochure from "../../assets/plumeriaresortimages/PlumeriaResortBrochure.pdf";
+import ResortBrochure from "../../assets/plumeriaresortimages/PlumeriaResortBrochureNew.pdf";
 import "./PriceChart.css";
+import ContactModal from "../../Utils/contactModal";
 
 const PriceChart = () => {
   const [modalData, setModalData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const handleDownloadBrochure = () => {
     window.open(ResortBrochure, "_blank");
@@ -14,7 +19,7 @@ const PriceChart = () => {
 
   const plans = [
     {
-      name: "European Plan",
+      name: "Lite Plan",
       image: EPPlan,
       prices: [
         {
@@ -38,10 +43,10 @@ const PriceChart = () => {
           withGST: "Rs. 1770/-",
         },
       ],
-      note: "European Plan does not include any complimentary services.",
+      note: "Lite Plan does not include any complimentary services.",
     },
     {
-      name: "Continental Plan",
+      name: "Plus Plan",
       image: CPPlan,
       prices: [
         {
@@ -65,10 +70,10 @@ const PriceChart = () => {
           withGST: "Rs. 2124/-",
         },
       ],
-      note: "Continental Plan plan includes breakfast.",
+      note: "Plus Plan plan includes breakfast.",
     },
     {
-      name: "Modified American Plan",
+      name: "Max Plan",
       image: MapPlan,
       prices: [
         {
@@ -83,7 +88,7 @@ const PriceChart = () => {
         },
         {
           type: "Villa Rooms (2 Persons)",
-          withoutGST: "Rs. 7500/-",
+          withoutGST: "Rs. 7499/-",
           withGST: "Rs. 8850/-",
         },
         {
@@ -92,7 +97,7 @@ const PriceChart = () => {
           withGST: "Rs. 2596/-",
         },
       ],
-      note: "Modified American Plan includes breakfast and dinner.",
+      note: "Max Plan includes breakfast and dinner.",
     },
   ];
 
@@ -127,7 +132,7 @@ const PriceChart = () => {
         <div className="price-card-download">
           <button
             className="price-card-download-button"
-            onClick={handleDownloadBrochure}
+            onClick={handleOpenModal}
           >
             Download Brochure
           </button>
@@ -143,7 +148,7 @@ const PriceChart = () => {
                 <tr>
                   <th>Room Type</th>
                   <th>Without GST</th>
-                  <th>With GST 18%</th>
+                  {/* <th>With GST 18%</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -151,7 +156,7 @@ const PriceChart = () => {
                   <tr key={index}>
                     <td>{item.type}</td>
                     <td>{item.withoutGST}</td>
-                    <td>{item.withGST}</td>
+                    {/* <td>{item.withGST}</td> */}
                   </tr>
                 ))}
               </tbody>
@@ -162,6 +167,14 @@ const PriceChart = () => {
             </button>
           </div>
         </div>
+      )}
+      {showModal && (
+        <ContactModal
+          show={showModal}
+          handleClose={handleCloseModal}
+          onSubmitSuccess={handleDownloadBrochure}
+          project="Plumeria Resort"
+        />
       )}
     </div>
   );

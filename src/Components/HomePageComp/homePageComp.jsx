@@ -17,7 +17,7 @@ const HomePageComponent = () => {
             truly enchanting experience that caters to every aspect of your
             stay.
           </p>
-          <button className="accommodation-btn pulse">ACCOMMODATION</button>
+          {/* <button className="accommodation-btn pulse">ACCOMMODATION</button> */}
         </div>
       </section>
     </div>

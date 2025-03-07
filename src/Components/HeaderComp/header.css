@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 40px; /* More padding for a balanced layout */
+  padding: 20px 40px; /* More padding for a balanced layout */
   color: white;
   position: fixed;
   width: 100%;
@@ -16,7 +16,7 @@
 
 /* Logo */
 .logo img {
-  height: 50px;
+  height: 80px;
   transition: transform 0.3s ease-in-out;
   cursor: pointer;
 }
@@ -91,7 +91,7 @@
 /* Mobile Menu Button */
 .menu-icon {
   display: none;
-  font-size: 24px;
+  font-size: 35px;
   cursor: pointer;
 }
 
@@ -101,12 +101,17 @@
     gap: 15px; /* Slightly reduce spacing for smaller screens */
     max-width: 600px; /* Reduce width */
   }
+  .logo img {
+    height: 60px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+  }
 }
 
 @media (max-width: 768px) {
   .nav-links {
     position: absolute;
-    top: 60px;
+    top: 0px;
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.9);
@@ -123,5 +128,6 @@
 
   .menu-icon {
     display: block;
+    z-index: 1;
   }
 }

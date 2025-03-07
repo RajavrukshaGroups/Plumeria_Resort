@@ -1,0 +1,19 @@
+.modal-header {
+  background-color: #b78d65;
+  color: black;
+}
+
+.modal-title {
+  margin-left: auto;
+  color: white;
+}
+
+.modal-top {
+  margin-top: 6rem;
+}
+
+@media(max-width:430px){
+    .modal-top{
+        margin-top:-7rem;
+    }
+}

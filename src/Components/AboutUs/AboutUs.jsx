@@ -2,8 +2,9 @@ import React from "react";
 import "./AboutUs.css";
 import AboutUsNew from "../../assets/plumeriaresortimages/about_us_new.webp";
 import AboutUsImg from "../../assets/plumeriaresortimages/aboutus_img.jpg";
-import SecondAbout from "../../assets/plumeriaresortimages/about_jpg.jpg";
+import SecondAbout from "../../assets/plumeriaresortimages/poolhero.jpg";
 import AboutThree from "../../assets/plumeriaresortimages/about.jpg";
+import DomeImg from "../../assets/plumeriaresortimages/homeimg.jpg";
 
 const AboutUs = () => {
   return (
@@ -108,7 +109,7 @@ const AboutUs = () => {
               className="gallery-img"
             />
             <img
-              src={AboutUsImg}
+              src={DomeImg}
               alt="Nature Surroundings"
               className="gallery-img"
             />
