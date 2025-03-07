@@ -1,6 +1,6 @@
 import React from "react";
 import "./AboutUs.css";
-import AboutUsNew from "../../assets/plumeriaresortimages/about_us_new.webp";
+import AboutUsNew from "../../assets/plumeriaresortimages/about_us_new1.jpeg";
 import AboutUsImg from "../../assets/plumeriaresortimages/aboutus_img.jpg";
 import SecondAbout from "../../assets/plumeriaresortimages/poolhero.jpg";
 import AboutThree from "../../assets/plumeriaresortimages/about.jpg";
@@ -8,9 +8,9 @@ import DomeImg from "../../assets/plumeriaresortimages/homeimg.jpg";
 
 const AboutUs = () => {
   return (
-    <>
+    <div className="overflow-hidden">
       {/* Hero Section */}
-      <div className="w-screen h-[460px] relative">
+      <div className="w-full h-[460px] relative">
         <img
           className="w-full h-full object-cover"
           src={AboutUsNew}
@@ -26,31 +26,6 @@ const AboutUs = () => {
       {/* About Us Content Section */}
       <div className="container mx-auto px-5 py-12 about-section">
         <div className="about-container">
-          {/* Text Content */}
-          {/* <div className="about-text">
-            <h2 className="text-3xl font-semibold text-yellow-500">
-              Welcome to Plumeria Resort
-            </h2>
-            <p>
-              At our resort, we believe in providing a perfect blend of comfort,
-              luxury, and nature. Nestled amidst the breathtaking landscapes of
-              Coorg, we offer an idyllic retreat for those seeking tranquility,
-              adventure, and rejuvenation.
-            </p>
-            <p>
-              Our resort features thoughtfully designed accommodations that
-              allow you to unwind and connect with nature, while our
-              personalized services ensure every moment of your stay is
-              exceptional. Whether you’re here to explore the lush surroundings,
-              indulge in local flavors, or simply relax, we are committed to
-              offering an unforgettable experience that brings you closer to the
-              serene beauty of Coorg.
-            </p>
-            <p>
-              Come, escape the ordinary, and immerse yourself in the
-              extraordinary at our resort.
-            </p>
-          </div> */}
           <div className="about-text">
             <h2 className="text-3xl font-semibold text-yellow-500">
               Welcome to Plumeria Resort
@@ -90,7 +65,11 @@ const AboutUs = () => {
 
           {/* Image - Now perfectly aligned */}
           <div className="about-image">
-            <img src={AboutUsImg} alt="Resort View" />
+            <img
+              src={AboutUsImg}
+              alt="Resort View"
+              className="w-full h-auto object-cover rounded-lg shadow-md"
+            />
           </div>
         </div>
       </div>
@@ -102,21 +81,25 @@ const AboutUs = () => {
             Discover Our Resort
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-            <img src={SecondAbout} alt="Scenic View" className="gallery-img" />
+            <img
+              src={SecondAbout}
+              alt="Scenic View"
+              className="w-full h-72 object-cover rounded-lg shadow-md"
+            />
             <img
               src={AboutThree}
               alt="Luxurious Room"
-              className="gallery-img"
+              className="w-full h-72 object-cover rounded-lg shadow-md"
             />
             <img
               src={DomeImg}
               alt="Nature Surroundings"
-              className="gallery-img"
+              className="w-full h-72 object-cover rounded-lg shadow-md"
             />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -14,6 +14,9 @@ import pathway2 from "../../assets/plumeriaresortimages/aboutus_img.jpg";
 import Restaurant from "../../assets/plumeriaresortimages/cp-plan.jpg";
 import Restaurant2 from "../../assets/plumeriaresortimages/restaurant1.webp";
 import campfire from "../../assets/plumeriaresortimages/campfire.webp";
+import Entertainment from "../../assets/plumeriaresortimages/entertainment.jpeg";
+import Info1 from "../../assets/plumeriaresortimages/contact-us-new.jpeg";
+import Info2 from "../../assets/plumeriaresortimages/about_us_new1.jpeg";
 
 // Data for categories
 const gallerySections = [
@@ -22,8 +25,8 @@ const gallerySections = [
     images: [VillaRoom1, DeluxeRoom1, CottageHome],
   },
   {
-    title: "Swimming Pool",
-    images: [SwimmingPool1, SwimmingPool2, SwimmingPool3],
+    title: "Play Area",
+    images: [SwimmingPool1, SwimmingPool2, Entertainment],
   },
   {
     title: "Pathway & Meditation Area",
@@ -33,13 +36,17 @@ const gallerySections = [
     title: "Restaurant & Campfire",
     images: [Restaurant, campfire],
   },
+  {
+    title: "Front Desk",
+    images: [Info1, Info2],
+  },
 ];
 
 const GalleryComponent = () => {
   return (
-    <div>
+    <div className="overflow-hidden">
       {/* Hero Section */}
-      <div className="w-screen h-[460px] relative">
+      <div className="w-full h-[460px] relative">
         <img
           className="w-full h-full object-cover"
           src={CottageHome}
