@@ -3,13 +3,20 @@ import EPPlan from "../../assets/plumeriaresortimages/pathway.jpg";
 import CPPlan from "../../assets/plumeriaresortimages/cp-plan.jpg";
 import MapPlan from "../../assets/plumeriaresortimages/meditaion.jpg";
 import ResortBrochure from "../../assets/plumeriaresortimages/PlumeriaResortBrochureNew.pdf";
-import { FaUtensils } from "react-icons/fa";
+import {
+  FaUtensils,
+  FaInfoCircle,
+  FaCocktail,
+  FaUtensilSpoon,
+  FaClipboardList,
+} from "react-icons/fa";
 import "./PriceChart.css";
 import ContactModal from "../../Utils/contactModal";
 
 const PriceChart = () => {
   const [modalData, setModalData] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [infoModal, setInfoModal] = useState(null);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
@@ -75,6 +82,22 @@ const PriceChart = () => {
         <>
           <FaUtensils className="inline-block mr-2 text-yellow-500" />
           Plus Plan includes breakfast.
+          {/* <FaInfoCircle
+            className="inline-block ml-2 text-gray-500 cursor-pointer hover:text-yellow-500"
+            onClick={() => setInfoModal("plus")}
+          /> */}
+          {/* <button
+            className="ml-2 bg-yellow-500 text-white px-2 py-1 rounded text-sm hover:bg-yellow-600"
+            onClick={() => setInfoModal("plus")}
+          >
+            View Menu
+          </button> */}
+          <span
+            className="ml-2 bg-yellow-100 text-yellow-600 text-xs font-semibold px-2 py-1 rounded-full cursor-pointer hover:bg-yellow-200"
+            onClick={() => setInfoModal("plus")}
+          >
+            View Menu
+          </span>
         </>
       ),
     },
@@ -106,11 +129,130 @@ const PriceChart = () => {
       note: (
         <>
           <FaUtensils className="inline-block mr-2 text-yellow-500" />
-          Max Plan includes breakfast and dinner.
+          Max Plan includes breakfast, snacks and dinner.
+          <span
+            className="ml-2 bg-yellow-100 text-yellow-600 text-xs font-semibold px-2 py-1 rounded-full cursor-pointer hover:bg-yellow-200"
+            onClick={() => setInfoModal("max")}
+          >
+            View Menu
+          </span>
         </>
       ),
     },
   ];
+
+  const menuDetails = {
+    plus: {
+      title: "Plus Plan Menu",
+      items: [
+        {
+          category: "Welcome Drinks",
+          options: [
+            "Watermelon Juice",
+            "Lemon Juice",
+            "Mint Lemon Juice",
+            "Carrot/Beetroot Juice",
+          ],
+          icon: <FaCocktail className="menu-category-icon text-yellow-500" />,
+        },
+
+        {
+          category: "Breakfast",
+          icon: <FaUtensils className="menu-category-icon text-yellow-500" />,
+          options: [
+            "Idli",
+            "Wada",
+            "Dosa (Plain, Masala, Onion, Set)",
+            "Upma (Rava, Vermicelli)",
+            "Kesari Bath",
+            "Poha",
+            "Puri Sagu",
+            "Aloo Paratha (Curd & Pickle)",
+            "Tomato Rice",
+            "Lemon Rice",
+            "Pongal (Karra, Sweet)",
+            "Bisi Bele Bath",
+            "French Toast",
+            "Scrambled Egg",
+            "Boiled Egg",
+            "Omelette",
+            "Sambar",
+            "Chutney",
+          ],
+        },
+      ],
+    },
+    max: {
+      title: "Max Plan Menu",
+      items: [
+        {
+          category: "Welcome Drinks",
+          options: ["Watermelon Juice", "Lemon Juice", "Mint Lemon Juice"],
+          icon: <FaCocktail className="menu-category-icon text-yellow-500" />,
+        },
+        {
+          category: "Breakfast",
+          icon: <FaUtensils className="menu-category-icon text-yellow-500" />,
+          options: [
+            "Idli",
+            "Wada",
+            "Dosa (Plain, Masala, Onion, Set)",
+            "Upma (Rava, Vermicelli)",
+            "Kesari Bath",
+            "Poha",
+            "Puri Sagu",
+            "Aloo Paratha (Curd & Pickle)",
+            "Tomato Rice",
+            "Lemon Rice",
+            "Pongal (Karra, Sweet)",
+            "Bisi Bele Bath",
+            "French Toast",
+            "Scrambled Egg",
+            "Boiled Egg",
+            "Omelette",
+            "Sambar",
+            "Chutney",
+          ],
+        },
+        {
+          category: "Dinner",
+          icon: <FaUtensils className="menu-category-icon text-yellow-500" />,
+          options: [
+            "Veg Starter",
+            "Non-Veg Starter",
+            "Veg Gravy",
+            "Non-Veg Gravy",
+            "Rasam",
+            "Sambar / Dal",
+            "Flavour Rice",
+            "White Rice",
+            "Chapathi / Pulka",
+            "Curd / Papad / Pickle",
+            "Salad",
+          ],
+        },
+        {
+          category: "Snacks (changes on daily basis)",
+          icon: (
+            <FaUtensilSpoon className="menu-category-icon text-yellow-500" />
+          ),
+          options: [
+            "Ginger Tea",
+            "Green Tea",
+            "Masala tea",
+            "Coffee",
+            "Black Tea",
+            "Black coffee",
+            "Onion rings",
+            "Pakoda",
+            "Finger chips",
+            "Capsiccum Bajji",
+            "Mirchi bajji",
+          ],
+        },
+      ],
+    },
+  };
 
   return (
     <div className="price-chart-container">
@@ -179,6 +321,34 @@ const PriceChart = () => {
           </div>
         </div>
       )}
+      {infoModal && (
+        <div className="modal-overlay" onClick={() => setInfoModal(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>{menuDetails[infoModal].title}</h2>
+
+            {/* Wrap all categories in a grid container */}
+            <div className="menu-container">
+              {menuDetails[infoModal].items.map((category, index) => (
+                <div key={index}>
+                  <div className="menu-category">
+                    {category.icon} {category.category}
+                  </div>
+                  <ul className="menu-list">
+                    {category.options.map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <button className="modal-close" onClick={() => setInfoModal(null)}>
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       {showModal && (
         <ContactModal
           show={showModal}
