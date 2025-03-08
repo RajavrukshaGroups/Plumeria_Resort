@@ -1,5 +1,5 @@
 .modal-price {
-  margin-top: 4rem;
+  margin-top: 6rem;
 }
 
 /* Title Section Styling */
@@ -97,10 +97,11 @@
   padding: 1rem;
   text-align: center;
 }
+
 .price-card-download {
-    text-align: center;
-    position: relative;
-    z-index: 10;
+  text-align: center;
+  position: relative;
+  z-index: 10;
 }
 
 .price-card-button {
@@ -161,36 +162,66 @@
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Modal Title */
 .modal-content h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  text-align: center;
+  color: #b8860b;
+}
+
+/* Pricing Table */
+.modal-content .table-container {
+  width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling on small screens */
 }
 
 .modal-content table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  white-space: nowrap; /* Prevents text from wrapping */
 }
 
 .modal-content th,
 .modal-content td {
-  padding: 8px;
-  border: 1px solid #ddd;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.5);
+  text-align: center;
+  font-size: 14px; /* Adjusted for better readability */
 }
 
 .modal-content th {
-  background: #f8f8f8;
+  background: linear-gradient(135deg, #d4af37, #b8860b);
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
+.modal-content tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-content tr:hover {
+  background-color: rgba(255, 215, 0, 0.2);
+  transition: background 0.3s ease-in-out;
+}
+
+/* Price Note */
 .price-note {
   color: red;
   margin-top: 10px;
   font-size: 0.9rem;
+  text-align: center;
 }
 
+/* Modal Close Button */
 .modal-close {
   position: absolute;
   top: 10px;
@@ -212,6 +243,11 @@
   .price-card {
     max-width: 100%;
   }
+  .modal-content th,
+  .modal-content td {
+    font-size: 12px; /* Adjusting font size for better fit */
+    padding: 8px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -226,5 +262,24 @@
   }
   .price-card-download {
     padding: 0.5rem;
+  }
+
+  /* Improve table responsiveness */
+  .modal-content .table-container {
+    overflow-x: auto;
+  }
+
+  .modal-content table {
+    font-size: 12px;
+    min-width: 100%; /* Ensures proper scrolling */
+  }
+
+  .modal-content th,
+  .modal-content td {
+    padding: 6px;
+    white-space: nowrap; /* Prevents text from wrapping */
+  }
+  .modal-price {
+    margin-top: -12rem;
   }
 }
