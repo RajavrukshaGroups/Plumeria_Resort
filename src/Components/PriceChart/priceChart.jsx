@@ -3,6 +3,7 @@ import EPPlan from "../../assets/plumeriaresortimages/pathway.jpg";
 import CPPlan from "../../assets/plumeriaresortimages/cp-plan.jpg";
 import MapPlan from "../../assets/plumeriaresortimages/meditaion.jpg";
 import ResortBrochure from "../../assets/plumeriaresortimages/PlumeriaResortBrochureNew.pdf";
+import { FaUtensils } from "react-icons/fa";
 import "./PriceChart.css";
 import ContactModal from "../../Utils/contactModal";
 
@@ -70,7 +71,12 @@ const PriceChart = () => {
           withGST: "Rs. 2124/-",
         },
       ],
-      note: "Plus Plan plan includes breakfast.",
+      note: (
+        <>
+          <FaUtensils className="inline-block mr-2 text-yellow-500" />
+          Plus Plan includes breakfast.
+        </>
+      ),
     },
     {
       name: "Max Plan",
@@ -97,7 +103,12 @@ const PriceChart = () => {
           withGST: "Rs. 2596/-",
         },
       ],
-      note: "Max Plan includes breakfast and dinner.",
+      note: (
+        <>
+          <FaUtensils className="inline-block mr-2 text-yellow-500" />
+          Max Plan includes breakfast and dinner.
+        </>
+      ),
     },
   ];
 

@@ -50,7 +50,7 @@ const DeluxeRooms = () => {
   return (
     <div className="rooms-section">
       <p className="section-tag">Best on our Rooms</p>
-      <h2 className="section-title">Our Accommodations</h2>
+      <h2 className="section-title">OUR ACCOMMODATIONS</h2>
 
       <div className="rooms-slider">
         {/* Previous Room (Hidden in Mobile) */}

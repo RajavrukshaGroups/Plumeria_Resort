@@ -49,8 +49,8 @@ const VillaRooms = () => {
 
   return (
     <div className="rooms-section">
-      <p className="section-tag">Best on our Rooms</p>
-      <h2 className="section-title">Our Accommodations</h2>
+      {/* <p className="section-tag">Best on our Rooms</p>
+      <h2 className="section-title">Our Accommodations</h2> */}
 
       <div className="rooms-slider">
         {/* Previous Room (Hidden in Mobile) */}
