@@ -51,7 +51,7 @@ const PriceChart = () => {
           withGST: "Rs. 1770/-",
         },
       ],
-      note: "Lite Plan does not include any complimentary services.",
+      note: "It does not include any complimentary services.",
     },
     {
       name: "Plus Plan",
@@ -81,7 +81,7 @@ const PriceChart = () => {
       note: (
         <>
           <FaUtensils className="inline-block mr-2 text-yellow-500" />
-          Plus Plan includes breakfast.
+          It includes breakfast.
           {/* <FaInfoCircle
             className="inline-block ml-2 text-gray-500 cursor-pointer hover:text-yellow-500"
             onClick={() => setInfoModal("plus")}
@@ -129,7 +129,7 @@ const PriceChart = () => {
       note: (
         <>
           <FaUtensils className="inline-block mr-2 text-yellow-500" />
-          Max Plan includes breakfast, snacks and dinner.
+          breakfast, snacks and dinner.
           <span
             className="ml-2 bg-yellow-100 text-yellow-600 text-xs font-semibold px-2 py-1 rounded-full cursor-pointer hover:bg-yellow-200"
             onClick={() => setInfoModal("max")}
