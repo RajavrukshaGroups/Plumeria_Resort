@@ -1,7 +1,8 @@
 import "./footer.css";
 import RRPL_logo from "../../assets/plumeriaresortimages/RRPL_logo.webp";
 import { Link } from "react-router-dom";
-import logo from "../../assets/plumeriaresortimages/plumeriaresort_logo.png";
+// import logo from "../../assets/plumeriaresortimages/plumeriaresort_logo.png";
+import logo from "../../assets/plumeriaresortimages/plumeria_footer_logo.png";
 import RRPL_Group from "../../assets/plumeriaresortimages/Logo_RRPL_New.png";
 import {
   FaXTwitter,

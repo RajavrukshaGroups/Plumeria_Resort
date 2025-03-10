@@ -1,14 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
-// import HomePageMainComponent from "../HomePageMain/HomePageMain";
-// import AboutUsMain from "../AboutUsMain/AboutUsMain";
-// import HeaderComponent from "../../Components/HeaderComp/header";
-// import ContactUsMain from "../../MainComp/contactUsMain/contactUsMain";
-// import Services from "../../Components/Services/services";
-// import ServicesMain from "../ServicesMain/servicesMain";
 import ScrollToTop from "../../Utils/scrollToTop";
 import LazyLoader from "../../Utils/LazyLoader/lazyLoader";
-// import GalleryMain from "../GalleryMain/gallery";
 
 const HomePageMainComponent = lazy(() =>
   import("../HomePageMain/HomePageMain")
@@ -23,7 +16,6 @@ const ContactUsMain = lazy(() =>
 const AllRoute = () => {
   return (
     <Router>
-      {/* <HeaderComponent/> */}
       <ScrollToTop />
       <Suspense fallback={<LazyLoader />}>
         <Routes>
