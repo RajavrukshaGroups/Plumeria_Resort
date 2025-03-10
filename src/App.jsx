@@ -1,11 +1,13 @@
+import { HelmetProvider } from "react-helmet-async";
 import AllRoute from "./MainComp/Router";
-
 
 function App() {
   return (
     <>
       <div>
-        <AllRoute />
+        <HelmetProvider>
+          <AllRoute />
+        </HelmetProvider>
       </div>
     </>
   );
