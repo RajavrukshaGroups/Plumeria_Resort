@@ -258,10 +258,10 @@ const PriceChart = () => {
     <div className="price-chart-container">
       <div className="price-title-container">
         <div className="title-section">
-          <h1>Day Out Packages We Provide</h1>
+          <h1>Resort Stays We Offer</h1>
           <p>
-            Experience luxury, comfort, and adventure with our exclusive day-out
-            plans.
+            Indulge in luxury, comfort, and tranquility with our exclusive
+            resort stays, designed for a perfect getaway.
           </p>
         </div>
         <div className="price-chart-content grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
