@@ -68,7 +68,8 @@ const Footer = () => {
               <Link to="/facilities">Services & Amenities</Link>
             </li>
             <li>
-              <FaFileContract className="footer-link-icon" /> Terms & Conditions
+              <FaFileContract className="footer-link-icon" />
+              <Link to="/terms-conditions">Terms & Conditions</Link>
             </li>
             <li>
               <FaEnvelope className="footer-link-icon" />
