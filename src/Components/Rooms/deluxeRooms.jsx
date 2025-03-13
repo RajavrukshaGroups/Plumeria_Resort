@@ -78,8 +78,11 @@ const DeluxeRooms = () => {
               <span className="original-price">
                 {rooms[currentIndex].originalPrice}
               </span>{" "}
-              <span>{rooms[currentIndex].price}</span>
+              <span className="price-with-star">
+                {rooms[currentIndex].price} <sup className="price-star">*</sup>
+              </span>
             </p>
+
             <h3 className="room-title">{rooms[currentIndex].title}</h3>
             <div className="room-info">
               <span>
@@ -92,6 +95,10 @@ const DeluxeRooms = () => {
                 <IconBath size={16} /> 1 bath
               </span>
             </div>
+            <p className="price-disclaimer">
+              <sup className="price-star">*</sup> Prices may vary based on
+              season and availability.
+            </p>
           </div>
 
           {/* Arrows for Mobile - Placed inside Main Room */}

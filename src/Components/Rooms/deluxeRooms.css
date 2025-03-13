@@ -6,6 +6,23 @@
   position: relative;
 }
 
+.price-star {
+  font-size: 25px;
+  vertical-align: super; /* Moves the asterisk slightly above */
+  color: red; /* Optional: Highlight it */
+  top: 8px;
+}
+
+.price-disclaimer {
+  font-size: 14px;
+  /* color: #777; */
+  margin-top: 9px;
+  text-align: center;
+  font-weight: bolder;
+  text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.6);
+  opacity: 0.6;
+}
+
 /* Dark Overlay */
 .rooms-section::before {
   content: "";
@@ -125,6 +142,10 @@
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Space between price and asterisk */
 }
 
 /* Strikethrough Original Price */
@@ -231,6 +252,32 @@
 
   .main-room .nav-button.next {
     right: 5%;
+  }
+  .room-price {
+    font-size: 16px; /* Reduce font size on mobile */
+  }
+
+  .price-star {
+    font-size: 10px; /* Smaller asterisk on mobile */
+  }
+
+  .price-disclaimer {
+    font-size: 12px;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .room-price {
+    font-size: 14px;
+  }
+
+  .price-star {
+    font-size: 20px;
+  }
+
+  .price-disclaimer {
+    font-size: 11px;
   }
 }
 

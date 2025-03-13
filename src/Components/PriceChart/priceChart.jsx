@@ -161,12 +161,12 @@ const PriceChart = () => {
           icon: <FaUtensils className="menu-category-icon text-yellow-500" />,
           options: [
             "Idli",
-            "Wada",
+            "Vada",
             "Dosa (Plain, Masala, Onion, Set)",
             "Upma (Rava, Vermicelli)",
             "Kesari Bath",
             "Poha",
-            "Puri Sagu",
+            "Poori Sagu",
             "Aloo Paratha (Curd & Pickle)",
             "Tomato Rice",
             "Lemon Rice",
@@ -187,7 +187,12 @@ const PriceChart = () => {
       items: [
         {
           category: "Welcome Drinks",
-          options: ["Watermelon Juice", "Lemon Juice", "Mint Lemon Juice"],
+          options: [
+            "Watermelon Juice",
+            "Lemon Juice",
+            "Mint Lemon Juice",
+            "Carrot/Beetroot Juice",
+          ],
           icon: <FaCocktail className="menu-category-icon text-yellow-500" />,
         },
         {
@@ -195,12 +200,12 @@ const PriceChart = () => {
           icon: <FaUtensils className="menu-category-icon text-yellow-500" />,
           options: [
             "Idli",
-            "Wada",
+            "Vada",
             "Dosa (Plain, Masala, Onion, Set)",
             "Upma (Rava, Vermicelli)",
             "Kesari Bath",
             "Poha",
-            "Puri Sagu",
+            "Poori Sagu",
             "Aloo Paratha (Curd & Pickle)",
             "Tomato Rice",
             "Lemon Rice",
