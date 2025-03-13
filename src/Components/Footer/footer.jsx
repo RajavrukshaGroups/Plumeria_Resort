@@ -14,6 +14,7 @@ import {
   FaFileContract,
   FaBellConcierge,
   FaEnvelope,
+  FaUserShield,
 } from "react-icons/fa6";
 import { FaPhoneAlt, FaMapMarkerAlt, FaClock } from "react-icons/fa";
 
@@ -68,12 +69,16 @@ const Footer = () => {
               <Link to="/facilities">Services & Amenities</Link>
             </li>
             <li>
-              <FaFileContract className="footer-link-icon" />
-              <Link to="/terms-conditions">Privacy Policy</Link>
-            </li>
-            <li>
               <FaEnvelope className="footer-link-icon" />
               <Link to="/contact-us">Contact Us</Link>
+            </li>
+            <li>
+              <FaUserShield className="footer-link-icon" />
+              <Link to="/privacy-policy">Privacy Policy</Link>
+            </li>
+            <li>
+              <FaFileContract className="footer-link-icon" />
+              <Link to="/terms-conditions">Terms & Conditions</Link>
             </li>
           </ul>
         </div>

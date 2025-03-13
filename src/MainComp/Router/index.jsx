@@ -2,8 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ScrollToTop from "../../Utils/scrollToTop";
 import LazyLoader from "../../Utils/LazyLoader/lazyLoader";
-// import MainTermsAndConditions from "../TermsCondition/TermsAndCondition";
-
+import { IconLocationX } from "@tabler/icons-react";
 const HomePageMainComponent = lazy(() =>
   import("../HomePageMain/HomePageMain")
 );
@@ -13,8 +12,13 @@ const GalleryMain = lazy(() => import("../GalleryMain/gallery"));
 const ContactUsMain = lazy(() =>
   import("../../MainComp/contactUsMain/contactUsMain")
 );
-const MainTermsAndConditions=lazy(()=>import("../TermsCondition/TermsAndCondition"));
+const MainPrivacyPolicy = lazy(() =>
+  import("../../MainComp/PrivacyPolicy/PrivacyPolicy")
+);
 
+const MainTermsAndConditions = lazy(() =>
+  import("../../MainComp/TermsAndConditions/termsAndConditions")
+);
 const AllRoute = () => {
   return (
     <Router>
@@ -26,6 +30,7 @@ const AllRoute = () => {
           <Route path="/facilities" element={<ServicesMain />} />
           <Route path="/gallery" element={<GalleryMain />} />
           <Route path="/contact-us" element={<ContactUsMain />} />
+          <Route path="/privacy-policy" element={<MainPrivacyPolicy />} />
           <Route
             path="/terms-conditions"
             element={<MainTermsAndConditions />}

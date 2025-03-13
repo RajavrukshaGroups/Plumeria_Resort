@@ -1,18 +1,18 @@
-import "./terms.css";
-import PrivacyPolicy from "../../assets/plumeriaresortimages/privacy_policy.webp";
+import "./privacypolicy.css";
+import PrivacyPolicyImg from "../../assets/plumeriaresortimages/privacy_policy.webp";
 
-const TermsAndConditions = () => {
+const PrivacyPolicy = () => {
   return (
     <div className="overflow-hidden">
       <div className="w-full h-[460px] relative">
         <img
           className="w-full h-full object-cover"
-          src={PrivacyPolicy}
+          src={PrivacyPolicyImg}
           alt="Privacy Policy"
         />
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-60">
           <h1 className="text-5xl md:text-6xl font-bold text-white">
-            Privacy Policy
+            PRIVACY POLICY
           </h1>
         </div>
       </div>
@@ -150,4 +150,4 @@ const TermsAndConditions = () => {
   );
 };
 
-export default TermsAndConditions;
+export default PrivacyPolicy;
