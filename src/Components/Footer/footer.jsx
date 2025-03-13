@@ -69,7 +69,7 @@ const Footer = () => {
             </li>
             <li>
               <FaFileContract className="footer-link-icon" />
-              <Link to="/terms-conditions">Terms & Conditions</Link>
+              <Link to="/terms-conditions">Privacy Policy</Link>
             </li>
             <li>
               <FaEnvelope className="footer-link-icon" />
