@@ -60,7 +60,8 @@ const ContactUs = () => {
 
     try {
       const response = await fetch(
-        "https://servermain.rajavrukshagroup.in/plumeriacontact",
+        // "https://servermain.rajavrukshagroup.in/plumeriacontact",
+        "https://server.plumeriaresort.in/plumeriacontact",
         {
           method: "POST",
           headers: {
