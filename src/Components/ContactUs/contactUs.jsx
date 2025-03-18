@@ -3,6 +3,8 @@ import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import contact from "../../assets/plumeriaresortimages/contact-us-new.jpeg";
 import Loader from "../../Utils/loader"; // Import the Loader component
 import "./contact.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -65,12 +67,12 @@ const ContactUs = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(formData), 
         }
       );
 
       if (response.ok) {
-        alert("Message sent successfully!");
+        toast.success("Message sent successfully!");
         setFormData({
           name: "",
           lastName: "",
@@ -81,10 +83,10 @@ const ContactUs = () => {
         });
         setErrors({});
       } else {
-        alert("Failed to send message. Please try again.");
+        toast.error("Failed to send message. Please try again.");
       }
     } catch (error) {
-      alert("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setLoading(false); // Hide loader after response
     }
@@ -93,6 +95,17 @@ const ContactUs = () => {
   return (
     <div className="overflow-hidden">
       {" "}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Prevent unwanted scrolling */}
       {loading && <Loader />} {/* Show Loader when loading is true */}
       {/* Hero Section */}
