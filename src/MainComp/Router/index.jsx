@@ -6,6 +6,10 @@ import { IconLocationX } from "@tabler/icons-react";
 const HomePageMainComponent = lazy(() =>
   import("../HomePageMain/HomePageMain")
 );
+
+const AccommodationMain = lazy(() =>
+  import("../AccommodationMain/accommodationMain")
+);
 const AboutUsMain = lazy(() => import("../AboutUsMain/AboutUsMain"));
 const ServicesMain = lazy(() => import("../ServicesMain/servicesMain"));
 const GalleryMain = lazy(() => import("../GalleryMain/gallery"));
@@ -35,6 +39,7 @@ const AllRoute = () => {
             path="/terms-conditions"
             element={<MainTermsAndConditions />}
           />
+          <Route path="/book-now" element={<AccommodationMain />} />
         </Routes>
       </Suspense>
     </Router>
