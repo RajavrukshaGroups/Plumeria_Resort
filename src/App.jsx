@@ -6,7 +6,7 @@ function App() {
     <>
       <div>
         <HelmetProvider>
-          <AllRoute />
+          <AllRoute/>
         </HelmetProvider>
       </div>
     </>
