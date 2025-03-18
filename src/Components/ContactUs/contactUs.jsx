@@ -28,19 +28,17 @@ const ContactUs = () => {
         delete newErrors[name];
         return newErrors;
       }
-      return prevErrors;
+      return prevErrors; 
     });
   };
 
   const validateForm = () => {
     let newErrors = {};
-
     if (!formData.name.trim()) newErrors.name = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     if (!formData.subject.trim()) newErrors.subject = "Subject is required";
     if (!formData.notes.trim()) newErrors.notes = "Notes cannot be empty";
-
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else if (!/^\d{10}$/.test(formData.phone)) {
