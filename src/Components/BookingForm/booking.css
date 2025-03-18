@@ -1,0 +1,16 @@
+.book-now {
+  background-color: #f4d025;
+  transition: background 0.3s ease-in-out;
+}
+
+.book-now:hover {
+  background-color: #d4b422;
+}
+
+.book-now-button {
+  margin-top: 25px;
+}
+
+.main-div {
+  margin: 1rem;
+}

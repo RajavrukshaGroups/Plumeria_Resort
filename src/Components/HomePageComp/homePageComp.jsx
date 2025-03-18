@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import HeaderComponent from "../HeaderComp/header";
 import "./homepage.css";
+import BookingForm from "../BookingForm/index";
 
 const HomePageComponent = () => {
   return (
@@ -17,7 +19,10 @@ const HomePageComponent = () => {
             truly enchanting experience that caters to every aspect of your
             stay.
           </p>
-          {/* <button className="accommodation-btn pulse">ACCOMMODATION</button> */}
+          {/* <button className="accommodation-btn pulse">
+            <Link to="/book-now">BOOK NOW</Link>
+          </button> */}
+          {/* <BookingForm /> */}
         </div>
       </section>
     </div>
