@@ -22,7 +22,7 @@ const HomePageComponent = () => {
           {/* <button className="accommodation-btn pulse">
             <Link to="/book-now">BOOK NOW</Link>
           </button> */}
-          {/* <BookingForm /> */}
+          <BookingForm />
         </div>
       </section>
     </div>

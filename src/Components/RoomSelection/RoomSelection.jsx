@@ -1,8 +1,12 @@
+
+// export default RoomSelection;
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUsers, FaBed, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import YourStay from "../YourStay/YourStay";
 import RoomDetailsModal from "./RoomDetails";
+import { setPlan,updateRoomPrice,setRooms } from "../../store/bookingSlice";
+import { useLocation } from "react-router-dom";
 
 import VillaRoomImg1 from "../../assets/plumeriaresortimages/delRoom6.webp";
 import VillaRoomImg2 from "../../assets/plumeriaresortimages/deluxeRoomNew1.webp";
@@ -10,25 +14,71 @@ import VillaRoomImg3 from "../../assets/plumeriaresortimages/deluxeRoom2.jpg";
 import DeluxeRoomImg1 from "../../assets/plumeriaresortimages/villaRoom2.jpg";
 import DeluxeRoomImg2 from "../../assets/plumeriaresortimages/delRoom1.jpg";
 import DeluxeRoomImg3 from "../../assets/plumeriaresortimages/delRoom10.jpg";
-import { setPlan } from "../../store/bookingSlice";
 
 const RoomSelection = ({ rooms }) => {
-  console.log("rooms-data", rooms);
+
+
+  console.log("Rooms array:", rooms);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const currentStep = parseInt(queryParams.get("step")) || 1;
+  const currentRoomIndex = currentStep - 1;
+  // const selectedPlan = useSelector((state) => state.booking.selectedPlan);
+
+  if (
+    !rooms || rooms.length === 0 || currentRoomIndex < 0 ||
+    currentRoomIndex >= rooms.length
+  ) {
+    return null;
+  }
+
+  const currentRoom = rooms[currentRoomIndex] || {}; // Ensure it's an object
+  // console.log("Current Roomss:", currentRoomIndex);
+  console.log("Current Room nomber in room selection:", currentRoom.id);
+  if (!currentRoom) {
+    console.log("Current Room is undefined:", currentRoom);
+    return null;
+  }
+
+
+  console.log("Rooms Data: ", rooms);
+  // console.log("rooms-data", rooms);
   const dispatch = useDispatch();
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
+  console.log("Redux Selected Plan: ", selectedPlan);
 
-  // const [selectedPlan, setSelectedPlan] = useState(null);
   const [selectedRoomType, setSelectedRoomType] = useState(null);
   const [roomImageIndex, setRoomImageIndex] = useState({ Villa: 0, Deluxe: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
 
-  //   console.log("selectedPlans", selectedPlan);
-
   const roomImages = {
     Villa: [VillaRoomImg1, VillaRoomImg2, VillaRoomImg3],
     Deluxe: [DeluxeRoomImg1, DeluxeRoomImg2, DeluxeRoomImg3],
   };
+
+
+  // const updatedRooms = rooms.map((room, index) => {
+  //   const roomKey = `${room.type}${room.id}`;
+  //   return {
+  //     ...room,
+  //     price: selectedPlan[roomKey]?.price || 0, // Assign the correct price
+  //   };
+  // });
+
+
+  const updatedRooms = rooms.map((room) => {
+    const roomKey = `${room.type}-${room.id}`; // Match with Redux key format
+    console.log("Room Key:", roomKey, "Selected Plan:", selectedPlan[roomKey]); 
+  
+    return {
+      ...room,
+      price: selectedPlan[roomKey]?.price || 0, // Fetch price correctly
+    };
+  });
+  // console.log(updatedRooms,'updatedRooms');
+  
+  
 
   const openModal = (roomType) => {
     setSelectedRoom(roomType);
@@ -51,14 +101,43 @@ const RoomSelection = ({ rooms }) => {
     });
   };
 
-  const handleRoomSelect = (roomType, plan, roomIndex) => {
-    console.log(
-      `Selecting plan for Room Type: ${roomType}, Room Index: ${roomIndex}`,
-      plan
-    );
+const handleRoomSelect = (roomType, plan, roomId, storedRooms) => {
+  console.log("Current Room Index:", currentRoomIndex);
+  console.log("Room ID:", roomId);
+  console.log("Plan Selected:", plan);
 
-    dispatch(setPlan({ roomId: `${roomType}${roomIndex}`, plan, roomType }));
-  };
+   if (!roomType || roomId === undefined) {
+     console.error("Invalid room type or ID:", roomType, roomId );
+     return;
+   }
+
+  const roomKey = `${roomType}-${roomId}`;
+  console.log("Generated Room Key:", roomKey);
+  // ✅ Retrieve previously stored rooms from localStorage if not provided
+  let existingRooms = storedRooms || JSON.parse(localStorage.getItem("selectedRooms")) || [];
+  console.log("🔹 Existing Selected Rooms:", existingRooms);
+  // ✅ Update or add the selected room in the local storage array
+  let updatedRooms = existingRooms.map((room) =>
+    room.id === roomId ? { ...room, price: plan.price } : room
+  );
+  if (!updatedRooms.some((room) => room.id === roomId)) {
+    updatedRooms.push({ id: roomId, price: plan.price });
+  }
+  console.log("✅ Updated Rooms Data:", updatedRooms);
+  // ✅ Save updated rooms in localStorage
+  localStorage.setItem("selectedRooms", JSON.stringify(updatedRooms));
+  // ✅ Dispatch updated room details to Redux
+  dispatch(setPlan({ roomId: roomKey, plan }));
+  dispatch(updateRoomPrice({ roomId, price: plan.price }));
+  // ✅ Calculate and store the total price
+  const totalStoredPrice = updatedRooms.reduce((total, room) => total + room.price, 0);
+  localStorage.setItem("totalPrice", JSON.stringify(totalStoredPrice));
+  console.log("🛒 Updated Total Price in LocalStorage:", totalStoredPrice);
+  // ✅ Store selected rooms in Redux as well
+  dispatch(setRooms(updatedRooms));
+  // ✅ Access the latest `selectedRooms` inside the function
+  console.log("🔹 Final Selected Rooms inside function:", JSON.parse(localStorage.getItem("selectedRooms")));
+};
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 w-full p-4">
@@ -160,7 +239,7 @@ const RoomSelection = ({ rooms }) => {
                       ₹ {plan.price}
                     </div>
                     <button
-                      onClick={() => handleRoomSelect(roomType, plan, index)}
+                      onClick={() => handleRoomSelect(roomType, plan, currentRoom.id)}
                       className="bg-[#a77a3a] text-white py-2 px-4 rounded text-xs hover:bg-[#8c5f2a] transition-all duration-300"
                     >
                       Select
@@ -175,7 +254,7 @@ const RoomSelection = ({ rooms }) => {
 
       {/* Pass updated selectedPlan to YourStay */}
       <div className="w-full lg:w-1/4">
-        <YourStay rooms={rooms} />
+        <YourStay rooms={updatedRooms} />
       </div>
 
       {isModalOpen && (
