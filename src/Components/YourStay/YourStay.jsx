@@ -171,16 +171,26 @@
 
 // export default YourStay;
 
-import React from "react";
+import React,{useEffect} from "react";
 import { useSelector } from "react-redux";
 
 const YourStay = () => {
   // Fetch selected rooms and total price from Redux store
-  const selectedRooms = useSelector((state) => state.booking.rooms);
-  const totalPrice = useSelector((state) => state.booking.totalPrice);
+ 
+const selectedRooms = useSelector((state) => state.booking.rooms);
+const totalPrice = useSelector((state) => state.booking.totalPrice);
 
-  console.log("Selected Rooms in YourStay:", selectedRooms);
-  console.log("Total Price in YourStay:", totalPrice);
+
+
+useEffect(() => {
+  console.log("Redux State Updated:", selectedRooms);
+}, [selectedRooms]);
+
+// useEffect(() => {
+//   console.log("Redux State Updated: Selected Rooms:", selectedRooms);
+//   console.log("Redux State Updated: Total Price:", totalPrice);
+// }, [selectedRooms, totalPrice]);
+
 
   return (
     <div className="your-stay-container shadow-lg rounded-lg p-5 bg-white">

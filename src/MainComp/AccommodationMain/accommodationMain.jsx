@@ -28,23 +28,21 @@ const AccommodationMain = () => {
           return { id: index + 1, persons, adults, children };
         })
     : [{ id: 1, persons: 1, adults: 0, children: 0 }];
-
-console.log("rooms-accommodate",rooms)
-
-  return (
-    <div>
-      <HeaderComponent />
-      <AccommodationComp />
-      <BookingSection
-        accommodation={true}
-        initialCheckIn={checkIn}
-        initialCheckOut={checkOut}
-        initialRooms={rooms}
-      />
-      <BookingDetailsComponent rooms={rooms}/>
-      <Footer />
-    </div>
-  );
-};
+    console.log("rooms-accommodate",rooms)
+      return (
+        <div>
+          <HeaderComponent />
+          <AccommodationComp />
+          <BookingSection
+            accommodation={true}
+            initialCheckIn={checkIn}
+            initialCheckOut={checkOut}
+            initialRooms={rooms}
+          />
+          <BookingDetailsComponent rooms={rooms}/>
+          <Footer />
+        </div>
+      );
+    };
 
 export default AccommodationMain;
