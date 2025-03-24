@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 const RoomModal = ({ rooms, setRooms, setIsModalOpen }) => {
+  // const [rooms, setRooms] = useState([]);
   useEffect(() => {
     console.log("Updated Rooms:", rooms);
   }, [rooms]);
@@ -15,7 +16,7 @@ const RoomModal = ({ rooms, setRooms, setIsModalOpen }) => {
               adults:
                 type === "Villa Room" ? Math.min(1, room.adults) : room.adults,
             } // Ensure max 1 adult for Villa
-          : room
+         : room
       )
     );
   };
@@ -59,6 +60,8 @@ const RoomModal = ({ rooms, setRooms, setIsModalOpen }) => {
   };
 
   const removeRoom = (id) => {
+    console.log('room remove', id);
+    
     setRooms((prevRooms) =>
       prevRooms
         .filter((room) => room.id !== id)
