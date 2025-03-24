@@ -4,6 +4,9 @@ import DatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import "./booking.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setRoomss } from "../../store/bookingSlice"; // Import your Redux actions
+
 
 const BookingSection = ({
   accommodation,
@@ -16,6 +19,11 @@ const BookingSection = ({
   const [rooms, setRooms] = useState(
     initialRooms || [{ id: 1, persons: 1, adults: 0, children: 0 }]
   );
+    const selectedRooms = useSelector((state) => state.booking.rooms);
+  
+    console.log(selectedRooms,'selectedroom inside booking form')
+
+  console.log(rooms,'inside the booking form rooms')
 
   const today = new Date();
   const tomorrow = new Date(today);
@@ -23,7 +31,7 @@ const BookingSection = ({
 
   const [checkInDate, setCheckInDate] = useState(initialCheckIn || today);
   const [checkOutDate, setCheckOutDate] = useState(initialCheckOut || tomorrow);
-
+  const dispatch = useDispatch();
   const handleCheckInChange = (date) => {
     setCheckInDate(date);
     if (checkOutDate <= date) {
@@ -46,24 +54,70 @@ const BookingSection = ({
   //     navigate(`/book-now?${bookingParams.toString()}`);
   //   };
 
+  // const handleBookNow = () => {
+
+
+  //   const bookingParams = new URLSearchParams(location.search);
+
+  //   let currentStep = parseInt(bookingParams.get("step")) || 1;
+
+  //   // Ensure step does not skip backward or jump to personal details prematurely
+  //   if (currentStep > rooms.length) {
+  //     currentStep = rooms.length; // Adjust step to the correct room count
+  //   }
+
+  //   bookingParams.set("checkIn", checkInDate.toISOString().split("T")[0]);
+  //   bookingParams.set("checkOut", checkOutDate.toISOString().split("T")[0]);
+  //   bookingParams.set(
+  //     "rooms",
+  //     rooms.map((r) => `${r.persons}-${r.adults}-${r.children}`).join(",")
+  //   );
+  //   bookingParams.set("step", currentStep); // Keep step consistent
+    
+  //   navigate(`/book-now?${bookingParams.toString()}`);
+    
+  //   const filteredSelectedRooms = selectedRooms.filter((room) =>
+  //     rooms.some((r) => r.id === room.id)
+  //   );
+  //   console.log(filteredSelectedRooms,'filtered rooms inside booking form');
+    
+  //     dispatch(setRooms(filteredSelectedRooms));
+  // };
+
   const handleBookNow = () => {
-    const bookingParams = new URLSearchParams(location.search);
-
-    let currentStep = parseInt(bookingParams.get("step")) || 1;
-
-    // Ensure step does not skip backward or jump to personal details prematurely
-    if (currentStep > rooms.length) {
-      currentStep = rooms.length; // Adjust step to the correct room count
+    if (!selectedRooms || !rooms) {
+      console.error("Error: selectedRooms or rooms is undefined");
+      return;
     }
-
+  
+    const filteredSelectedRooms = selectedRooms.filter((room) =>
+      rooms.some((r) => r.id === room.id)
+    );
+  
+    console.log(filteredSelectedRooms, "filtered rooms inside booking form");
+  
+    // ✅ Ensure `setRooms` is a valid Redux action before dispatching
+    if (filteredSelectedRooms.length > 0) {
+      dispatch(setRoomss(filteredSelectedRooms)); // Ensure setRooms is correctly imported
+    } else {
+      console.warn("No valid rooms found to dispatch!");
+    }
+  
+    const bookingParams = new URLSearchParams(location.search);
+    let currentStep = parseInt(bookingParams.get("step")) || 1;
+  
+    if (currentStep > rooms.length) {
+      currentStep = rooms.length;
+    }
+  
     bookingParams.set("checkIn", checkInDate.toISOString().split("T")[0]);
     bookingParams.set("checkOut", checkOutDate.toISOString().split("T")[0]);
     bookingParams.set(
       "rooms",
       rooms.map((r) => `${r.persons}-${r.adults}-${r.children}`).join(",")
     );
-    bookingParams.set("step", currentStep); // Keep step consistent
-
+    bookingParams.set("step", currentStep);
+  
     navigate(`/book-now?${bookingParams.toString()}`);
   };
 

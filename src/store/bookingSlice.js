@@ -161,20 +161,45 @@ const bookingSlice = createSlice({
       );
     },
 
-    updateRoomPrice: (state, action) => {
-      const { roomId, price } = action.payload;
-      const existingRoom = state.rooms.find((room) => room.id === roomId);
-      if (existingRoom) {
-        existingRoom.price = price;
-      } else {
-        state.rooms.push({ id: roomId, price });
-      }
+    // updateRoomPrice: (state, action) => {
+    //   const { roomId, price } = action.payload;
+    //   const existingRoom = state.rooms.find((room) => room.id === roomId);
+    //   if (existingRoom) {
+    //     existingRoom.price = price;
+    //   } else {
+    //     state.rooms.push({ id: roomId, price });
+    //   }
 
-      // Recalculate total price
-      state.totalPrice = state.rooms.reduce((total, room) => total + (room.price || 0), 0);
-    },
+    //   // Recalculate total price
+    //   state.totalPrice = state.rooms.reduce((total, room) => total + (room.price || 0), 0);
+    // },
 
-    setRooms: (state, action) => {
+//     updateRoomPrice: (state, action) => {
+//   const { roomId, price } = action.payload;
+//   const roomIndex = state.rooms.findIndex((room) => room.id === roomId);
+  
+//   if (roomIndex !== -1) {
+//     // Update existing room price
+//     state.rooms[roomIndex].price = price;
+//   } else {
+//     // Add new room entry only if not already in the list
+//     state.rooms.push({ id: roomId, price });
+//   }
+
+//   // Ensure the total price is updated
+//   state.totalPrice = state.rooms.reduce((total, room) => total + (room.price || 0), 0);
+// },
+updateRoomPrice: (state, action) => {
+  const { roomId, price } = action.payload;
+  state.rooms = state.rooms.map((room) =>
+    room.id === roomId ? { ...room, price } : room
+  );
+  state.totalPrice = state.rooms.reduce((total, room) => total + (room.price || 0), 0);
+},
+
+
+
+    setRoomss: (state, action) => {
       state.rooms = action.payload;
 
       // Ensure the total price is set when rooms are initialized
@@ -198,5 +223,5 @@ const bookingSlice = createSlice({
   },
 });
 
-export const { setPlan, updateRoomPrice, setRooms, resetBooking, deleteRoom } = bookingSlice.actions;
+export const { setPlan, updateRoomPrice, setRoomss, resetBooking, deleteRoom } = bookingSlice.actions;
 export default bookingSlice.reducer;

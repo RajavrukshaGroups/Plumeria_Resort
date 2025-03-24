@@ -1,9 +1,7 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { setPlan, updateRoomPrice, setRooms ,deleteRoom} from "../../store/bookingSlice"; // Import your Redux actions
+import { setPlan, updateRoomPrice, setRoomss ,deleteRoom} from "../../store/bookingSlice"; // Import your Redux actions
 import { FaChevronLeft, FaChevronRight, FaUsers, FaBed } from "react-icons/fa";
 import YourStay from "../YourStay/YourStay";
 import RoomDetailsModal from "./RoomDetails";
@@ -15,9 +13,8 @@ import DeluxeRoomImg1 from "../../assets/plumeriaresortimages/villaRoom2.jpg";
 import DeluxeRoomImg2 from "../../assets/plumeriaresortimages/delRoom1.jpg";
 import DeluxeRoomImg3 from "../../assets/plumeriaresortimages/delRoom10.jpg";
 
-const RoomSelection = ({ rooms }) => {
-  
-  console.log("Rooms array inside roomselection:", rooms);
+ const RoomSelection = ({ rooms }) => {
+    console.log("Rooms array inside roomselection:", rooms);
   
   const dispatch = useDispatch();
   const location = useLocation();
@@ -43,15 +40,15 @@ const RoomSelection = ({ rooms }) => {
     Deluxe: [DeluxeRoomImg1, DeluxeRoomImg2, DeluxeRoomImg3],
   };
 
-  const updatedRooms = rooms.map((room) => {
-    const roomKey = `${room.type}-${room.id}`;
-    return {
-      ...room,
-      price: selectedPlan[roomKey]?.price || 0,
-    };
-  });
+  // const updatedRooms = rooms.map((room) => {
+  //   const roomKey = `${room.type}-${room.id}`;
+  //   return {
+  //     ...room,
+  //     price: selectedPlan[roomKey]?.price || 0,
+  //   };
+  // });
   
-    console.log(updatedRooms,'updatedRooms');
+    // console.log(updatedRooms,'updatedRooms');
 
   const openModal = (roomType) => {
     setSelectedRoom(roomType);
@@ -74,31 +71,143 @@ const RoomSelection = ({ rooms }) => {
   };
 
 
-    const handleRoomSelect = (roomType, plan, roomId) => {
-      console.log(roomId,'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
-      console.log(roomType,'roomtype in room selection');
-      console.log(plan,'plan in room selection');
-      console.log(selectedRooms,'redux state recieved inside the room selection');
-      if (!roomType || roomId === undefined) return;
-      const roomKey = `${roomType}-${roomId}`;
-      console.log(roomKey,'roomKey in room selection');
+    // const handleRoomSelect = (roomType, plan, roomId) => {
+    //   console.log(roomId,'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    //   console.log(roomType,'roomtype in room selection');
+    //   console.log(plan,'plan in room selection');
+    //   console.log(selectedRooms,'redux state recieved inside the room selection');
+    //   if (!roomType || roomId === undefined) return;
+    //   const roomKey = `${roomType}-${roomId}`;
+    //   console.log(roomKey,'roomKey in room selection');
       
-      // Remove the room from selectedRooms
-      let updatedRooms = selectedRooms.filter((room) => room.id !== roomId);
+    //   // Remove the room from selectedRooms
+    //   let updatedRooms = selectedRooms.filter((room) => room.id !== roomId);
 
       
+    //   if (plan) {
+    //     updatedRooms.push({ id: roomId, price: plan.price });
+    //     dispatch(setPlan({ roomId, plan }));  // Use roomId directly here
+    //     dispatch(updateRoomPrice({ roomId, price: plan.price }));
+    //   } else {
+    //     console.log("Dispatching deleteRoom for ID:", roomId);
+    //     dispatch(deleteRoom(roomId));  // Remove room if plan is null
+    //   }
+      
+    //   console.log("Updated Rooms before dispatch:", updatedRooms);
+    //   dispatch(setRooms(updatedRooms));
+    // };
+    
+    // const handleRoomSelect = (roomType, plan, roomId) => {
+    //   console.log(roomId, 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    //   console.log(roomType, 'roomtype in room selection');
+    //   console.log(plan, 'plan in room selection');
+    //   console.log(selectedRooms, 'redux state received inside the room selection');
+    
+    //   if (!roomType || roomId === undefined) return;
+    //   const roomKey = `${roomType}-${roomId}`;
+    //   console.log(roomKey, 'roomKey in room selection');
+    
+    //   // Remove the room from selectedRooms
+    //   let updatedRooms = selectedRooms.filter((room) => room.id !== roomId);
+    
+    //   if (plan) {
+    //     updatedRooms.push({ id: roomId, price: plan.price });
+    //     dispatch(setPlan({ roomId, plan }));
+    //     dispatch(updateRoomPrice({ roomId, price: plan.price }));
+    //   } else {
+    //     console.log("Dispatching deleteRoom for ID:", roomId);
+    //     dispatch(deleteRoom(roomId));
+    //   }
+    
+    //   console.log("Updated Rooms before filtering:", updatedRooms);
+    
+    //   // Filter updatedRooms based on available rooms (same logic as YourStay)
+    //   const filteredUpdatedRooms = updatedRooms.filter((room) =>
+    //     rooms.some((r) => r.id === room.id)
+    //   );
+    
+    //   console.log("Filtered Updated Rooms:", filteredUpdatedRooms);
+    
+    //   dispatch(setRooms(filteredUpdatedRooms));
+    // };
+
+
+    // const handleRoomSelect = (roomType, plan, roomId) => {
+    //   console.log(roomId, 'rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
+    //   console.log(roomType, 'roomtype in room selection');
+    //   console.log(plan, 'plan in room selection');
+    //   console.log(selectedRooms, 'redux state received inside the room selection');
+    
+    //   if (!roomType || roomId === undefined) return;
+    //   const roomKey = `${roomType}-${roomId}`;
+    //   console.log(roomKey, 'roomKey in room selection');
+    
+    //   // Remove the room from selectedRooms
+    //   let updatedRooms = selectedRooms.filter((room) => room.id !== roomId);
+    //   console.log(updatedRooms,'updatedRooms in room selection')
+    //   if (plan) {
+    //     updatedRooms.push({ id: roomId, price: plan.price  });
+    //     dispatch(setPlan({ roomId, plan }));
+    //   } else {
+    //     console.log("Dispatching deleteRoom for ID:", roomId);
+    //     dispatch(deleteRoom(roomId));
+    //   }
+    
+    //   console.log("Updated Rooms before filtering:", updatedRooms);
+    
+    //   // Filter updatedRooms based on available rooms (same logic as YourStay)
+    //   const filteredUpdatedRooms = updatedRooms.filter((room) =>
+    //     rooms.some((r) => r.id === room.id)
+    //   );
+    
+    //   console.log("Filtered Updated Rooms:", filteredUpdatedRooms);
+    
+    //   dispatch(setRooms(filteredUpdatedRooms));
+    
+    //   // Filter and update room prices only for valid rooms
+    //   const filteredPrices = filteredUpdatedRooms.map((room) => ({
+    //     roomId: room.id,
+    //     price: room.price,
+    //   }));
+    
+    //   console.log("Filtered Prices before dispatch:", filteredPrices);
+    
+    //   filteredPrices.forEach(({ roomId, price}) => {
+    //     dispatch(updateRoomPrice({ roomId, price }));
+    //   });
+    // };
+
+
+    const handleRoomSelect = (roomType, plan, roomId) => {
+      console.log(roomId, 'Selected Room ID');
+    
+      if (!roomType || roomId === undefined) return;
+    
+      let updatedRooms = selectedRooms.filter((room) => room.id !== roomId);
+    
       if (plan) {
         updatedRooms.push({ id: roomId, price: plan.price });
-        dispatch(setPlan({ roomId, plan }));  // Use roomId directly here
-        dispatch(updateRoomPrice({ roomId, price: plan.price }));
+        dispatch(setPlan({ roomId, plan }));
       } else {
-        console.log("Dispatching deleteRoom for ID:", roomId);
-        dispatch(deleteRoom(roomId));  // Remove room if plan is null
+        dispatch(deleteRoom(roomId));
       }
-      
-      console.log("Updated Rooms before dispatch:", updatedRooms);
-      dispatch(setRooms(updatedRooms));
+    
+      console.log("Updated Rooms before filtering:", updatedRooms);
+    
+      const filteredUpdatedRooms = updatedRooms.filter((room) =>
+        rooms.some((r) => r.id === room.id)
+      );
+    
+      console.log("Filtered Updated Rooms:", filteredUpdatedRooms);
+      dispatch(setRoomss(filteredUpdatedRooms));
+    
+      filteredUpdatedRooms.forEach(({ roomId, price }) => {
+        dispatch(updateRoomPrice({ roomId, price }));
+      });
+    
+      console.log("Dispatched Updated Prices:", filteredUpdatedRooms);
     };
+    
     
     
 
@@ -174,7 +283,7 @@ const RoomSelection = ({ rooms }) => {
       </div>
 
       <div className="w-full lg:w-1/4">
-        <YourStay rooms={updatedRooms} />
+        <YourStay rooms={rooms} />
       </div>
 
       {isModalOpen && <RoomDetailsModal roomType={selectedRoom} onClose={closeModal} />}
