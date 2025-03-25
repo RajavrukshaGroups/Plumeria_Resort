@@ -33,19 +33,6 @@ const BookingSection = ({
     }
   };
 
-  //   const handleBookNow = () => {
-  //     const bookingParams = new URLSearchParams();
-  //     bookingParams.set("checkIn", checkInDate.toISOString().split("T")[0]);
-  //     bookingParams.set("checkOut", checkOutDate.toISOString().split("T")[0]);
-  //     bookingParams.set(
-  //       "rooms",
-  //       rooms.map((r) => `${r.persons}-${r.adults}-${r.children}`).join(",")
-  //     );
-  //     bookingParams.set("step", 1);
-
-  //     navigate(`/book-now?${bookingParams.toString()}`);
-  //   };
-
   const handleBookNow = () => {
     const bookingParams = new URLSearchParams(location.search);
 

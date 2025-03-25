@@ -4,6 +4,7 @@ import RoomSelection from "../RoomSelection/RoomSelection";
 import "./BookingDetailsComponent.css";
 
 const BookingDetailsComponent = ({ rooms }) => {
+  console.log("rooms-book", rooms);
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -11,14 +12,10 @@ const BookingDetailsComponent = ({ rooms }) => {
   const totalSteps = rooms.length + 2; // Room selections + Personal Details + Payment
   const currentStep = parseInt(queryParams.get("step")) || 1;
 
-  const selectedPlan = JSON.parse(queryParams.get("selectedPlan") || "{}");
-  
-
-  const handleRoomPlanSelection = (roomId, plan) => {
-    const updatedPlans = { ...selectedPlan, [roomId]: plan };
-    queryParams.set("selectedPlan", JSON.stringify(updatedPlans));
-    navigate(`?${queryParams.toString()}`, { replace: true });
-  };
+  console.log("queryParams", queryParams);
+  const totalGuests = rooms.reduce((acc, room) => {
+    return acc + room.persons + room.adults + room.children;
+  }, 0);
 
   const handleNextStep = () => {
     queryParams.set("step", currentStep + 1);
@@ -92,17 +89,7 @@ const BookingDetailsComponent = ({ rooms }) => {
           </span>
         </div>
       </div>
-
-      <RoomSelection
-        // key={location.search}
-        key={currentStep}  // Ensure re-render when step changes
-        rooms={rooms}
-        onRoomSelect={handleRoomPlanSelection}
-        // selectedPlan={selectedPlan}
-        selectedPlan={selectedPlan} // Pass only the relevant step’s plan
-
-      />
-
+      <RoomSelection rooms={rooms} currentStep={currentStep} totalGuests={totalGuests}/>
       <div className="navigation-buttons">
         {currentStep > 1 && (
           <button onClick={handlePrevStep} className="prev-step-button">

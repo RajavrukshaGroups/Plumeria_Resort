@@ -1,59 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const RoomDetailsModal = ({ roomType, onClose }) => {
+const RoomDetailsModal = ({ roomData, onClose }) => {
+  console.log("room-data", roomData);
   const [activeTab, setActiveTab] = useState("details");
 
-  const roomDescriptions = {
-    deluxe: (
-      <p className="text-sm text-gray-700">
-        Our Spacious <strong>Deluxe Rooms</strong> offer an elevated experience
-        with generous space, elegant décor, and premium amenities, designed to
-        provide ultimate comfort and relaxation. These rooms feature{" "}
-        <strong>
-          larger living areas, luxurious furnishings, and stunning views
-        </strong>
-        , making them the perfect choice for those seeking extra comfort and
-        sophistication.
-      </p>
-    ),
-    villa: (
-      <p className="text-sm text-gray-700">
-        The <strong>Individual Villa Rooms</strong> provide a private and
-        intimate experience, nestled within beautifully landscaped surroundings.
-        Each villa is designed with its own unique charm, featuring{" "}
-        <strong>
-          spacious interiors, modern amenities, and private outdoor spaces
-        </strong>
-        , ensuring a tranquil retreat for guests who value both{" "}
-        <strong>luxury and privacy.</strong> Our Individual Villa Rooms also
-        include a charming <strong>portico</strong>, perfect for relaxing and
-        enjoying the refreshing breeze.
-      </p>
-    ),
-  };
+  if (!roomData) return null; // Handle case where no data is passed
 
   const sections = {
-    details:
-      roomType.toLowerCase() === "deluxe"
-        ? roomDescriptions.deluxe
-        : roomDescriptions.villa,
+    details: (
+      <p className="text-sm text-gray-700">{roomData.roomInfo.description}</p>
+    ),
     amenities: (
       <ul className="text-sm text-gray-600 space-y-1">
-        <li>🏨 Free Wi-Fi</li>
-        <li>🛏️ King-size bed</li>
-        <li>🍽️ 24-hour room service</li>
-        <li>🌅 Private balcony (subject to availability)</li>
-        <li>☕ Tea and coffee maker</li>
+        {roomData.roomInfo.amenities.map((amenity, index) => (
+          <li key={index}>📌{amenity}</li>
+        ))}
       </ul>
     ),
     terms: (
       <ul className="text-sm text-gray-600 space-y-1">
-        <li>📌 Check-in: 1:00 PM | Check-out: 11:00 AM</li>
-        <li>📌 Alcohol consumption is allowed only in designated areas</li>
-        <li>📌 Illegal drugs and substances are strictly prohibited</li>
-        <li>📌 Pets are not allowed</li>
-        <li>📌 Cancellation policy applies</li>
+        {roomData.roomInfo.terms.map((term, index) => (
+          <li key={index}>📌{term}</li>
+        ))}
         <li>
           📌 For more details, visit{" "}
           <Link
@@ -65,12 +34,7 @@ const RoomDetailsModal = ({ roomType, onClose }) => {
         </li>
       </ul>
     ),
-    bed: (
-      <p className="text-sm text-gray-700">
-        This room features a <strong>king-size bed</strong> with high-quality
-        linens and plush pillows to ensure maximum comfort during your stay.
-      </p>
-    ),
+    bed: <p className="text-sm text-gray-700">{roomData.roomInfo.bed}</p>,
   };
 
   return (
@@ -79,7 +43,7 @@ const RoomDetailsModal = ({ roomType, onClose }) => {
         {/* Modal Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg sm:text-xl font-bold">
-            {roomType} Room Details
+            {roomData.roomType} Details
           </h2>
           <button
             onClick={onClose}
@@ -107,7 +71,9 @@ const RoomDetailsModal = ({ roomType, onClose }) => {
                 ? "Amenities"
                 : tab === "terms"
                 ? "T&C"
-                : "Bed Type"}
+                : tab === "bed"
+                ? "Bed Type"
+                : ""}
             </button>
           ))}
         </div>

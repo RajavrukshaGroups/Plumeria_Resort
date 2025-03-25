@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import HeaderComponent from "../HeaderComp/header";
 import "./homepage.css";
-import BookingForm from "../BookingForm/index";
+import BookingForm from "../BookingForm/newBookingForm";
 
 const HomePageComponent = () => {
   return (
@@ -22,7 +22,7 @@ const HomePageComponent = () => {
           {/* <button className="accommodation-btn pulse">
             <Link to="/book-now">BOOK NOW</Link>
           </button> */}
-          {/* <BookingForm /> */}
+          <BookingForm />
         </div>
       </section>
     </div>
