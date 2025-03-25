@@ -39,7 +39,7 @@ const AllRoute = () => {
             path="/terms-conditions"
             element={<MainTermsAndConditions />}
           />
-          {/* <Route path="/book-now" element={<AccommodationMain />} /> */}
+          <Route path="/book-now" element={<AccommodationMain />} />
         </Routes>
       </Suspense>
     </Router>
