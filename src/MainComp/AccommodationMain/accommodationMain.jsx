@@ -14,7 +14,7 @@ const AccommodationMain = () => {
   const { roomsList, checkInDate, checkOutDate, setBookingData } =
     useBookingContext();
 
-  const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(location.search);       
   const checkIn = queryParams.get("checkIn")
     ? new Date(queryParams.get("checkIn"))
     : checkInDate;

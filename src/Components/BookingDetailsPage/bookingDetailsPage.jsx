@@ -86,9 +86,10 @@ const BookingDetailsComponent = ({ rooms }) => {
             }`}
           >
             Payment Confirmation
-          </span>
+          </span> 
         </div>
       </div>
+
       <RoomSelection rooms={rooms} currentStep={currentStep} totalGuests={totalGuests}/>
       <div className="navigation-buttons">
         {currentStep > 1 && (
@@ -96,7 +97,6 @@ const BookingDetailsComponent = ({ rooms }) => {
             Previous
           </button>
         )}
-
         {currentStep < totalSteps && (
           <button onClick={handleNextStep} className="next-step-button">
             Next
