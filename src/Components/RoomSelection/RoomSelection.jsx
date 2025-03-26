@@ -30,7 +30,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
   const handleRoomSelect = (roomId, planName, plan) => {
     console.log(roomId, "this is plan inside the room selection");
     console.log(planName, "this is planName inside the room selection");
-    console.log(plan.price.twoGuests.withGst, "this is plan price inside the room selection");
+    console.log(plan, "this is plan price inside the room selection");
 
     let selectedRoomData = {};
 
@@ -55,9 +55,13 @@ const RoomSelection = ({ rooms, currentStep }) => {
       }
     });
     dispatch(setRoom(selectedRoomData));
-    const roomKey = `${roomId}-${planName}`;
+    // const roomKey = `${roomId}-${planName}`;
 
-    dispatch(setPlan({ roomId: roomKey, plan }));
+    // dispatch(setPlan({ roomId: roomKey, plan }));
+     
+    // const roomKey = `${roomId}-${planName}`;
+    dispatch(setPlan({ roomId, plan }));
+    // dispatch(setPlan({ roomId: roomKey, plan }));
   };
 
   const openModal = (room) => {

@@ -181,9 +181,18 @@ const bookingSlice = createSlice({
       state.totalPrice = state.rooms.reduce((total, room) => total + (room.roomPrice || 0) + (room.extraAdultPrice || 0), 0);
     },
 
+    // setPlan: (state, action) => {
+    //   const { roomId, plan } = action.payload;
+    //   state.selectedPlan = { [roomId]: plan }; // ✅ Always replace the previous selection
+    // },
+    // setPlan: (state, action) => {
+    //   const { roomId, plan } = action.payload;
+    //   state.selectedPlan[roomId] = plan; // ✅ Store full plan object
+    // },
     setPlan: (state, action) => {
       const { roomId, plan } = action.payload;
-      state.selectedPlan = { [roomId]: plan }; // ✅ Always replace the previous selection
+      // Store plan correctly under the specific roomId
+      state.selectedPlan[roomId] = plan;
     },
       resetRooms: (state) => {
         state.rooms = [];
