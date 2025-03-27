@@ -10,6 +10,7 @@ const bookingSlice = createSlice({
   name: "booking",
   initialState,
   reducers: {
+
     setRoom: (state, action) => {
       const { roomId, roomPrice, extraAdultPrice, ...updates } = action.payload;
     
@@ -32,6 +33,7 @@ const bookingSlice = createSlice({
     
       state.totalPrice = state.rooms.reduce((total, room) => total + (room.roomPrice || 0) + (room.extraAdultPrice || 0), 0);
     },
+    
     
     // removeRoom: (state, action) => {
     //   const roomId = action.payload;

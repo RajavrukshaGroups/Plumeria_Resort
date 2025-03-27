@@ -18,17 +18,19 @@ const BookingDetailsComponent = ({ rooms }) => {
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
   const personnelDetailRef = useRef();
+  console.log(selectedRooms,'selectedplannnnnn');
+  
 
   const handleNextStep = () => {
     if (currentStep === 1) {
-      if (!selectedRooms[0]?.planName) {
+      if (!selectedRooms[0]?.planName || selectedRooms[0]?.roomPrice==0) {
         alert("Please select a plan for the first room before proceeding.");
         return;
       }
     }
 
     if (currentStep === 2 && rooms.length > 1) {
-      if (!selectedRooms[1]?.planName) {
+      if (!selectedRooms[1]?.planName || selectedRooms[1]?.roomPrice==0) {
         alert("Please select a plan for the second room before proceeding.");
         return;
       }
