@@ -1,14 +1,14 @@
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUsers, FaBed, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { setPlan } from "../../store/bookingSlice";
+import { FaUsers, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { setPlan, setRoom } from "../../store/bookingSlice";
 import RoomDetailsModal from "./RoomDetails";
 import YourStay from "../YourStay/YourStay";
 
 const RoomSelection = ({ rooms, currentStep }) => {
   const dispatch = useDispatch();
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
-
   const [roomImageIndex, setRoomImageIndex] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
@@ -28,11 +28,28 @@ const RoomSelection = ({ rooms, currentStep }) => {
   };
 
   const handleRoomSelect = (roomId, planName, plan) => {
-    const roomKey = `${roomId}-${planName}`;
-    dispatch(setPlan({ roomKey, plan }));
-    // console.log("roomId",roomId);
-    // console.log("planname",planName);
-    // console.log("plan",plan)
+
+    let selectedRoomData = {};
+    rooms.forEach((val) => {
+      if (roomId === val.id) {
+        let extraAdultPrice = val.adults > 0 ? val.adults * plan.price.extraAdult.withGst : 0;
+        let roomType = val.selectedRoom.roomType;
+        let roomPrice = plan.price.twoGuests.withGst;
+
+        selectedRoomData = {
+          roomId,
+          planName,
+          roomType,
+          roomPrice,
+          extraAdultPrice,
+          persons: val.persons,
+          adults: val.adults,
+          children: val.children,
+        };
+      }
+    });
+    dispatch(setRoom(selectedRoomData));
+    dispatch(setPlan({ roomId, plan }));
   };
 
   const openModal = (room) => {
@@ -46,9 +63,8 @@ const RoomSelection = ({ rooms, currentStep }) => {
   };
 
   const roomIndex = currentStep - 1;
-  if (roomIndex < 0 || roomIndex >= rooms.length) return null;
+  if (roomIndex < 0 || roomIndex >= rooms.length ) return null;
   const room = rooms[roomIndex];
-
   const currentRoomGuests = room.persons + room.adults + room.children;
 
   return (

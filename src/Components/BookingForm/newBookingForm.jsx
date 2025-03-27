@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BookingContext } from "./BookingContext";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
 
 const NewBookingSection = () => {
   const navigate = useNavigate();
@@ -27,7 +29,10 @@ const NewBookingSection = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tempRoomsList, setTempRoomsList] = useState([...roomsList]);
+  const selectedRooms = useSelector((state) => state.booking.rooms);
+  const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
+  const dispatch = useDispatch();
   const openModal = () => {
     setTempRoomsList([...roomsList]);
     setAvailabilityMessage("");
@@ -57,12 +62,10 @@ const NewBookingSection = () => {
     setTempRoomsList((prevRooms) =>
       prevRooms.map((room) => {
         if (room.id !== id || !room.selectedRoom) return room;
-
         const maxPersons = room.selectedRoom.capacity?.maxPersons || 1;
         const maxAdults = room.selectedRoom.capacity?.maxAdults || 0;
         const maxChildren = room.selectedRoom.capacity?.maxChildren || 0;
-
-        return {
+        const updatedRoom = {
           ...room,
           [type]: Math.max(
             type === "persons" ? 1 : 0,
@@ -76,6 +79,7 @@ const NewBookingSection = () => {
             )
           ),
         };
+        return updatedRoom;
       })
     );
   };
@@ -96,7 +100,22 @@ const NewBookingSection = () => {
   };
 
   const removeRoom = (id) => {
-    setTempRoomsList((prevRooms) => prevRooms.filter((room) => room.id !== id));
+    const updatedTempRoomsList = tempRoomsList
+      .filter((room) => room.id !== id)
+      .map((room, index) => ({
+        ...room,
+        id: index + 1, // Reassign room IDs sequentially
+      }));
+    setTempRoomsList(updatedTempRoomsList);
+    dispatch(resetRooms());
+    // Reassign room IDs in Redux
+    const updatedSelectedRooms = selectedRooms
+      .filter((room) => room.roomId !== id) // Remove the deleted room
+      .map((room, index) => ({
+        ...room,
+        roomId: index + 1, // Reassign room IDs sequentially
+      }));
+    updatedSelectedRooms.forEach((room) => dispatch(setRoom(room)));
   };
 
   const confirmSelection = async () => {
@@ -110,18 +129,42 @@ const NewBookingSection = () => {
       return;
     }
     setInvalidRooms([]);
-
     const requestData = {
       checkInDate: checkInDate.toISOString().split("T")[0],
       checkOutDate: checkOutDate.toISOString().split("T")[0],
       totalRooms: tempRoomsList.length,
-      rooms: tempRoomsList.map((room) => ({
-        roomType: room.selectedRoom?.roomType,
-        persons: room.persons,
-        adults: room.adults,
-        children: room.children,
-      })),
+      rooms: tempRoomsList.map((room) => {
+        const plan = selectedPlan[room.id]; // Match plan using roomId
+        let extraAdultPrice = 0;
+        if (plan && room.adults > 0) {
+          extraAdultPrice =
+            room.adults * (plan.price?.extraAdult?.withGst || 0);
+        }
+        return {
+          roomId: room.id,
+          roomType: room.selectedRoom?.roomType,
+          persons: room.persons,
+          adults: room.adults,
+          children: room.children,
+          extraAdultPrice, // Now correctly calculated
+        };
+      }),
     };
+
+    requestData.rooms.forEach((room) => {
+      const plan = selectedPlan[room.roomId]; // Match plan using roomId
+      if (plan) {
+        const extraAdultPrice =
+          room.adults * (plan.price?.extraAdult?.withGst || 0);
+        dispatch(
+          setRoom({
+            roomId: room.roomId,
+            extraAdultPrice, // Update only extraAdultPrice
+            adults: room.adults,
+          })
+        );
+      }
+    });
 
     try {
       const response = await axios.post(
@@ -191,7 +234,6 @@ const NewBookingSection = () => {
           } available on ${new Date(room.date).toDateString()})\n`;
         });
       }
-
       setAvailabilityMessage(message);
     }
   };
@@ -264,11 +306,11 @@ const NewBookingSection = () => {
                 </label>
                 <select
                   className={`w-full border p-3 text-gray-700 text-sm rounded-md mb-4 focus:ring-2 focus:outline-none
-    ${
-      invalidRooms.includes(room.id)
-        ? "border-red-500"
-        : "focus:ring-yellow-400"
-    }`}
+          ${
+            invalidRooms.includes(room.id)
+              ? "border-red-500"
+              : "focus:ring-yellow-400"
+          }`}
                   value={room.selectedRoom?.roomType || ""}
                   onChange={(event) => handleRoomChange(room.id, event)}
                 >
