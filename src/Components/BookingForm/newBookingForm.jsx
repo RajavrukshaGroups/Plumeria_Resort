@@ -4,9 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BookingContext } from "./BookingContext";
 import axios from "axios";
-import { useSelector,useDispatch } from "react-redux";
-import { setRoom,resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
-
+import { useSelector, useDispatch } from "react-redux";
+import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
 
 const NewBookingSection = () => {
   const navigate = useNavigate();
@@ -27,23 +26,13 @@ const NewBookingSection = () => {
     invalidRooms,
     setInvalidRooms,
   } = useContext(BookingContext);
-  console.log(roomsData[0].roomType,'roomsdataaaaaaaaaa');
-  
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tempRoomsList, setTempRoomsList] = useState([...roomsList]);
   const selectedRooms = useSelector((state) => state.booking.rooms);
-    const selectedPlan = useSelector((state) => state.booking.selectedPlan);
-  
+  const selectedPlan = useSelector((state) => state.booking.selectedPlan);
+
   const dispatch = useDispatch();
-
-  console.log(selectedPlan,'selectedPlan in form');
-  
-
-  
-  
-  console.log(selectedRooms,'this is temprromselect in booking form') 
-  
   const openModal = () => {
     setTempRoomsList([...roomsList]);
     setAvailabilityMessage("");
@@ -70,30 +59,12 @@ const NewBookingSection = () => {
   };
 
   const updateGuestCount = (id, type, delta) => {
-    console.log(type,'this is count');
-    
     setTempRoomsList((prevRooms) =>
       prevRooms.map((room) => {
         if (room.id !== id || !room.selectedRoom) return room;
-
         const maxPersons = room.selectedRoom.capacity?.maxPersons || 1;
         const maxAdults = room.selectedRoom.capacity?.maxAdults || 0;
         const maxChildren = room.selectedRoom.capacity?.maxChildren || 0;
-
-        // return {
-        //   ...room,
-        //   [type]: Math.max(
-        //     type === "persons" ? 1 : 0,
-        //     Math.min(
-        //       room[type] + delta,
-        //       type === "persons"
-        //         ? maxPersons
-        //         : type === "adults"
-        //         ? maxAdults
-        //         : maxChildren
-        //     )
-        //   ),
-        // };
         const updatedRoom = {
           ...room,
           [type]: Math.max(
@@ -108,19 +79,10 @@ const NewBookingSection = () => {
             )
           ),
         };
-        console.log(`Updated adults count for Room ID ${id}:`, updatedRoom.adults);
- // Dispatch only the updated `adults` count to Redux
-      // dispatch(
-      //   setRoom({
-      //     roomId: id,
-      //     adults: updatedRoom.adults, // Update only adults count
-      //   })
-      // );
-        return updatedRoom
+        return updatedRoom;
       })
     );
   };
-console.log(updateGuestCount,'updateGuestCount');
 
   const addRoom = () => {
     if (tempRoomsList.length < 2) {
@@ -134,282 +96,27 @@ console.log(updateGuestCount,'updateGuestCount');
           children: 0,
         },
       ]);
-    };
+    }
   };
 
-  // const removeRoom = (id) => {
-  //   console.log(id,'removeRoom');
-  //   setTempRoomsList((prevRooms) => prevRooms.filter((room) => room.id !== id));
-   
-  // };
   const removeRoom = (id) => {
-    console.log(id, 'removeRoom');
-    setTempRoomsList((prevRooms) => prevRooms.filter((room) => room.id !== id));
-
-    // Ensure Redux state updates correctly
+    const updatedTempRoomsList = tempRoomsList
+      .filter((room) => room.id !== id)
+      .map((room, index) => ({
+        ...room,
+        id: index + 1, // Reassign room IDs sequentially
+      }));
+    setTempRoomsList(updatedTempRoomsList);
     dispatch(resetRooms());
-    const updatedSelectedRooms = selectedRooms.filter((room) => room.roomId !== id);
+    // Reassign room IDs in Redux
+    const updatedSelectedRooms = selectedRooms
+      .filter((room) => room.roomId !== id) // Remove the deleted room
+      .map((room, index) => ({
+        ...room,
+        roomId: index + 1, // Reassign room IDs sequentially
+      }));
     updatedSelectedRooms.forEach((room) => dispatch(setRoom(room)));
-};
-    
-    // if (filteredSelectedRooms.length > 0) {
-    //   dispatch(setRooms(filteredSelectedRooms)); // Ensure setRooms is correctly imported
-    // } else {
-    //   console.warn("No valid rooms found to dispatch!");
-    // } 
-    // console.log(filteredSelectedRooms,'filtered selection')
-
-  // const confirmSelection = async () => {
-  //   setLoading(true);
-  //   setAvailabilityMessage("");
-
-  //   const unselectedRooms = tempRoomsList.filter((room) => !room.selectedRoom);
-  //   if (unselectedRooms.length > 0) {
-  //     setLoading(false);
-  //     setInvalidRooms(unselectedRooms.map((room) => room.id));
-  //     return;
-  //   }
-
-  //   console.log(unselectedRooms,'unselectedRooms')
-  //   setInvalidRooms([]);
-
-  //   const requestData = {
-  //     checkInDate: checkInDate.toISOString().split("T")[0],
-  //     checkOutDate: checkOutDate.toISOString().split("T")[0],
-  //     totalRooms: tempRoomsList.length,
-  //     rooms: tempRoomsList.map((room) => ({
-  //       roomType: room.selectedRoom?.roomType,
-  //       persons: room.persons,
-  //       adults: room.adults,
-  //       children: room.children,
-  //     })),
-  //   };
-  //      // Debugging: Log selectedRooms
-  //      console.log("🔹 Selected Rooms:", selectedRooms);
-
-  //      // Debugging: Log requestData.rooms
-  //      console.log("🔹 Request Data Rooms:", requestData.rooms);
-   
-  //      // Debugging: Check indexes of requestData.rooms
-  //      requestData.rooms.forEach((_, index) => {
-  //          console.log(`📌 Room index in requestData: ${index}`);
-  //      });
-   
-  //      // Debugging: Check roomId in selectedRooms
-  //      selectedRooms.forEach((room) => {
-  //          console.log(`📌 Room ID in selectedRooms: ${room.roomId}`);
-  //      });
-   
-   
-  //     const filteredSelectedRooms = selectedRooms.filter((room) =>
-  //       requestData.rooms.some((_, index) => index + 1 === room.roomId)
-  //   );
-    
-   
-  //      console.log("✅ Filtered Selected Rooms:", filteredSelectedRooms);
-
-  //          dispatch(setRoom(selectedRoomData));
-       
-
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3000/rooms/check-availability",
-  //       requestData
-  //     );
-  //     setLoading(false);
-
-  //     if (
-  //       response.data.message === "Rooms are available for the selected dates."
-  //     ) {
-  //       setIsRoomSelected(true);
-  //       setRoomsList(tempRoomsList);
-  //       setIsModalOpen(false);
-
-  //       const roomsQuery = tempRoomsList
-  //         .map(
-  //           (room) =>
-  //             `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`
-  //         )
-  //         .join(",");
-
-  //       navigate(
-  //         `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
-  //           requestData.checkOutDate
-  //         }&rooms=${encodeURIComponent(roomsQuery)}`
-  //       );
-  //       return;
-  //     }
-
-  //     let message = "Some rooms are unavailable.\n";
-  //     if (response.data.unavailableDates?.length > 0) {
-  //       message += "❌ Unavailable Rooms:\n";
-  //       response.data.unavailableDates.forEach((room) => {
-  //         message += `- ${room.roomType} on ${room.date}\n`;
-  //       });
-  //     }
-
-  //     if (response.data.availableRooms?.length > 0) {
-  //       message += "\n✅ Available Alternatives:\n";
-  //       response.data.availableRooms.forEach((room) => {
-  //         message += `- ${room.roomType} (${
-  //           room.availableRooms
-  //         } available on ${new Date(room.date).toDateString()})\n`;
-  //       });
-  //     }
-
-  //     setAvailabilityMessage(message);
-  //   } catch (error) {
-  //     setLoading(false);
-  //     let message =
-  //       error.response?.data?.error ||
-  //       "Error checking availability. Please try again.";
-
-  //     if (error.response?.data?.unavailableDates?.length > 0) {
-  //       message += "\n❌ Unavailable Rooms:\n";
-  //       error.response.data.unavailableDates.forEach((room) => {
-  //         message += `- ${room.roomType} on ${room.date}\n`;
-  //       });
-  //     }
-
-  //     if (error.response?.data?.availableRooms?.length > 0) {
-  //       message += "\n✅ Available Alternatives:\n";
-  //       error.response.data.availableRooms.forEach((room) => {
-  //         message += `- ${room.roomType} (${
-  //           room.availableRooms
-  //         } available on ${new Date(room.date).toDateString()})\n`;
-  //       });
-  //     }
-
-  //     setAvailabilityMessage(message);
-  //   }
-  // };
-
-  // const confirmSelection = async () => {
-  //   setLoading(true);
-  //   setAvailabilityMessage("");
-  
-  //   const unselectedRooms = tempRoomsList.filter((room) => !room.selectedRoom);
-  //   if (unselectedRooms.length > 0) {
-  //     setLoading(false);
-  //     setInvalidRooms(unselectedRooms.map((room) => room.id));
-  //     return;
-  //   }
-  
-  //   console.log(unselectedRooms, 'unselectedRooms');
-  //   setInvalidRooms([]);
-  
-  //   const requestData = {
-  //     checkInDate: checkInDate.toISOString().split("T")[0],
-  //     checkOutDate: checkOutDate.toISOString().split("T")[0],
-  //     totalRooms: tempRoomsList.length,
-  //     rooms: tempRoomsList.map((room) => ({
-  //       roomType: room.selectedRoom?.roomType,
-  //       persons: room.persons,
-  //       adults: room.adults,
-  //       children: room.children,
-  //     })),
-  //   };
-  
-  //   // Debugging: Log selectedRooms
-  //   console.log("🔹 Selected Rooms:", selectedRooms);
-  
-  //   // Debugging: Log requestData.rooms
-  //   console.log("🔹 Request Data Rooms:", requestData.rooms);
-  
-  //   // Debugging: Check indexes of requestData.rooms
-  //   requestData.rooms.forEach((_, index) => {
-  //     console.log(`📌 Room index in requestData: ${index}`);
-  //   });
-  
-  //   // Debugging: Check roomId in selectedRooms
-  //   selectedRooms.forEach((room) => {
-  //     console.log(`📌 Room ID in selectedRooms: ${room.roomId}`);
-  //   });
-  
-  //   const filteredSelectedRooms = selectedRooms.filter((room) =>
-  //     requestData.rooms.some((_, index) => index + 1 === room.roomId)
-  //   );
-  
-  //   console.log("✅ Filtered Selected Rooms:", filteredSelectedRooms);
-  
-  //   // Dispatch setRoom for each filtered room
-  //   filteredSelectedRooms.forEach((room) => {
-  //     dispatch(setRoom(room));
-  //   });
-  
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3000/rooms/check-availability",
-  //       requestData
-  //     );
-  //     setLoading(false);
-  
-  //     if (
-  //       response.data.message === "Rooms are available for the selected dates."
-  //     ) {
-  //       setIsRoomSelected(true);
-  //       setRoomsList(tempRoomsList);
-  //       setIsModalOpen(false);
-  
-  //       const roomsQuery = tempRoomsList
-  //         .map(
-  //           (room) =>
-  //             `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`
-  //         )
-  //         .join(",");
-  
-  //       navigate(
-  //         `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
-  //           requestData.checkOutDate
-  //         }&rooms=${encodeURIComponent(roomsQuery)}`
-  //       );
-  //       return;
-  //     }
-  
-  //     let message = "Some rooms are unavailable.\n";
-  //     if (response.data.unavailableDates?.length > 0) {
-  //       message += "❌ Unavailable Rooms:\n";
-  //       response.data.unavailableDates.forEach((room) => {
-  //         message += `- ${room.roomType} on ${room.date}\n`;
-  //       });
-  //     }
-  
-  //     if (response.data.availableRooms?.length > 0) {
-  //       message += "\n✅ Available Alternatives:\n";
-  //       response.data.availableRooms.forEach((room) => {
-  //         message += `- ${room.roomType} (${
-  //           room.availableRooms
-  //         } available on ${new Date(room.date).toDateString()})\n`;
-  //       });
-  //     }
-  
-  //     setAvailabilityMessage(message);
-  //   } catch (error) {
-  //     setLoading(false);
-  //     let message =
-  //       error.response?.data?.error ||
-  //       "Error checking availability. Please try again.";
-  
-  //     if (error.response?.data?.unavailableDates?.length > 0) {
-  //       message += "\n❌ Unavailable Rooms:\n";
-  //       error.response.data.unavailableDates.forEach((room) => {
-  //         message += `- ${room.roomType} on ${room.date}\n`;
-  //       });
-  //     }
-  
-  //     if (error.response?.data?.availableRooms?.length > 0) {
-  //       message += "\n✅ Available Alternatives:\n";
-  //       error.response.data.availableRooms.forEach((room) => {
-  //         message += `- ${room.roomType} (${
-  //           room.availableRooms
-  //         } available on ${new Date(room.date).toDateString()})\n`;
-  //       });
-  //     }
-  
-  //     setAvailabilityMessage(message);
-  //   }
-  // };
+  };
 
   const confirmSelection = async () => {
     setLoading(true);
@@ -421,22 +128,7 @@ console.log(updateGuestCount,'updateGuestCount');
       setInvalidRooms(unselectedRooms.map((room) => room.id));
       return;
     }
-  
     setInvalidRooms([]);
-  
-    // const requestData = {
-    //   checkInDate: checkInDate.toISOString().split("T")[0],
-    //   checkOutDate: checkOutDate.toISOString().split("T")[0],
-    //   totalRooms: tempRoomsList.length,
-    //   rooms: tempRoomsList.map((room) => ({
-    //     const plan = selectedPlan[room.id]; // Match plan using roomId
-    //     roomId: room.id,
-    //     roomType: room.selectedRoom?.roomType,
-    //     persons: room.persons,
-    //     adults: room.adults,
-    //     children: room.children,
-    //   })),
-    // };
     const requestData = {
       checkInDate: checkInDate.toISOString().split("T")[0],
       checkOutDate: checkOutDate.toISOString().split("T")[0],
@@ -444,11 +136,10 @@ console.log(updateGuestCount,'updateGuestCount');
       rooms: tempRoomsList.map((room) => {
         const plan = selectedPlan[room.id]; // Match plan using roomId
         let extraAdultPrice = 0;
-  
         if (plan && room.adults > 0) {
-          extraAdultPrice = room.adults * (plan.price?.extraAdult?.withGst || 0);
+          extraAdultPrice =
+            room.adults * (plan.price?.extraAdult?.withGst || 0);
         }
-  
         return {
           roomId: room.id,
           roomType: room.selectedRoom?.roomType,
@@ -459,83 +150,43 @@ console.log(updateGuestCount,'updateGuestCount');
         };
       }),
     };
-  
-    console.log("Final Request Data:", requestData);
-  // };
-  
-    // // Debugging: Log selectedRooms
-    // console.log("🔹 Selected Rooms:", selectedRooms);
-  
-    // // Debugging: Log requestData.rooms
-    console.log("🔹 Request Data Rooms:", requestData.rooms.roomType);
-  
-    // // Debugging: Check indexes of requestData.rooms
-    // requestData.rooms.forEach((_, index) => {
-    //   console.log(`📌 Room index in requestData: ${index}`);
-    // });
-  
-    // // Debugging: Check roomId in selectedRooms
-    // selectedRooms.forEach((room) => {
-    //   console.log(`📌 Room ID in selectedRooms: ${room.roomId}`);
-    // });
 
-
-  
-    // const filteredSelectedRooms = selectedRooms.filter((room) =>
-    //   requestData.rooms.some((_, index) => index + 1 === room.roomId)
-    // );
-    // const filteredSelectedRooms = selectedRooms.filter((room) => room.roomId !== requestData.rooms.roomId);
-    // filteredSelectedRooms.forEach((room) => dispatch(setRoom(room)));
-  
-    // console.log("✅ Filtered Selected Rooms:", filteredSelectedRooms);
-  
-    // Dispatch setRoom for each filtered room
-    // dispatch(resetRooms());
-
-    // filteredSelectedRooms.forEach((room) => {
-    //   console.log("Dispatching setRoom for:", room);
-    //   dispatch(setRoom(room));
-    // });
-      // ✅ Match rooms and update only adults count
-      // let extraAdultPrice = val.adults > 0 ? val.adults * plan.price.extraAdult.withGst : 0;
-      roomsData.map((value,index)=>{
-        console.log(value.roomType,'this is value')
-      })
-
-      selectedRooms.forEach((room) => {
-        const matchingRoom = requestData.rooms.find((r) => r.roomId === room.roomId);
-        if (matchingRoom) {
-            dispatch(setRoom({ ...room, adults: matchingRoom.adults })); // Update Redux only for adults
-        }
+    requestData.rooms.forEach((room) => {
+      const plan = selectedPlan[room.roomId]; // Match plan using roomId
+      if (plan) {
+        const extraAdultPrice =
+          room.adults * (plan.price?.extraAdult?.withGst || 0);
+        dispatch(
+          setRoom({
+            roomId: room.roomId,
+            extraAdultPrice, // Update only extraAdultPrice
+            adults: room.adults,
+          })
+        );
+      }
     });
 
-    console.log("✅ Updated Redux with new adults count");
-
-    setTimeout(() => {
-      console.log("Updated Redux rooms:", selectedRooms);
-    }, 1000);
-  
     try {
       const response = await axios.post(
         "http://localhost:3000/rooms/check-availability",
         requestData
       );
       setLoading(false);
-  
+
       if (
         response.data.message === "Rooms are available for the selected dates."
       ) {
         setIsRoomSelected(true);
         setRoomsList(tempRoomsList);
         setIsModalOpen(false);
-  
+
         const roomsQuery = tempRoomsList
           .map(
             (room) =>
               `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`
           )
           .join(",");
-  
+
         navigate(
           `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
             requestData.checkOutDate
@@ -543,7 +194,7 @@ console.log(updateGuestCount,'updateGuestCount');
         );
         return;
       }
-  
+
       let message = "Some rooms are unavailable.\n";
       if (response.data.unavailableDates?.length > 0) {
         message += "❌ Unavailable Rooms:\n";
@@ -551,7 +202,7 @@ console.log(updateGuestCount,'updateGuestCount');
           message += `- ${room.roomType} on ${room.date}\n`;
         });
       }
-  
+
       if (response.data.availableRooms?.length > 0) {
         message += "\n✅ Available Alternatives:\n";
         response.data.availableRooms.forEach((room) => {
@@ -560,21 +211,21 @@ console.log(updateGuestCount,'updateGuestCount');
           } available on ${new Date(room.date).toDateString()})\n`;
         });
       }
-  
+
       setAvailabilityMessage(message);
     } catch (error) {
       setLoading(false);
       let message =
         error.response?.data?.error ||
         "Error checking availability. Please try again.";
-  
+
       if (error.response?.data?.unavailableDates?.length > 0) {
         message += "\n❌ Unavailable Rooms:\n";
         error.response.data.unavailableDates.forEach((room) => {
           message += `- ${room.roomType} on ${room.date}\n`;
         });
       }
-  
+
       if (error.response?.data?.availableRooms?.length > 0) {
         message += "\n✅ Available Alternatives:\n";
         error.response.data.availableRooms.forEach((room) => {
@@ -583,16 +234,9 @@ console.log(updateGuestCount,'updateGuestCount');
           } available on ${new Date(room.date).toDateString()})\n`;
         });
       }
-  
       setAvailabilityMessage(message);
     }
   };
-  
-  // console.log(confirmSelection, 'this is a confirmation function');
-  
-  // console.log(confirmSelection, 'this is a confirmation function');
-
-  // console.log(confirmSelection,'this is a confirmation function')
 
   return (
     <div className="flex flex-col items-center mt-8 gap-4">

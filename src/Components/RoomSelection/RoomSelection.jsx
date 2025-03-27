@@ -28,15 +28,10 @@ const RoomSelection = ({ rooms, currentStep }) => {
   };
 
   const handleRoomSelect = (roomId, planName, plan) => {
-    console.log(roomId, "this is plan inside the room selection");
-    console.log(planName, "this is planName inside the room selection");
-    console.log(plan, "this is plan price inside the room selection");
 
     let selectedRoomData = {};
-
     rooms.forEach((val) => {
       if (roomId === val.id) {
-        console.log(val, "price need to be changed here") ;
         let extraAdultPrice = val.adults > 0 ? val.adults * plan.price.extraAdult.withGst : 0;
         let roomType = val.selectedRoom.roomType;
         let roomPrice = plan.price.twoGuests.withGst;
@@ -51,17 +46,10 @@ const RoomSelection = ({ rooms, currentStep }) => {
           adults: val.adults,
           children: val.children,
         };
-        console.log(selectedRoomData, "final data to be stored in redux");
       }
     });
     dispatch(setRoom(selectedRoomData));
-    // const roomKey = `${roomId}-${planName}`;
-
-    // dispatch(setPlan({ roomId: roomKey, plan }));
-     
-    // const roomKey = `${roomId}-${planName}`;
     dispatch(setPlan({ roomId, plan }));
-    // dispatch(setPlan({ roomId: roomKey, plan }));
   };
 
   const openModal = (room) => {
@@ -77,7 +65,6 @@ const RoomSelection = ({ rooms, currentStep }) => {
   const roomIndex = currentStep - 1;
   if (roomIndex < 0 || roomIndex >= rooms.length ) return null;
   const room = rooms[roomIndex];
-
   const currentRoomGuests = room.persons + room.adults + room.children;
 
   return (

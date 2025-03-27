@@ -2,25 +2,38 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
 import "./BookingDetailsComponent.css";
+import { useSelector } from "react-redux";
 
 const BookingDetailsComponent = ({ rooms }) => {
-  console.log("rooms-book", rooms);
+  const selectedRooms = useSelector((state) => state.booking.rooms);
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-
   const totalSteps = rooms.length + 2; // Room selections + Personal Details + Payment
   const currentStep = parseInt(queryParams.get("step")) || 1;
-
-  console.log("queryParams", queryParams);
   const totalGuests = rooms.reduce((acc, room) => {
     return acc + room.persons + room.adults + room.children;
   }, 0);
+  
+const handleNextStep = () => {
+  if (currentStep === 1) {
+    if (!selectedRooms[0]?.planName) {
+      alert("Please select a plan for the first room before proceeding.");
+      return;
+    }
+  }
 
-  const handleNextStep = () => {
-    queryParams.set("step", currentStep + 1);
-    navigate(`?${queryParams.toString()}`, { replace: true });
-  };
+  if (currentStep === 2) {
+    if (!selectedRooms[1]?.planName) {
+      alert("Please select a plan for the second room before proceeding.");
+      return;
+    }
+  }
+
+  // If validation passes, navigate to the next step
+  queryParams.set("step", currentStep + 1);
+  navigate(`?${queryParams.toString()}`, { replace: true });
+};
 
   const handlePrevStep = () => {
     if (currentStep > 1) {

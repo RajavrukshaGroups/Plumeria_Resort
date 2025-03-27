@@ -3,11 +3,8 @@ import "./YourStay.css";
 import { useSelector } from "react-redux";
 
 const YourStay = ({ selectedPlan }) => {
-  console.log(selectedPlan,'seleteeeeeeeeeeeeeeeeeeeeee')
   const selectedPlansArray = Object.entries(selectedPlan);
   const selectedRooms = useSelector((state) => state.booking.rooms);
-  console.log(selectedRooms, 'selectedRoomsssssssss'); // Logs the updated room details
-
   const totalAmount = selectedRooms.reduce((total, room) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0);
