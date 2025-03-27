@@ -23,24 +23,38 @@ const BookingDetailsComponent = ({ rooms }) => {
 
   const handleNextStep = () => {
     if (currentStep === 1) {
-      if (!selectedRooms[0]?.planName || selectedRooms[0]?.roomPrice==0) {
+      // Check if planName is missing or roomPrice is 0
+      if (!selectedRooms[0]?.planName) {
         alert("Please select a plan for the first room before proceeding.");
         return;
       }
-    }
-
-    if (currentStep === 2 && rooms.length > 1) {
-      if (!selectedRooms[1]?.planName || selectedRooms[1]?.roomPrice==0) {
-        alert("Please select a plan for the second room before proceeding.");
+  
+      if (selectedRooms[0]?.roomPrice === 0 || selectedRooms[0]?.roomPrice == null) {
+        alert("The room price for the first room cannot be zero. Please select a valid plan.");
         return;
       }
     }
-
+  
+    if (currentStep === 2 && rooms.length > 1) {
+      // Check if planName is missing or roomPrice is 0 for the second room
+      if (!selectedRooms[1]?.planName) {
+        alert("Please select a plan for the second room before proceeding.");
+        return;
+      }
+  
+      if (selectedRooms[1]?.roomPrice === 0 || selectedRooms[1]?.roomPrice == null) {
+        alert("The room price for the second room cannot be zero. Please select a valid plan.");
+        return;
+      }
+    }
+  
     if (currentStep === totalSteps - 1) {
       if (!personnelDetailRef.current?.validateForm()) {
         return;
       }
     }
+  
+    // Proceed to the next step
     queryParams.set("step", currentStep + 1);
     navigate(`?${queryParams.toString()}`, { replace: true });
   };
