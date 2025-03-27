@@ -191,7 +191,6 @@ import DeluxeRoomImg3 from "../../assets/plumeriaresortimages/delRoom10.jpg";
       } else {
         dispatch(deleteRoom(roomId));
       }
-    
       console.log("Updated Rooms before filtering:", updatedRooms);
     
       const filteredUpdatedRooms = updatedRooms.filter((room) =>
