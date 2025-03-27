@@ -147,6 +147,7 @@ const NewBookingSection = () => {
           adults: room.adults,
           children: room.children,
           extraAdultPrice, // Now correctly calculated
+          roomPrice:0
         };
       }),
     };
@@ -164,6 +165,7 @@ const NewBookingSection = () => {
             extraAdultPrice, // Update only extraAdultPrice
             adults: room.adults,
             roomType:room.roomType,
+            roomPrice:0
           })
         );
       }
