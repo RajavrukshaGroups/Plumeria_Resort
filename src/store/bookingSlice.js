@@ -11,25 +11,28 @@ const bookingSlice = createSlice({
   initialState,
   reducers: {
     setRoom: (state, action) => {
-      const { roomId, ...updates } = action.payload;
-      const existingRoomIndex = state.rooms.findIndex(
-        (room) => room.roomId === roomId
-      );
-      if (existingRoomIndex !== -1) {
-        state.rooms[existingRoomIndex] = {
-          ...state.rooms[existingRoomIndex],
-          ...updates, // Merge updates with existing room data
-        };
+      const { roomId, roomPrice, extraAdultPrice, ...updates } = action.payload;
+    
+      const existingRoom = state.rooms.find((room) => room.roomId === roomId);
+    
+      if (existingRoom) {
+        // Preserve roomPrice if it's already set, otherwise use the new one
+        existingRoom.roomPrice = roomPrice ?? existingRoom.roomPrice ?? 0;
+        existingRoom.extraAdultPrice = extraAdultPrice ?? existingRoom.extraAdultPrice ?? 0;
+    
+        Object.assign(existingRoom, updates);
       } else {
-        state.rooms.push({ roomId, ...updates });
+        state.rooms.push({ 
+          roomId, 
+          roomPrice: roomPrice ?? 0, 
+          extraAdultPrice: extraAdultPrice ?? 0, 
+          ...updates 
+        });
       }
-      // Recalculate total price
-      state.totalPrice = state.rooms.reduce(
-        (total, room) =>
-          total + (room.roomPrice || 0) + (room.extraAdultPrice || 0),
-        0
-      );
+    
+      state.totalPrice = state.rooms.reduce((total, room) => total + (room.roomPrice || 0) + (room.extraAdultPrice || 0), 0);
     },
+    
     // removeRoom: (state, action) => {
     //   const roomId = action.payload;
     //   state.rooms = state.rooms.filter((room) => room.roomId !== roomId);
@@ -37,7 +40,6 @@ const bookingSlice = createSlice({
     // },
     setPlan: (state, action) => {
       const { roomId, plan } = action.payload;
-      // Store plan correctly under the specific roomId
       state.selectedPlan[roomId] = plan;
     },
       resetRooms: (state) => {

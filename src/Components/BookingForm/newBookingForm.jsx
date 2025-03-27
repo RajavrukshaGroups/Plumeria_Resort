@@ -151,6 +151,8 @@ const NewBookingSection = () => {
       }),
     };
 
+    console.log(requestData,'this is requestdata')
+
     requestData.rooms.forEach((room) => {
       const plan = selectedPlan[room.roomId]; // Match plan using roomId
       if (plan) {
