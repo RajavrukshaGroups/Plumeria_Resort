@@ -163,6 +163,7 @@ const NewBookingSection = () => {
             roomId: room.roomId,
             extraAdultPrice, // Update only extraAdultPrice
             adults: room.adults,
+            roomType:room.roomType,
           })
         );
       }
