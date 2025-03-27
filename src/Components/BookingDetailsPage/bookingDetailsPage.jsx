@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
 import "./BookingDetailsComponent.css";
 import { useSelector } from "react-redux";
+import PersonalDetails from "../PersonnelDetails/personnelDetail";
 
 const BookingDetailsComponent = ({ rooms }) => {
   const selectedRooms = useSelector((state) => state.booking.rooms);
@@ -14,26 +15,33 @@ const BookingDetailsComponent = ({ rooms }) => {
   const totalGuests = rooms.reduce((acc, room) => {
     return acc + room.persons + room.adults + room.children;
   }, 0);
-  
-const handleNextStep = () => {
-  if (currentStep === 1) {
-    if (!selectedRooms[0]?.planName) {
-      alert("Please select a plan for the first room before proceeding.");
-      return;
-    }
-  }
+  const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
-  if (currentStep === 2) {
-    if (!selectedRooms[1]?.planName) {
-      alert("Please select a plan for the second room before proceeding.");
-      return;
-    }
-  }
+  const personnelDetailRef = useRef();
 
-  // If validation passes, navigate to the next step
-  queryParams.set("step", currentStep + 1);
-  navigate(`?${queryParams.toString()}`, { replace: true });
-};
+  const handleNextStep = () => {
+    if (currentStep === 1) {
+      if (!selectedRooms[0]?.planName) {
+        alert("Please select a plan for the first room before proceeding.");
+        return;
+      }
+    }
+
+    if (currentStep === 2 && rooms.length > 1) {
+      if (!selectedRooms[1]?.planName) {
+        alert("Please select a plan for the second room before proceeding.");
+        return;
+      }
+    }
+
+    if (currentStep === totalSteps - 1) {
+      if (!personnelDetailRef.current?.validateForm()) {
+        return;
+      }
+    }
+    queryParams.set("step", currentStep + 1);
+    navigate(`?${queryParams.toString()}`, { replace: true });
+  };
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
@@ -99,11 +107,22 @@ const handleNextStep = () => {
             }`}
           >
             Payment Confirmation
-          </span> 
+          </span>
         </div>
       </div>
 
-      <RoomSelection rooms={rooms} currentStep={currentStep} totalGuests={totalGuests}/>
+      {currentStep <= rooms.length ? (
+        <RoomSelection
+          rooms={rooms}
+          currentStep={currentStep}
+          totalGuests={totalGuests}
+        />
+      ) : currentStep === totalSteps - 1 ? (
+        <PersonalDetails onNext={handleNextStep} selectedPlan={selectedPlan} ref={personnelDetailRef}/>
+      ) : (
+        <div>Payment Component Here</div>
+      )}
+
       <div className="navigation-buttons">
         {currentStep > 1 && (
           <button onClick={handlePrevStep} className="prev-step-button">
