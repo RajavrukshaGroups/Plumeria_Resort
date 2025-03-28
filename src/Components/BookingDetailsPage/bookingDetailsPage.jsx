@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
 import "./BookingDetailsComponent.css";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PersonalDetails from "../PersonnelDetails/personnelDetail";
 import { setErrors } from "../../store/bookingSlice";
+import PaymentDetails from "../PaymentDetails/paymentDetails";
 
 const BookingDetailsComponent = ({ rooms }) => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,8 +21,7 @@ const BookingDetailsComponent = ({ rooms }) => {
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
   const personnelDetailRef = useRef();
-  console.log(selectedRooms,'selectedplannnnnn');
-  
+  console.log(selectedRooms, "selectedplannnnnn");
 
   const handleNextStep = () => {
     if (currentStep === 1) {
@@ -30,32 +30,42 @@ const BookingDetailsComponent = ({ rooms }) => {
         alert("Please select a plan for the first room before proceeding.");
         return;
       }
-  
-      if (selectedRooms[0]?.roomPrice === 0 || selectedRooms[0]?.roomPrice == null) {
-        alert("The room price for the first room cannot be zero. Please select a valid plan.");
+
+      if (
+        selectedRooms[0]?.roomPrice === 0 ||
+        selectedRooms[0]?.roomPrice == null
+      ) {
+        alert(
+          "The room price for the first room cannot be zero. Please select a valid plan."
+        );
         return;
       }
     }
-  
+
     if (currentStep === 2 && rooms.length > 1) {
       // Check if planName is missing or roomPrice is 0 for the second room
       if (!selectedRooms[1]?.planName) {
         alert("Please select a plan for the second room before proceeding.");
         return;
       }
-  
-      if (selectedRooms[1]?.roomPrice === 0 || selectedRooms[1]?.roomPrice == null) {
-        alert("The room price for the second room cannot be zero. Please select a valid plan.");
+
+      if (
+        selectedRooms[1]?.roomPrice === 0 ||
+        selectedRooms[1]?.roomPrice == null
+      ) {
+        alert(
+          "The room price for the second room cannot be zero. Please select a valid plan."
+        );
         return;
       }
     }
-  
+
     if (currentStep === totalSteps - 1) {
       if (!personnelDetailRef.current?.validateForm()) {
         return;
       }
     }
-  
+
     // Proceed to the next step
     queryParams.set("step", currentStep + 1);
     navigate(`?${queryParams.toString()}`, { replace: true });
@@ -63,7 +73,7 @@ const BookingDetailsComponent = ({ rooms }) => {
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      dispatch(setErrors({}))
+      dispatch(setErrors({}));
       queryParams.set("step", currentStep - 1);
       navigate(`?${queryParams.toString()}`, { replace: true });
     }
@@ -137,9 +147,15 @@ const BookingDetailsComponent = ({ rooms }) => {
           totalGuests={totalGuests}
         />
       ) : currentStep === totalSteps - 1 ? (
-        <PersonalDetails onNext={handleNextStep} selectedPlan={selectedPlan} ref={personnelDetailRef}/>
+        <PersonalDetails
+          onNext={handleNextStep}
+          selectedPlan={selectedPlan}
+          ref={personnelDetailRef}
+        />
       ) : (
-        <div>Payment Component Here</div>
+        <div>
+          <PaymentDetails />
+        </div>
       )}
 
       <div className="navigation-buttons">
