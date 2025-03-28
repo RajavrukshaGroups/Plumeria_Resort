@@ -9,7 +9,7 @@ const YourStay = ({ selectedPlan }) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0);// Reassign room IDs sequentially
 
-  console.log(selectedRooms,'this is selected rooms')
+  // console.log(selectedRooms,'this is selected rooms')
 
   return (
     <div className="your-stay-container shadow-lg rounded-lg p-5 bg-white">

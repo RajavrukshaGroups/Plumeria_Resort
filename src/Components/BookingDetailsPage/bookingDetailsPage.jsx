@@ -19,9 +19,7 @@ const BookingDetailsComponent = ({ rooms }) => {
     return acc + room.persons + room.adults + room.children;
   }, 0);
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
-
   const personnelDetailRef = useRef();
-  console.log(selectedRooms, "selectedplannnnnn");
 
   const handleNextStep = () => {
     if (currentStep === 1) {
