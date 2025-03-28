@@ -15,7 +15,7 @@ const ServicesMain = lazy(() => import("../ServicesMain/servicesMain"));
 const GalleryMain = lazy(() => import("../GalleryMain/gallery"));
 const ContactUsMain = lazy(() =>
   import("../../MainComp/contactUsMain/contactUsMain")
-);
+   );
 const MainPrivacyPolicy = lazy(() =>
   import("../../MainComp/PrivacyPolicy/PrivacyPolicy")
 );
@@ -26,8 +26,8 @@ const MainTermsAndConditions = lazy(() =>
 const AllRoute = () => {
   return (
     <Router>
-      <ScrollToTop />
-      <Suspense fallback={<LazyLoader />}>
+      <ScrollToTop/>
+      <Suspense fallback={<LazyLoader/>}>
         <Routes>
           <Route path="/" element={<HomePageMainComponent />} />
           <Route path="/about-us" element={<AboutUsMain />} />
@@ -36,7 +36,7 @@ const AllRoute = () => {
           <Route path="/contact-us" element={<ContactUsMain />} />
           <Route path="/privacy-policy" element={<MainPrivacyPolicy />} />
           <Route path="/terms-conditions" element={<MainTermsAndConditions />} />
-          <Route path="/book-now" element={<AccommodationMain />} />
+          <Route path="/book-now" element={<AccommodationMain />}/>
         </Routes>
       </Suspense>
     </Router>

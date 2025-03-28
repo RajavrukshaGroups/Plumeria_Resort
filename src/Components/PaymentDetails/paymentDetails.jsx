@@ -48,7 +48,9 @@ const Payment = () => {
           contact: "9999999999",
         },
         theme: {
-          color: "#3399cc",
+          color: "#A77A3A",
+          // backdrop_color: "#f5f5f5", // Change the background color
+          hide_topbar: false, // Hide the top bar (true/false)
         },
       };
 

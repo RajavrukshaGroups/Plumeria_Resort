@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  selectedPlan: {}, // Store plans for multiple rooms
-  rooms: [], // Initialize rooms array
+  selectedPlan: {},  // Store plans for multiple rooms
+  rooms: [],  // Initialize rooms array
   totalPrice: 0,
   personalDetails: {
     firstName: "",
@@ -28,7 +28,6 @@ const bookingSlice = createSlice({
         existingRoom.roomPrice = roomPrice ?? existingRoom.roomPrice ?? 0;
         existingRoom.extraAdultPrice =
           extraAdultPrice ?? existingRoom.extraAdultPrice ?? 0;
-
         Object.assign(existingRoom, updates);
       } else {
         state.rooms.push({

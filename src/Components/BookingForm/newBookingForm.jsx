@@ -28,9 +28,13 @@ const NewBookingSection = () => {
   } = useContext(BookingContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
   const [tempRoomsList, setTempRoomsList] = useState([...roomsList]);
-  const selectedRooms = useSelector((state) => state.booking.rooms);
-  const selectedPlan = useSelector((state) => state.booking.selectedPlan);
+    const selectedRooms = useSelector((state) => state.booking.rooms);
+    const selectedPlan = useSelector((state) => state.booking.selectedPlan);
+
+    console.log(selectedRooms,'this is selectedRoom in new booking form');
+//  console.log(tempRoomsList[0]?.selectedRoom.roomType,'this is the temp rooms list')
 
   const dispatch = useDispatch();
   const openModal = () => {
@@ -42,7 +46,6 @@ const NewBookingSection = () => {
   const handleRoomChange = (id, event) => {
     const newRoomType = event.target.value;
     const newRoom = roomsData.find((room) => room.roomType === newRoomType);
-
     setTempRoomsList((prevRooms) =>
       prevRooms.map((room) =>
         room.id === id
@@ -94,7 +97,7 @@ const NewBookingSection = () => {
           persons: 1,
           adults: 0,
           children: 0,
-        },
+          },
       ]);
     }
   };
@@ -104,7 +107,7 @@ const NewBookingSection = () => {
       .filter((room) => room.id !== id)
       .map((room, index) => ({
         ...room,
-        id: index + 1, // Reassign room IDs sequentially
+        id: index + 1, 
       }));
     setTempRoomsList(updatedTempRoomsList);
     dispatch(resetRooms());
@@ -118,27 +121,37 @@ const NewBookingSection = () => {
     updatedSelectedRooms.forEach((room) => dispatch(setRoom(room)));
   };
 
+  
   const confirmSelection = async () => {
     setLoading(true);
     setAvailabilityMessage("");
-
     const unselectedRooms = tempRoomsList.filter((room) => !room.selectedRoom);
-    if (unselectedRooms.length > 0) {
-      setLoading(false);
-      setInvalidRooms(unselectedRooms.map((room) => room.id));
-      return;
-    }
-    setInvalidRooms([]);
-    const requestData = {
+    if (unselectedRooms.length > 0) { 
+      setLoading(false);   
+      setInvalidRooms(unselectedRooms.map((room) => room.id));  
+      return;   
+    }   
+
+    setInvalidRooms([]);   
+    const currentPlanMap = selectedRooms.reduce((acc, room) => {
+        acc[room.roomId] = room.roomType; 
+        return acc;
+    }, {});
+
+    const requestData = {   
       checkInDate: checkInDate.toISOString().split("T")[0],
       checkOutDate: checkOutDate.toISOString().split("T")[0],
-      totalRooms: tempRoomsList.length,
+      totalRooms: tempRoomsList.length,  
       rooms: tempRoomsList.map((room) => {
-        const plan = selectedPlan[room.id]; // Match plan using roomId
+        const plan = selectedPlan[room.id];
+        const previousRoomType = currentPlanMap[room.id] || null; 
+        let roomPrice = room.roomPrice;
+        if (previousRoomType && previousRoomType !== room.selectedRoom.roomType) {
+          roomPrice = 0;
+        }
         let extraAdultPrice = 0;
         if (plan && room.adults > 0) {
-          extraAdultPrice =
-            room.adults * (plan.price?.extraAdult?.withGst || 0);
+          extraAdultPrice = room.adults * (plan.price?.extraAdult?.withGst || 0);
         }
         return {
           roomId: room.id,
@@ -146,26 +159,22 @@ const NewBookingSection = () => {
           persons: room.persons,
           adults: room.adults,
           children: room.children,
-          extraAdultPrice, // Now correctly calculated
-          roomPrice:0
+          extraAdultPrice,
+          roomPrice, 
         };
       }),
     };
-
-    console.log(requestData,'this is requestdata')
-
     requestData.rooms.forEach((room) => {
-      const plan = selectedPlan[room.roomId]; // Match plan using roomId
+      const plan = selectedPlan[room.roomId];
       if (plan) {
-        const extraAdultPrice =
-          room.adults * (plan.price?.extraAdult?.withGst || 0);
+        const extraAdultPrice = room.adults * (plan.price?.extraAdult?.withGst || 0);
         dispatch(
           setRoom({
             roomId: room.roomId,
-            extraAdultPrice, // Update only extraAdultPrice
+            extraAdultPrice,
             adults: room.adults,
-            roomType:room.roomType,
-            roomPrice:0
+            roomType: room.roomType,
+            roomPrice: room.roomPrice, 
           })
         );
       }
@@ -178,24 +187,17 @@ const NewBookingSection = () => {
       );
       setLoading(false);
 
-      if (
-        response.data.message === "Rooms are available for the selected dates."
-      ) {
+      if (response.data.message === "Rooms are available for the selected dates.") {
         setIsRoomSelected(true);
         setRoomsList(tempRoomsList);
         setIsModalOpen(false);
 
         const roomsQuery = tempRoomsList
-          .map(
-            (room) =>
-              `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`
-          )
+          .map(room => `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`)
           .join(",");
 
         navigate(
-          `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
-            requestData.checkOutDate
-          }&rooms=${encodeURIComponent(roomsQuery)}`
+          `/book-now?checkIn=${requestData.checkInDate}&checkOut=${requestData.checkOutDate}&rooms=${encodeURIComponent(roomsQuery)}`
         );
         return;
       }
@@ -203,45 +205,40 @@ const NewBookingSection = () => {
       let message = "Some rooms are unavailable.\n";
       if (response.data.unavailableDates?.length > 0) {
         message += "❌ Unavailable Rooms:\n";
-        response.data.unavailableDates.forEach((room) => {
+        response.data.unavailableDates.forEach(room => {
           message += `- ${room.roomType} on ${room.date}\n`;
         });
       }
 
       if (response.data.availableRooms?.length > 0) {
         message += "\n✅ Available Alternatives:\n";
-        response.data.availableRooms.forEach((room) => {
-          message += `- ${room.roomType} (${
-            room.availableRooms
-          } available on ${new Date(room.date).toDateString()})\n`;
+        response.data.availableRooms.forEach(room => {
+          message += `- ${room.roomType} (${room.availableRooms} available on ${new Date(room.date).toDateString()})\n`;
         });
       }
 
       setAvailabilityMessage(message);
     } catch (error) {
       setLoading(false);
-      let message =
-        error.response?.data?.error ||
-        "Error checking availability. Please try again.";
+      let message = error.response?.data?.error || "Error checking availability. Please try again.";
 
       if (error.response?.data?.unavailableDates?.length > 0) {
         message += "\n❌ Unavailable Rooms:\n";
-        error.response.data.unavailableDates.forEach((room) => {
+        error.response.data.unavailableDates.forEach(room => {
           message += `- ${room.roomType} on ${room.date}\n`;
         });
       }
 
       if (error.response?.data?.availableRooms?.length > 0) {
         message += "\n✅ Available Alternatives:\n";
-        error.response.data.availableRooms.forEach((room) => {
-          message += `- ${room.roomType} (${
-            room.availableRooms
-          } available on ${new Date(room.date).toDateString()})\n`;
+        error.response.data.availableRooms.forEach(room => {
+          message += `- ${room.roomType} (${room.availableRooms} available on ${new Date(room.date).toDateString()})\n`;
         });
       }
       setAvailabilityMessage(message);
     }
-  };
+};
+
 
   return (
     <div className="flex flex-col items-center mt-8 gap-4">

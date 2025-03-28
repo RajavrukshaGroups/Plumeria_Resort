@@ -62,7 +62,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
     setSelectedRoom(null);
   };
 
-  const roomIndex = currentStep - 1;
+  const roomIndex = currentStep - 1 ;
   if (roomIndex < 0 || roomIndex >= rooms.length ) return null;
   const room = rooms[roomIndex];
   const currentRoomGuests = room.persons + room.adults + room.children;
