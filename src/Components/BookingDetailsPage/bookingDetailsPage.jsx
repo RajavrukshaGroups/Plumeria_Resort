@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
 import "./BookingDetailsComponent.css";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import PersonalDetails from "../PersonnelDetails/personnelDetail";
+import { setErrors } from "../../store/bookingSlice";
 
 const BookingDetailsComponent = ({ rooms }) => {
+  const dispatch=useDispatch();
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,6 +63,7 @@ const BookingDetailsComponent = ({ rooms }) => {
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
+      dispatch(setErrors({}))
       queryParams.set("step", currentStep - 1);
       navigate(`?${queryParams.toString()}`, { replace: true });
     }

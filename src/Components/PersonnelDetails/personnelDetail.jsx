@@ -1,50 +1,69 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import YourStay from "../YourStay/YourStay";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useBookingContext } from "../BookingForm/BookingContext";
+import { setErrors, setPersonalDetails } from "../../store/bookingSlice";
 
 const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
+  const dispatch = useDispatch();
   const selectedRooms = useSelector((state) => state.booking.rooms);
-    const { roomsList, checkInDate, checkOutDate, setBookingData } =
-      useBookingContext();
+  const personalDetails = useSelector((state) => state.booking.personalDetails);
+  const errors = useSelector((state) => state.booking.personalDetails.errors);
+  const { roomsList, checkInDate, checkOutDate } = useBookingContext();
+
+  console.log("personaldetails", personalDetails);
+
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    gstNumber: "",
-    specialRequests: "",
-    agreeTerms: false,
+    firstName: personalDetails.firstName || "",
+    lastName: personalDetails.lastName || "",
+    email: personalDetails.email || "",
+    phone: personalDetails.phone || "",
+    specialRequests: personalDetails.specialRequests || "",
+    agreeTerms: personalDetails.agreeTerms || false,
   });
 
-  console.log("checkIn",checkInDate);
-  console.log("checkOut",checkOutDate);
-  console.log("roomslist",roomsList);
-
-  const [errors, setErrors] = useState({});
+  const totalGuests = roomsList.reduce(
+    (acc, room) => acc + room.persons + room.adults + room.children,
+    0
+  );
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
+    const updatedFormData = {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
-    });
+    };
+    setFormData(updatedFormData);
+
+    // Dispatch data to Redux store
+    dispatch(setPersonalDetails(updatedFormData));
+    dispatch(setErrors({ ...errors, [name]: "" }));
   };
 
   const validateForm = () => {
     let newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/; // Assumes a 10-digit phone number
+
     if (!formData.firstName.trim())
       newErrors.firstName = "First Name is required.";
-    if (!formData.email.trim()) newErrors.email = "Email is required.";
-    if (!formData.phone.trim()) newErrors.phone = "Phone Number is required.";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email format.";
+    }
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone Number is required.";
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Invalid phone number. Must be 10 digits.";
+    }
     if (!formData.agreeTerms)
       newErrors.agreeTerms = "You must agree to the terms.";
 
-    setErrors(newErrors);
+    dispatch(setErrors(newErrors));
     return Object.keys(newErrors).length === 0;
   };
 
-  // Expose validateForm to the parent component
   useImperativeHandle(ref, () => ({
     validateForm,
   }));
@@ -64,7 +83,7 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
                 type="text"
                 name="firstName"
                 placeholder="First Name"
-                value={formData.firstName}
+                value={formData.firstName || personalDetails.firstName}
                 onChange={handleChange}
                 className="border p-2 rounded w-full"
               />
@@ -76,7 +95,7 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
               type="text"
               name="lastName"
               placeholder="Last Name"
-              value={formData.lastName}
+              value={formData.lastName || personalDetails.lastName}
               onChange={handleChange}
               className="border p-2 rounded w-1/2"
             />
@@ -88,7 +107,7 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
                 type="email"
                 name="email"
                 placeholder="Email"
-                value={formData.email}
+                value={formData.email || personalDetails.email}
                 onChange={handleChange}
                 className="border p-2 rounded w-full"
               />
@@ -101,7 +120,7 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
                 type="tel"
                 name="phone"
                 placeholder="Phone Number"
-                value={formData.phone}
+                value={formData.phone || personalDetails.phone}
                 onChange={handleChange}
                 className="border p-2 rounded w-full"
               />
@@ -114,7 +133,7 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
           <textarea
             name="specialRequests"
             placeholder="Special Requests"
-            value={formData.specialRequests}
+            value={formData.specialRequests || personalDetails.specialRequests}
             onChange={handleChange}
             className="border p-2 rounded w-full h-20"
             maxLength={500}
@@ -125,7 +144,7 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
             <input
               type="checkbox"
               name="agreeTerms"
-              checked={formData.agreeTerms}
+              checked={formData.agreeTerms || personalDetails.agreeTerms}
               onChange={handleChange}
               className="mr-2"
             />
