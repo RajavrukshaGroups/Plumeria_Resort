@@ -58,7 +58,8 @@
 }
 
 .prev-step-button,
-.next-step-button {
+.next-step-button,
+.checkout-button {
   /* background: #a77a3a; */
   background: white;
   color: black;
@@ -72,6 +73,7 @@
 }
 
 .prev-step-button:hover,
-.next-step-button:hover {
+.next-step-button:hover,
+.checkout-button:hover {
   background: #a77a3a;
 }

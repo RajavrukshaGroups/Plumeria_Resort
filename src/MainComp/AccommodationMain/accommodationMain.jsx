@@ -14,7 +14,7 @@ const AccommodationMain = () => {
   const { roomsList, checkInDate, checkOutDate, setBookingData } =
     useBookingContext();
 
-  const queryParams = new URLSearchParams(location.search);       
+  const queryParams = new URLSearchParams(location.search);
   const checkIn = queryParams.get("checkIn")
     ? new Date(queryParams.get("checkIn"))
     : checkInDate;
@@ -37,6 +37,9 @@ const AccommodationMain = () => {
     () => (roomsList.length > 0 ? roomsList : roomsFromQuery),
     [roomsList, roomsFromQuery]
   );
+
+  const currentStep = parseInt(queryParams.get("step")) || 1;
+  const isPastRoomSelection = currentStep > combinedRooms.length;
 
   useEffect(() => {
     setBookingData((prevData) => {
@@ -65,7 +68,7 @@ const AccommodationMain = () => {
     <div>
       <HeaderComponent />
       <AccommodationComp />
-      <NewBookingSection />
+      <NewBookingSection disableControls={isPastRoomSelection} />
       {/* <BookingSection/> */}
       <BookingDetailsComponent
         rooms={combinedRooms}

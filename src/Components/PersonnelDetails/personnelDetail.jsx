@@ -1,4 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import YourStay from "../YourStay/YourStay";
 import { useSelector, useDispatch } from "react-redux";
 import { useBookingContext } from "../BookingForm/BookingContext";
@@ -6,6 +7,7 @@ import { setErrors, setPersonalDetails } from "../../store/bookingSlice";
 
 const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const personalDetails = useSelector((state) => state.booking.personalDetails);
   const errors = useSelector((state) => state.booking.personalDetails.errors);
@@ -150,11 +152,17 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
             />
             <label className="text-gray-700 text-sm">
               I have read and agree to the{" "}
-              <span className="text-yellow-600 cursor-pointer">
+              <span
+                className="text-yellow-600 cursor-pointer"
+                onClick={() => navigate("/privacy-policy")}
+              >
                 Privacy Policy
               </span>{" "}
               and{" "}
-              <span className="text-yellow-600 cursor-pointer">
+              <span
+                className="text-yellow-600 cursor-pointer"
+                onClick={() => navigate("/terms-conditions")}
+              >
                 Terms & Conditions
               </span>
               .

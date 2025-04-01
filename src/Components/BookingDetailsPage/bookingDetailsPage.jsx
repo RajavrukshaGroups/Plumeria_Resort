@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
 import "./BookingDetailsComponent.css";
@@ -10,6 +11,9 @@ import PaymentDetails from "../PaymentDetails/paymentDetails";
 const BookingDetailsComponent = ({ rooms }) => {
   const dispatch = useDispatch();
   const selectedRooms = useSelector((state) => state.booking.rooms);
+  const totalAmount = selectedRooms.reduce((total, room) => {
+    return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
+  }, 0); // Reassign room IDs sequentially
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -20,6 +24,10 @@ const BookingDetailsComponent = ({ rooms }) => {
   }, 0);
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
   const personnelDetailRef = useRef();
+  const guestDetails = useSelector((state) => state.booking.personalDetails);
+  const isPastRoomSelection = currentStep > rooms.length;
+  // const [isRoomsSelected, setIsRoomSelected] = useState(false);
+  console.log("personnel details", guestDetails);
 
   const handleNextStep = () => {
     if (currentStep === 1) {
@@ -64,6 +72,10 @@ const BookingDetailsComponent = ({ rooms }) => {
       }
     }
 
+    // if (currentStep === rooms.length) {
+    //   setIsRoomSelected(true);
+    // }
+
     // Proceed to the next step
     queryParams.set("step", currentStep + 1);
     navigate(`?${queryParams.toString()}`, { replace: true });
@@ -74,6 +86,78 @@ const BookingDetailsComponent = ({ rooms }) => {
       dispatch(setErrors({}));
       queryParams.set("step", currentStep - 1);
       navigate(`?${queryParams.toString()}`, { replace: true });
+    }
+  };
+
+  const handleProceedToCheckout = async () => {
+    try {
+      // Load Razorpay script dynamically (if not already loaded)
+      if (!window.Razorpay) {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        script.onload = () => handlePayment();
+        document.body.appendChild(script);
+      } else {
+        handlePayment();
+      }
+    } catch (error) {
+      console.error("Error loading Razorpay:", error);
+      alert("❌ Failed to initiate payment.");
+    }
+  };
+
+  const handlePayment = async () => {
+    try {
+      // Create an order from your backend
+      const { data } = await axios.post(
+        "http://localhost:3000/payments/create-order",
+        {
+          amount: totalAmount, // Pass the dynamically calculated total amount
+          currency: "INR",
+        }
+      );
+
+      const options = {
+        key: "rzp_test_yb7RLsIfkH5SIq", // Replace with your Razorpay Key
+        amount: data.amount,
+        currency: data.currency,
+        name: "Plumeria Resort",
+        description: "Booking Payment",
+        order_id: data.id,
+        handler: async (response) => {
+          // Verify payment with backend
+          const verifyRes = await axios.post(
+            "http://localhost:3000/payments/verify-payment",
+            {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }
+          );
+
+          if (verifyRes.data.success) {
+            alert("✅ Payment Successful!");
+            navigate("/booking-success"); // Redirect after success
+          } else {
+            alert("❌ Payment Verification Failed!");
+          }
+        },
+        prefill: {
+          name: `${guestDetails.firstName} ${guestDetails.lastName}`,
+          email: `${guestDetails.email}`,
+          contact: `${guestDetails.phone}`,
+        },
+        theme: {
+          color: "#A77A3A",
+        },
+      };
+
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error("Payment Error:", error);
+      alert("❌ Error processing payment");
     }
   };
 
@@ -152,7 +236,7 @@ const BookingDetailsComponent = ({ rooms }) => {
         />
       ) : (
         <div>
-          <PaymentDetails />
+          <PaymentDetails selectedPlan={selectedPlan} />
         </div>
       )}
 
@@ -162,9 +246,13 @@ const BookingDetailsComponent = ({ rooms }) => {
             Previous
           </button>
         )}
-        {currentStep < totalSteps && (
+        {currentStep < totalSteps ? (
           <button onClick={handleNextStep} className="next-step-button">
             Next
+          </button>
+        ) : (
+          <button onClick={handleProceedToCheckout} className="checkout-button">
+            Proceed to Checkout
           </button>
         )}
       </div>
