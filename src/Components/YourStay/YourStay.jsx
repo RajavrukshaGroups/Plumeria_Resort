@@ -7,9 +7,9 @@ const YourStay = ({ selectedPlan }) => {
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const totalAmount = selectedRooms.reduce((total, room) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
-  }, 0);// Reassign room IDs sequentially
+  }, 0); // Reassign room IDs sequentially
 
-  // console.log(selectedRooms,'this is selected rooms')
+  console.log(selectedRooms, "this is selected rooms");
 
   return (
     <div className="your-stay-container shadow-lg rounded-lg p-5 bg-white">
@@ -19,16 +19,19 @@ const YourStay = ({ selectedPlan }) => {
 
       {selectedRooms.map((room, index) => (
         <div key={index} className="stay-details space-y-2 border-b pb-3 mb-3">
-          <p className="text-gray-700 text-sm font-medium flex flex-wrap items-center gap-x-2">
-            <span>Room {room.roomId}:</span>
-            <span className="font-semibold text-gray-900">
-              {room.persons} Persons, {room.adults} Extra Adults, {room.children} Children
+          <p className="text-gray-700 text-sm font-medium flex flex-wrap items-center gap-x-2 bg-yellow-100 p-2 rounded-lg shadow-md">
+            <span className="font-bold text-[#a77a3a]">
+              Room {room.roomId}:
+            </span>
+            <span className="font-semibold text-[#333]">
+              {room.persons} Persons, {room.adults} Extra Adults,{" "}
+              {room.children} Children
             </span>
           </p>
 
           <div className="stay-price text-gray-800 text-base font-semibold flex justify-between items-center">
             <span className="text-gray-600">Plan:</span>
-            <span className="text-[#a77a3a]">{room.planName}</span>
+            <span className="text-[#a77a3a] capitalize">{room.planName}</span>
           </div>
 
           <div className="stay-price text-gray-800 text-base font-semibold flex justify-between items-center">
@@ -43,7 +46,9 @@ const YourStay = ({ selectedPlan }) => {
 
           <div className="stay-price text-gray-800 text-base font-semibold flex justify-between items-center">
             <span className="text-gray-600">Extra Adult Price:</span>
-            <span className="text-[#a77a3a]">₹ {room.extraAdultPrice || "0.00"}</span>
+            <span className="text-[#a77a3a]">
+              ₹ {room.extraAdultPrice || "0.00"}
+            </span>
           </div>
 
           <div className="stay-taxes text-gray-800 text-base font-semibold flex justify-between items-center">
