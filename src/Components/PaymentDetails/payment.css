@@ -3,3 +3,19 @@
   justify-content: center;
   align-items: center;
 }
+
+/* .cancellation-policy,
+.checkin-policy {
+  background-color: floralwhite;
+} */
+
+.cancellation-policy,
+.checkin-policy {
+  background-color: rgb(249, 246, 239);
+}
+
+.cancellation-checkin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

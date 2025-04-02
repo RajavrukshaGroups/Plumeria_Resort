@@ -1,76 +1,61 @@
-import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import YourStay from "../YourStay/YourStay";
 import "./payment.css";
 
-const Payment = () => {
-  const [amount, setAmount] = useState(500); // Default amount
+const Payment = ({ offer }) => {
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
-  // ✅ Load Razorpay script on component mount
-  //   useEffect(() => {
-  //     const script = document.createElement("script");
-  //     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-  //     script.async = true;
-  //     document.body.appendChild(script);
-  //   }, []);
-
-  //   const handlePayment = async () => {
-  //     try {
-  //       const { data } = await axios.post(
-  //         "http://localhost:3000/payments/create-order",
-  //         { amount, currency: "INR" }
-  //       );
-
-  //       const options = {
-  //         key: "rzp_test_yb7RLsIfkH5SIq", // ✅ Replace with your Razorpay Key ID
-  //         amount: data.amount,
-  //         currency: data.currency,
-  //         name: "Plumeria Resort",
-  //         description: "Booking Payment",
-  //         order_id: data.id,
-  //         handler: async (response) => {
-  //           const verifyRes = await axios.post(
-  //             "http://localhost:3000/payments/verify-payment",
-  //             {
-  //               razorpay_order_id: response.razorpay_order_id,
-  //               razorpay_payment_id: response.razorpay_payment_id,
-  //               razorpay_signature: response.razorpay_signature,
-  //             }
-  //           );
-
-  //           if (verifyRes.data.success) {
-  //             alert("✅ Payment Successful!");
-  //           } else {
-  //             alert("❌ Payment Verification Failed!");
-  //           }
-  //         },
-  //         prefill: {
-  //           name: "Customer Name",
-  //           email: "customer@example.com",
-  //           contact: "9999999999",
-  //         },
-  //         theme: {
-  //           color: "#A77A3A",
-  //           // backdrop_color: "#f5f5f5", // Change the background color
-  //           hide_topbar: false, // Hide the top bar (true/false)
-  //         },
-  //       };
-
-  //       const razorpay = new window.Razorpay(options);
-  //       razorpay.open();
-  //     } catch (error) {
-  //       console.error("Payment Error:", error);
-  //       alert("❌ Error processing payment");
-  //     }
-  //   };
-
   return (
-    <div className="your-stay-price">
-      {/* <p>Amount: ₹{amount}</p>
-      <button onClick={handlePayment}>Pay Now</button> */}
-      <YourStay selectedPlan={selectedPlan} />
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="flex flex-col md:flex-row gap-6 p-6 rounded-lg w-full max-w-4xl justify-center">
+        <YourStay selectedPlan={selectedPlan} offer={offer} />
+
+        {offer && (
+          <div className="w-full md:w-1/3 flex flex-col gap-4 cancellation-checkin">
+            {/* Cancellation Policy */}
+            <div className="cancellation-policy border border-[#a77a3a] p-4 rounded-lg shadow-md">
+              <h3 className="text-base font-bold text-gray-800 mb-2">
+                Cancellation Policy
+              </h3>
+              <ul className="text-gray-600 text-sm list-disc pl-4">
+                <li>
+                  50% payment has to be made as an advance for the confirmation
+                  of booking.
+                </li>
+                <li>Full payment is required at the time of check-in.</li>
+                <li>
+                  No refunds will be issued for no-shows or early check-out.
+                </li>
+                {/* <li>
+                  Free cancellation by <strong>2PM - 1 day prior</strong> to
+                  arrival to avoid a penalty of 1 night charge plus any
+                  applicable taxes & fees.
+                </li> */}
+              </ul>
+            </div>
+
+            {/* Check-In & Check-Out Policy */}
+            <div className="checkin-policy border border-[#a77a3a] p-4 rounded-lg shadow-md">
+              <h3 className="text-base font-bold text-gray-800 mb-2">
+                Check-In & Check-Out Policy
+              </h3>
+              <ul className="text-gray-600 text-sm list-disc pl-4">
+                <li>
+                  Check-in time is <strong>1 PM</strong> and check-out time is{" "}
+                  <strong>11 AM</strong>.
+                </li>
+                <li>
+                  Early check-in or late check-out is subject to availability
+                  and may incur additional charges.
+                </li>
+                <li>
+                  All extras to be cleared at the resort before departure.
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

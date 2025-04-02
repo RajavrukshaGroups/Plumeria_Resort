@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  selectedPlan: {},  // Store plans for multiple rooms
-  rooms: [],  // Initialize rooms array
+  selectedPlan: {}, // Store plans for multiple rooms
+  rooms: [], // Initialize rooms array
   totalPrice: 0,
+  advancePayment: 0,
+  remainingPayment: 0,
   personalDetails: {
     firstName: "",
     lastName: "",
@@ -60,6 +62,11 @@ const bookingSlice = createSlice({
         ...action.payload,
       };
     },
+    setPaymentAmounts: (state, action) => {
+      const { advance, remaining } = action.payload;
+      state.advancePayment = advance;
+      state.remainingPayment = remaining;
+    },
     setErrors: (state, action) => {
       state.personalDetails.errors = action.payload;
     },
@@ -70,6 +77,13 @@ const bookingSlice = createSlice({
   },
 });
 
-export const { setPlan, setRoom, removeRoom, resetRooms, setPersonalDetails,setErrors } =
-  bookingSlice.actions;
+export const {
+  setPlan,
+  setRoom,
+  removeRoom,
+  resetRooms,
+  setPersonalDetails,
+  setPaymentAmounts,
+  setErrors,
+} = bookingSlice.actions;
 export default bookingSlice.reducer;

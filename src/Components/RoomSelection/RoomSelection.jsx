@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUsers, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { setPlan, setRoom } from "../../store/bookingSlice";
 import RoomDetailsModal from "./RoomDetails";
 import YourStay from "../YourStay/YourStay";
+import PricingDetailsModal from "./PricingDetailsModal";
 
 const RoomSelection = ({ rooms, currentStep }) => {
   const dispatch = useDispatch();
@@ -12,6 +12,12 @@ const RoomSelection = ({ rooms, currentStep }) => {
   const [roomImageIndex, setRoomImageIndex] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+  const [selectedPlanForPricing, setSelectedPlanForPricing] = useState(null);
+  const [selectedPlanNameForPricing, setSelectedPlanNameForPricing] =
+    useState(null);
+
+  console.log("selectedRoom-book-now", rooms);
 
   const handleImageChange = (roomId, direction) => {
     setRoomImageIndex((prev) => {
@@ -28,11 +34,11 @@ const RoomSelection = ({ rooms, currentStep }) => {
   };
 
   const handleRoomSelect = (roomId, planName, plan) => {
-
     let selectedRoomData = {};
     rooms.forEach((val) => {
       if (roomId === val.id) {
-        let extraAdultPrice = val.adults > 0 ? val.adults * plan.price.extraAdult.withGst : 0;
+        let extraAdultPrice =
+          val.adults > 0 ? val.adults * plan.price.extraAdult.withGst : 0;
         let roomType = val.selectedRoom.roomType;
         let roomPrice = plan.price.twoGuests.withGst;
 
@@ -62,10 +68,22 @@ const RoomSelection = ({ rooms, currentStep }) => {
     setSelectedRoom(null);
   };
 
-  const roomIndex = currentStep - 1 ;
-  if (roomIndex < 0 || roomIndex >= rooms.length ) return null;
+  const roomIndex = currentStep - 1;
+  if (roomIndex < 0 || roomIndex >= rooms.length) return null;
   const room = rooms[roomIndex];
   const currentRoomGuests = room.persons + room.adults + room.children;
+
+  const openPricingModal = (plan, planName) => {
+    setSelectedPlanForPricing(plan);
+    setSelectedPlanNameForPricing(planName);
+    setIsPricingModalOpen(true);
+  };
+
+  const closePricingModal = () => {
+    setIsPricingModalOpen(false);
+    setSelectedPlanForPricing(null);
+    setSelectedPlanNameForPricing(null);
+  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 w-full p-4">
@@ -152,6 +170,12 @@ const RoomSelection = ({ rooms, currentStep }) => {
                   >
                     Select
                   </button>
+                  <button
+                    onClick={() => openPricingModal(plan, planName)}
+                    className="mt-2 w-full bg-transparent text-[#a77a3a] border border-[#a77a3a] py-2 px-4 rounded text-xs hover:bg-[#a77a3a] hover:text-white transition-all duration-300"
+                  >
+                    View Price
+                  </button>
                 </div>
               </div>
             ))}
@@ -167,6 +191,14 @@ const RoomSelection = ({ rooms, currentStep }) => {
         <RoomDetailsModal
           roomData={selectedRoom?.selectedRoom}
           onClose={closeModal}
+        />
+      )}
+
+      {isPricingModalOpen && (
+        <PricingDetailsModal
+          plan={selectedPlanForPricing}
+          planName={selectedPlanNameForPricing}
+          onClose={closePricingModal}
         />
       )}
     </div>
