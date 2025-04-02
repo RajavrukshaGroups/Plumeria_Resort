@@ -46,3 +46,9 @@
   font-weight: bold;
   color: #a77a3a;
 }
+
+.room-head{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

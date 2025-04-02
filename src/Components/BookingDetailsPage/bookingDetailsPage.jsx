@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
@@ -7,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PersonalDetails from "../PersonnelDetails/personnelDetail";
 import { setErrors } from "../../store/bookingSlice";
 import PaymentDetails from "../PaymentDetails/paymentDetails";
+import "react-toastify/dist/ReactToastify.css";
 
 const BookingDetailsComponent = ({ rooms }) => {
   const dispatch = useDispatch();
@@ -27,13 +29,18 @@ const BookingDetailsComponent = ({ rooms }) => {
   const guestDetails = useSelector((state) => state.booking.personalDetails);
   const isPastRoomSelection = currentStep > rooms.length;
   // const [isRoomsSelected, setIsRoomSelected] = useState(false);
-  console.log("personnel details", guestDetails);
+  // console.log("personnel details", guestDetails);
+  const advancePayment = useSelector((state) => state.booking.advancePayment);
+  const remainingAmount = useSelector((state) => state.booking.remainingAmount);
 
   const handleNextStep = () => {
     if (currentStep === 1) {
       // Check if planName is missing or roomPrice is 0
       if (!selectedRooms[0]?.planName) {
-        alert("Please select a plan for the first room before proceeding.");
+        // alert("Please select a plan for the first room before proceeding.");
+        toast.error(
+          "Please select a plan for the first room before proceeding."
+        );
         return;
       }
 
@@ -41,7 +48,10 @@ const BookingDetailsComponent = ({ rooms }) => {
         selectedRooms[0]?.roomPrice === 0 ||
         selectedRooms[0]?.roomPrice == null
       ) {
-        alert(
+        // alert(
+        //   "The room price for the first room cannot be zero. Please select a valid plan."
+        // );
+        toast.error(
           "The room price for the first room cannot be zero. Please select a valid plan."
         );
         return;
@@ -51,7 +61,10 @@ const BookingDetailsComponent = ({ rooms }) => {
     if (currentStep === 2 && rooms.length > 1) {
       // Check if planName is missing or roomPrice is 0 for the second room
       if (!selectedRooms[1]?.planName) {
-        alert("Please select a plan for the second room before proceeding.");
+        // alert("Please select a plan for the second room before proceeding.");
+        toast.error(
+          "Please select a plan for the second room before proceeding."
+        );
         return;
       }
 
@@ -59,7 +72,10 @@ const BookingDetailsComponent = ({ rooms }) => {
         selectedRooms[1]?.roomPrice === 0 ||
         selectedRooms[1]?.roomPrice == null
       ) {
-        alert(
+        // alert(
+        //   "The room price for the second room cannot be zero. Please select a valid plan."
+        // );
+        toast.error(
           "The room price for the second room cannot be zero. Please select a valid plan."
         );
         return;
@@ -71,10 +87,6 @@ const BookingDetailsComponent = ({ rooms }) => {
         return;
       }
     }
-
-    // if (currentStep === rooms.length) {
-    //   setIsRoomSelected(true);
-    // }
 
     // Proceed to the next step
     queryParams.set("step", currentStep + 1);
@@ -103,17 +115,20 @@ const BookingDetailsComponent = ({ rooms }) => {
       }
     } catch (error) {
       console.error("Error loading Razorpay:", error);
-      alert("❌ Failed to initiate payment.");
+      // alert("❌ Failed to initiate payment.");
+      toast.error("Failed to initiate payment.");
     }
   };
 
   const handlePayment = async () => {
     try {
+      const amountToPay = advancePayment > 0 ? advancePayment : totalAmount;
       // Create an order from your backend
       const { data } = await axios.post(
         "http://localhost:3000/payments/create-order",
         {
-          amount: totalAmount, // Pass the dynamically calculated total amount
+          // amount: {totalAmount},
+          amount: amountToPay,
           currency: "INR",
         }
       );
@@ -137,10 +152,12 @@ const BookingDetailsComponent = ({ rooms }) => {
           );
 
           if (verifyRes.data.success) {
-            alert("✅ Payment Successful!");
+            // alert("✅ Payment Successful!");
+            toast.success("Payment Successful!");
             navigate("/booking-success"); // Redirect after success
           } else {
-            alert("❌ Payment Verification Failed!");
+            // alert("❌ Payment Verification Failed!");
+            toast.error("Payment Verification Failed!");
           }
         },
         prefill: {
@@ -157,13 +174,15 @@ const BookingDetailsComponent = ({ rooms }) => {
       razorpay.open();
     } catch (error) {
       console.error("Payment Error:", error);
-      alert("❌ Error processing payment");
+      // alert("❌ Error processing payment");
+      toast.error("Error processing payment");
     }
   };
 
   return (
     <div className="booking-container">
       {/* Step Indicator */}
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="steps-container">
         {rooms.map((room, index) => {
           const stepNumber = index + 1;
@@ -236,7 +255,7 @@ const BookingDetailsComponent = ({ rooms }) => {
         />
       ) : (
         <div>
-          <PaymentDetails selectedPlan={selectedPlan} />
+          <PaymentDetails selectedPlan={selectedPlan} offer={true} />
         </div>
       )}
 
