@@ -36,7 +36,7 @@ const AllRoute = () => {
           <Route path="/contact-us" element={<ContactUsMain />} />
           <Route path="/privacy-policy" element={<MainPrivacyPolicy />} />
           <Route path="/terms-conditions" element={<MainTermsAndConditions />} />
-          <Route path="/book-now" element={<AccommodationMain />}/>
+          <Route path="/book-now" element={<AccommodationMain />} />
         </Routes>
       </Suspense>
     </Router>

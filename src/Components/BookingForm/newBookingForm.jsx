@@ -7,7 +7,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
 
-const NewBookingSection = ({ disableControls = false }) => {
+const NewBookingSection = () => {
   const navigate = useNavigate();
   const {
     checkInDate,
@@ -28,13 +28,13 @@ const NewBookingSection = ({ disableControls = false }) => {
   } = useContext(BookingContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const [tempRoomsList, setTempRoomsList] = useState([...roomsList]);
-  const selectedRooms = useSelector((state) => state.booking.rooms);
-  const selectedPlan = useSelector((state) => state.booking.selectedPlan);
+    const selectedRooms = useSelector((state) => state.booking.rooms);
+    const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
-  console.log(selectedRooms, "this is selectedRoom in new booking form");
-  //  console.log(tempRoomsList[0]?.selectedRoom.roomType,'this is the temp rooms list')
+    console.log(selectedRooms,'this is selectedRoom in new booking form');
+//  console.log(tempRoomsList[0]?.selectedRoom.roomType,'this is the temp rooms list')
 
   const dispatch = useDispatch();
   const openModal = () => {
@@ -97,7 +97,7 @@ const NewBookingSection = ({ disableControls = false }) => {
           persons: 1,
           adults: 0,
           children: 0,
-        },
+          },
       ]);
     }
   };
@@ -107,7 +107,7 @@ const NewBookingSection = ({ disableControls = false }) => {
       .filter((room) => room.id !== id)
       .map((room, index) => ({
         ...room,
-        id: index + 1,
+        id: index + 1, 
       }));
     setTempRoomsList(updatedTempRoomsList);
     dispatch(resetRooms());
@@ -121,40 +121,37 @@ const NewBookingSection = ({ disableControls = false }) => {
     updatedSelectedRooms.forEach((room) => dispatch(setRoom(room)));
   };
 
+  
   const confirmSelection = async () => {
     setLoading(true);
     setAvailabilityMessage("");
     const unselectedRooms = tempRoomsList.filter((room) => !room.selectedRoom);
-    if (unselectedRooms.length > 0) {
-      setLoading(false);
-      setInvalidRooms(unselectedRooms.map((room) => room.id));
-      return;
-    }
+    if (unselectedRooms.length > 0) { 
+      setLoading(false);   
+      setInvalidRooms(unselectedRooms.map((room) => room.id));  
+      return;   
+    }   
 
-    setInvalidRooms([]);
+    setInvalidRooms([]);   
     const currentPlanMap = selectedRooms.reduce((acc, room) => {
-      acc[room.roomId] = room.roomType;
-      return acc;
+        acc[room.roomId] = room.roomType; 
+        return acc;
     }, {});
 
-    const requestData = {
+    const requestData = {   
       checkInDate: checkInDate.toISOString().split("T")[0],
       checkOutDate: checkOutDate.toISOString().split("T")[0],
-      totalRooms: tempRoomsList.length,
+      totalRooms: tempRoomsList.length,  
       rooms: tempRoomsList.map((room) => {
         const plan = selectedPlan[room.id];
-        const previousRoomType = currentPlanMap[room.id] || null;
+        const previousRoomType = currentPlanMap[room.id] || null; 
         let roomPrice = room.roomPrice;
-        if (
-          previousRoomType &&
-          previousRoomType !== room.selectedRoom.roomType
-        ) {
+        if (previousRoomType && previousRoomType !== room.selectedRoom.roomType) {
           roomPrice = 0;
         }
         let extraAdultPrice = 0;
         if (plan && room.adults > 0) {
-          extraAdultPrice =
-            room.adults * (plan.price?.extraAdult?.withGst || 0);
+          extraAdultPrice = room.adults * (plan.price?.extraAdult?.withGst || 0);
         }
         return {
           roomId: room.id,
@@ -163,22 +160,23 @@ const NewBookingSection = ({ disableControls = false }) => {
           adults: room.adults,
           children: room.children,
           extraAdultPrice,
-          roomPrice,
+          roomPrice, 
         };
       }),
     };
     requestData.rooms.forEach((room) => {
       const plan = selectedPlan[room.roomId];
       if (plan) {
-        const extraAdultPrice =
-          room.adults * (plan.price?.extraAdult?.withGst || 0);
+        const extraAdultPrice = room.adults * (plan.price?.extraAdult?.withGst || 0);
         dispatch(
           setRoom({
             roomId: room.roomId,
             extraAdultPrice,
             adults: room.adults,
             roomType: room.roomType,
-            roomPrice: room.roomPrice,
+            roomPrice: room.roomPrice, 
+            children:room.children,
+            persons:room.persons
           })
         );
       }
@@ -191,24 +189,17 @@ const NewBookingSection = ({ disableControls = false }) => {
       );
       setLoading(false);
 
-      if (
-        response.data.message === "Rooms are available for the selected dates."
-      ) {
+      if (response.data.message === "Rooms are available for the selected dates.") {
         setIsRoomSelected(true);
         setRoomsList(tempRoomsList);
         setIsModalOpen(false);
 
         const roomsQuery = tempRoomsList
-          .map(
-            (room) =>
-              `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`
-          )
+          .map(room => `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`)
           .join(",");
 
         navigate(
-          `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
-            requestData.checkOutDate
-          }&rooms=${encodeURIComponent(roomsQuery)}`
+          `/book-now?checkIn=${requestData.checkInDate}&checkOut=${requestData.checkOutDate}&rooms=${encodeURIComponent(roomsQuery)}`
         );
         return;
       }
@@ -216,66 +207,54 @@ const NewBookingSection = ({ disableControls = false }) => {
       let message = "Some rooms are unavailable.\n";
       if (response.data.unavailableDates?.length > 0) {
         message += "❌ Unavailable Rooms:\n";
-        response.data.unavailableDates.forEach((room) => {
+        response.data.unavailableDates.forEach(room => {
           message += `- ${room.roomType} on ${room.date}\n`;
         });
       }
 
       if (response.data.availableRooms?.length > 0) {
         message += "\n✅ Available Alternatives:\n";
-        response.data.availableRooms.forEach((room) => {
-          message += `- ${room.roomType} (${
-            room.availableRooms
-          } available on ${new Date(room.date).toDateString()})\n`;
+        response.data.availableRooms.forEach(room => {
+          message += `- ${room.roomType} (${room.availableRooms} available on ${new Date(room.date).toDateString()})\n`;
         });
       }
 
       setAvailabilityMessage(message);
     } catch (error) {
       setLoading(false);
-      let message =
-        error.response?.data?.error ||
-        "Error checking availability. Please try again.";
+      let message = error.response?.data?.error || "Error checking availability. Please try again.";
 
       if (error.response?.data?.unavailableDates?.length > 0) {
         message += "\n❌ Unavailable Rooms:\n";
-        error.response.data.unavailableDates.forEach((room) => {
+        error.response.data.unavailableDates.forEach(room => {
           message += `- ${room.roomType} on ${room.date}\n`;
         });
       }
 
       if (error.response?.data?.availableRooms?.length > 0) {
         message += "\n✅ Available Alternatives:\n";
-        error.response.data.availableRooms.forEach((room) => {
-          message += `- ${room.roomType} (${
-            room.availableRooms
-          } available on ${new Date(room.date).toDateString()})\n`;
+        error.response.data.availableRooms.forEach(room => {
+          message += `- ${room.roomType} (${room.availableRooms} available on ${new Date(room.date).toDateString()})\n`;
         });
       }
       setAvailabilityMessage(message);
     }
-  };
+};
+
 
   return (
     <div className="flex flex-col items-center mt-8 gap-4">
-      {/* <div className="relative bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 w-full max-w-6xl"> */}
-      <div
-        className={`relative bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 w-full max-w-6xl ${
-          disableControls ? "opacity-50 pointer-events-none" : ""
-        }`}
-      >
+      <div className="relative bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 w-full max-w-6xl">
         <div className="w-full md:w-1/4">
           <label className="block text-gray-700 text-sm font-semibold mb-1">
             Check-in
           </label>
           <DatePicker
             selected={checkInDate}
-            // onChange={setCheckInDate}
-            onChange={disableControls ? undefined : setCheckInDate}
+            onChange={setCheckInDate}
             minDate={new Date()}
             dateFormat="dd MMMM yyyy"
             className="w-full border p-3 text-gray-700 text-sm rounded-md text-center"
-            disabled={disableControls}
           />
         </div>
 
@@ -285,12 +264,10 @@ const NewBookingSection = ({ disableControls = false }) => {
           </label>
           <DatePicker
             selected={checkOutDate}
-            // onChange={setCheckOutDate}
-            onChange={disableControls ? undefined : setCheckOutDate}
+            onChange={setCheckOutDate}
             minDate={new Date(checkInDate.getTime() + 24 * 60 * 60 * 1000)}
             dateFormat="dd MMMM yyyy"
             className="w-full border p-3 text-gray-700 text-sm rounded-md text-center"
-            disabled={disableControls}
           />
         </div>
 
@@ -298,16 +275,9 @@ const NewBookingSection = ({ disableControls = false }) => {
           <label className="block text-gray-700 text-sm font-semibold mb-1">
             Guests & Rooms
           </label>
-          {/* <button
+          <button
             onClick={openModal}
             className="w-full border p-3 text-gray-700 text-sm rounded-md"
-          > */}
-          <button
-            onClick={disableControls ? undefined : openModal}
-            className={`w-full border p-3 text-gray-700 text-sm rounded-md ${
-              disableControls ? "cursor-not-allowed bg-gray-100" : ""
-            }`}
-            disabled={disableControls}
           >
             {isRoomsSelected
               ? `${roomsList.length} Room(s), ${roomsList.reduce(
