@@ -74,6 +74,7 @@ const bookingSlice = createSlice({
       state.rooms = [];
       state.totalPrice = 0;
     },
+    resetBooking: () => initialState,
   },
 });
 
@@ -82,6 +83,7 @@ export const {
   setRoom,
   removeRoom,
   resetRooms,
+  resetBooking,
   setPersonalDetails,
   setPaymentAmounts,
   setErrors,

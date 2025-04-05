@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoomSelection from "../RoomSelection/RoomSelection";
+import { BookingContext } from "../BookingForm/BookingContext";
 import "./BookingDetailsComponent.css";
 import { useSelector, useDispatch } from "react-redux";
 import PersonalDetails from "../PersonnelDetails/personnelDetail";
@@ -13,6 +14,23 @@ import "react-toastify/dist/ReactToastify.css";
 const BookingDetailsComponent = ({ rooms }) => {
   const dispatch = useDispatch();
   const selectedRooms = useSelector((state) => state.booking.rooms);
+  const {
+    checkInDate,
+    checkOutDate,
+    setCheckInDate,
+    setCheckOutDate,
+    roomsData,
+    roomsList,
+    setRoomsList,
+    loading,
+    setLoading,
+    availabilityMessage,
+    setAvailabilityMessage,
+    isRoomsSelected,
+    setIsRoomSelected,
+    invalidRooms,
+    setInvalidRooms,
+  } = useContext(BookingContext);
   const totalAmount = selectedRooms.reduce((total, room) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0); // Reassign room IDs sequentially
@@ -28,16 +46,24 @@ const BookingDetailsComponent = ({ rooms }) => {
   const personnelDetailRef = useRef();
   const guestDetails = useSelector((state) => state.booking.personalDetails);
   const isPastRoomSelection = currentStep > rooms.length;
-  // const [isRoomsSelected, setIsRoomSelected] = useState(false);
-  // console.log("personnel details", guestDetails);
   const advancePayment = useSelector((state) => state.booking.advancePayment);
-  const remainingAmount = useSelector((state) => state.booking.remainingAmount);
+  const remainingAmount = useSelector(
+    (state) => state.booking.remainingPayment
+  );
+
+  console.log("checkInDate for post", checkInDate);
+  console.log("checkOutDate for post", checkOutDate);
+  console.log("guestDetails for post", guestDetails);
+  console.log("selectedPlan for post", selectedPlan);
+  console.log("selectedRooms for post", selectedRooms);
+  console.log("advancepayment for post", advancePayment);
+  console.log("remainingamount for post", remainingAmount);
+  console.log("total guests", totalGuests);
+  console.log("total amount", totalAmount);
 
   const handleNextStep = () => {
     if (currentStep === 1) {
-      // Check if planName is missing or roomPrice is 0
       if (!selectedRooms[0]?.planName) {
-        // alert("Please select a plan for the first room before proceeding.");
         toast.error(
           "Please select a plan for the first room before proceeding."
         );
@@ -104,6 +130,17 @@ const BookingDetailsComponent = ({ rooms }) => {
   const handleProceedToCheckout = async () => {
     try {
       // Load Razorpay script dynamically (if not already loaded)
+      const checkRoomsAvailability = await axios.post(
+        "http://localhost:3000/rooms/check-availability",
+        {
+          checkInDate,
+          checkOutDate,
+          rooms: selectedRooms,
+        }
+      );
+      if (checkRoomsAvailability.data?.message) {
+        console.log("Availability Response ✅", checkRoomsAvailability.data);
+      }
       if (!window.Razorpay) {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
@@ -114,9 +151,11 @@ const BookingDetailsComponent = ({ rooms }) => {
         handlePayment();
       }
     } catch (error) {
-      console.error("Error loading Razorpay:", error);
-      // alert("❌ Failed to initiate payment.");
-      toast.error("Failed to initiate payment.");
+      console.error("Room Availability Error ❌", error);
+      const errMessage =
+        error.response?.data?.error ||
+        "Rooms are not available. Please try different dates.";
+      toast.error(errMessage);
     }
   };
 
@@ -153,8 +192,20 @@ const BookingDetailsComponent = ({ rooms }) => {
 
           if (verifyRes.data.success) {
             // alert("✅ Payment Successful!");
-            toast.success("Payment Successful!");
-            navigate("/booking-success"); // Redirect after success
+            await axios.post("http://localhost:3000/rooms/booking", {
+              checkInDate: checkInDate,
+              checkOutDate: checkOutDate,
+              selectedRooms: selectedRooms,
+              selectedPlan: selectedPlan,
+              totalGuests: totalGuests,
+              guestDetails: guestDetails,
+              advancePayment: advancePayment,
+              remainingAmount: remainingAmount,
+              totalAmount: totalAmount,
+              amountToPay: amountToPay,
+            });
+            // toast.success("Payment Successful!");
+            navigate("/booking-success");
           } else {
             // alert("❌ Payment Verification Failed!");
             toast.error("Payment Verification Failed!");

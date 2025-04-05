@@ -14,9 +14,9 @@ const HeaderComponent = () => {
     navigate("/contact-us");
   };
 
-  const handleClickHome=()=>{
-    navigate("/")
-  }
+  const handleClickHome = () => {
+    navigate("/");
+  };
 
   return (
     <header className="header">
@@ -30,10 +30,12 @@ const HeaderComponent = () => {
 
       {/* Desktop Navigation */}
       <nav className={`nav-links ${isOpen ? "open" : ""}`}>
-        <Link to="/">Home</Link>
+        {/* <Link to="/">Home</Link> */}
         <Link to="/about-us">About Us</Link>
         <Link to="/gallery">Gallery</Link>
         <Link to="/facilities">Facilities</Link>
+        <Link to="/booking-status">Booking Status</Link>
+
         <button className="book-now" onClick={handleClickContactUs}>
           Contact NOW
         </button>
