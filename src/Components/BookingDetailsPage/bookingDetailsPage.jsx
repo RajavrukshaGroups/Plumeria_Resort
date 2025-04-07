@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PersonalDetails from "../PersonnelDetails/personnelDetail";
 import { setErrors } from "../../store/bookingSlice";
 import PaymentDetails from "../PaymentDetails/paymentDetails";
+import Loader from "../../Utils/loader";
 import "react-toastify/dist/ReactToastify.css";
 
 const BookingDetailsComponent = ({ rooms }) => {
@@ -50,6 +51,7 @@ const BookingDetailsComponent = ({ rooms }) => {
   const remainingAmount = useSelector(
     (state) => state.booking.remainingPayment
   );
+  const [isProcessingBooking, setIsProcessingBooking] = useState(false);
 
   console.log("checkInDate for post", checkInDate);
   console.log("checkOutDate for post", checkOutDate);
@@ -128,6 +130,7 @@ const BookingDetailsComponent = ({ rooms }) => {
   };
 
   const handleProceedToCheckout = async () => {
+    setIsProcessingBooking(true);
     try {
       // Load Razorpay script dynamically (if not already loaded)
       const checkRoomsAvailability = await axios.post(
@@ -145,9 +148,13 @@ const BookingDetailsComponent = ({ rooms }) => {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
         script.async = true;
-        script.onload = () => handlePayment();
+        script.onload = () => {
+          setIsProcessingBooking(false);
+          handlePayment();
+        };
         document.body.appendChild(script);
       } else {
+        setIsProcessingBooking(false);
         handlePayment();
       }
     } catch (error) {
@@ -156,59 +163,134 @@ const BookingDetailsComponent = ({ rooms }) => {
         error.response?.data?.error ||
         "Rooms are not available. Please try different dates.";
       toast.error(errMessage);
+      setIsProcessingBooking(false);
     }
   };
+
+  // const handlePayment = async () => {
+  //   try {
+  //     const amountToPay = advancePayment > 0 ? advancePayment : totalAmount;
+  //     // Create an order from your backend
+  //     const { data } = await axios.post(
+  //       "http://localhost:3000/payments/create-order",
+  //       {
+  //         // amount: {totalAmount},
+  //         amount: amountToPay,
+  //         currency: "INR",
+  //       }
+  //     );
+
+  //     const options = {
+  //       key: "rzp_test_yb7RLsIfkH5SIq", // Replace with your Razorpay Key
+  //       amount: data.amount,
+  //       currency: data.currency,
+  //       name: "Plumeria Resort",
+  //       description: "Booking Payment",
+  //       order_id: data.id,
+  //       handler: async (response) => {
+  //         // Verify payment with backend
+  //         const verifyRes = await axios.post(
+  //           "http://localhost:3000/payments/verify-payment",
+  //           {
+  //             razorpay_order_id: response.razorpay_order_id,
+  //             razorpay_payment_id: response.razorpay_payment_id,
+  //             razorpay_signature: response.razorpay_signature,
+  //           }
+  //         );
+
+  //         if (verifyRes.data.success) {
+  //           // alert("✅ Payment Successful!");
+  //           await axios.post("http://localhost:3000/rooms/booking", {
+  //             checkInDate: checkInDate,
+  //             checkOutDate: checkOutDate,
+  //             selectedRooms: selectedRooms,
+  //             selectedPlan: selectedPlan,
+  //             totalGuests: totalGuests,
+  //             guestDetails: guestDetails,
+  //             advancePayment: advancePayment,
+  //             remainingAmount: remainingAmount,
+  //             totalAmount: totalAmount,
+  //             amountToPay: amountToPay,
+  //           });
+  //           // toast.success("Payment Successful!");
+  //           navigate("/booking-success");
+  //         } else {
+  //           // alert("❌ Payment Verification Failed!");
+  //           toast.error("Payment Verification Failed!");
+  //         }
+  //       },
+  //       prefill: {
+  //         name: `${guestDetails.firstName} ${guestDetails.lastName}`,
+  //         email: `${guestDetails.email}`,
+  //         contact: `${guestDetails.phone}`,
+  //       },
+  //       theme: {
+  //         color: "#A77A3A",
+  //       },
+  //     };
+
+  //     const razorpay = new window.Razorpay(options);
+  //     razorpay.open();
+  //   } catch (error) {
+  //     console.error("Payment Error:", error);
+  //     // alert("❌ Error processing payment");
+  //     toast.error("Error processing payment");
+  //   }
+  // };
 
   const handlePayment = async () => {
     try {
       const amountToPay = advancePayment > 0 ? advancePayment : totalAmount;
-      // Create an order from your backend
+
       const { data } = await axios.post(
         "http://localhost:3000/payments/create-order",
         {
-          // amount: {totalAmount},
           amount: amountToPay,
           currency: "INR",
         }
       );
 
       const options = {
-        key: "rzp_test_yb7RLsIfkH5SIq", // Replace with your Razorpay Key
+        key: "rzp_test_yb7RLsIfkH5SIq",
         amount: data.amount,
         currency: data.currency,
         name: "Plumeria Resort",
         description: "Booking Payment",
         order_id: data.id,
         handler: async (response) => {
-          // Verify payment with backend
-          const verifyRes = await axios.post(
-            "http://localhost:3000/payments/verify-payment",
-            {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }
-          );
+          try {
+            const verifyRes = await axios.post(
+              "http://localhost:3000/payments/verify-payment",
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }
+            );
 
-          if (verifyRes.data.success) {
-            // alert("✅ Payment Successful!");
-            await axios.post("http://localhost:3000/rooms/booking", {
-              checkInDate: checkInDate,
-              checkOutDate: checkOutDate,
-              selectedRooms: selectedRooms,
-              selectedPlan: selectedPlan,
-              totalGuests: totalGuests,
-              guestDetails: guestDetails,
-              advancePayment: advancePayment,
-              remainingAmount: remainingAmount,
-              totalAmount: totalAmount,
-              amountToPay: amountToPay,
-            });
-            // toast.success("Payment Successful!");
-            navigate("/booking-success");
-          } else {
-            // alert("❌ Payment Verification Failed!");
-            toast.error("Payment Verification Failed!");
+            if (verifyRes.data.success) {
+              setIsProcessingBooking(true); // show loader
+              await axios.post("http://localhost:3000/rooms/booking", {
+                checkInDate,
+                checkOutDate,
+                selectedRooms,
+                selectedPlan,
+                totalGuests,
+                guestDetails,
+                advancePayment,
+                remainingAmount,
+                totalAmount,
+                amountToPay,
+              });
+              navigate("/booking-success");
+            } else {
+              toast.error("Payment Verification Failed!");
+            }
+          } catch (err) {
+            console.error("Booking Save Error:", err);
+            toast.error("Failed to complete booking. Please try again.");
+          } finally {
+            setIsProcessingBooking(false); // hide loader
           }
         },
         prefill: {
@@ -225,10 +307,14 @@ const BookingDetailsComponent = ({ rooms }) => {
       razorpay.open();
     } catch (error) {
       console.error("Payment Error:", error);
-      // alert("❌ Error processing payment");
       toast.error("Error processing payment");
     }
   };
+
+  // 👇 Show loader during booking save
+  if (isProcessingBooking) {
+    return <Loader />;
+  }
 
   return (
     <div className="booking-container">
