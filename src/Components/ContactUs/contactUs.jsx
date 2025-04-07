@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import contact from "../../assets/plumeriaresortimages/contact-us-new.jpeg";
 import Loader from "../../Utils/loader"; // Import the Loader component
 import "./contact.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +31,7 @@ const ContactUs = () => {
         delete newErrors[name];
         return newErrors;
       }
-      return prevErrors; 
+      return prevErrors;
     });
   };
 
@@ -59,7 +62,8 @@ const ContactUs = () => {
     try {
       const response = await fetch(
         // "https://servermain.rajavrukshagroup.in/plumeriacontact",
-        "https://server.plumeriaresort.in/plumeriacontact",
+        // "https://server.plumeriaresort.in/plumeriacontact",
+        "http://localhost:3000/plumeriacontact",
         {
           method: "POST",
           headers: {
@@ -70,7 +74,8 @@ const ContactUs = () => {
       );
 
       if (response.ok) {
-        alert("Message sent successfully!");
+        // alert("Message sent successfully!");
+        toast.success("Message Sent Successfully");
         setFormData({
           name: "",
           lastName: "",
@@ -81,10 +86,12 @@ const ContactUs = () => {
         });
         setErrors({});
       } else {
-        alert("Failed to send message. Please try again.");
+        // alert("Failed to send message. Please try again.");
+        toast.error("Failed to send message. Please try again.");
       }
     } catch (error) {
-      alert("An error occurred. Please try again later.");
+      // alert("An error occurred. Please try again later.");
+      toast.error("An error occurred. Please try again later.");
     } finally {
       setLoading(false); // Hide loader after response
     }
@@ -93,6 +100,7 @@ const ContactUs = () => {
   return (
     <div className="overflow-hidden">
       {" "}
+      <ToastContainer position="top-right" autoClose={3000} />
       {/* Prevent unwanted scrolling */}
       {loading && <Loader />} {/* Show Loader when loading is true */}
       {/* Hero Section */}

@@ -42,7 +42,8 @@ const ContactModal = ({ show, handleClose, onSubmitSuccess, project }) => {
       project,
     };
 
-    fetch("https://servermain.rajavrukshagroup.in/plumeriacontact", {
+    // fetch("https://servermain.rajavrukshagroup.in/plumeriacontact", {
+    fetch("http://localhost:3000/plumeriacontact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
