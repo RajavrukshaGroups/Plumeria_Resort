@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
+  checkInDate: null,
+  checkOutDate: null,
   selectedPlan: {}, // Store plans for multiple rooms
   rooms: [], // Initialize rooms array
   totalPrice: 0,
@@ -19,8 +21,10 @@ const initialState = {
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
+  
   reducers: {
     setRoom: (state, action) => {
+      
       const { roomId, roomPrice, extraAdultPrice, ...updates } = action.payload;
 
       const existingRoom = state.rooms.find((room) => room.roomId === roomId);
@@ -75,6 +79,14 @@ const bookingSlice = createSlice({
       state.totalPrice = 0;
     },
     resetBooking: () => initialState,
+    setDates: (state, action) => {
+      state.checkInDate = action.payload.checkInDate;
+      state.checkOutDate = action.payload.checkOutDate;
+    },
+    resetDates: (state) => {
+      state.checkInDate = null;
+      state.checkOutDate = null;
+    },
   },
 });
 
@@ -87,5 +99,7 @@ export const {
   setPersonalDetails,
   setPaymentAmounts,
   setErrors,
+  setDates,
+  resetDates
 } = bookingSlice.actions;
 export default bookingSlice.reducer;

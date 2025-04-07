@@ -37,10 +37,7 @@ const AllRoute = () => {
           <Route path="/gallery" element={<GalleryMain />} />
           <Route path="/contact-us" element={<ContactUsMain />} />
           <Route path="/privacy-policy" element={<MainPrivacyPolicy />} />
-          <Route
-            path="/terms-conditions"
-            element={<MainTermsAndConditions />}
-          />
+          <Route path="/terms-conditions" element={<MainTermsAndConditions />}/>
           <Route path="/book-now" element={<AccommodationMain />} />
           <Route path="/booking-status" element={<CheckBookingStatus />} />
           <Route path="/booking-success" element={<BookingSuccess />} />

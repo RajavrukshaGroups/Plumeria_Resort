@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setDates, setRooms } from "../../store/bookingSlice"; // Import Redux actions
 
 export const BookingContext = createContext();
 
@@ -7,7 +9,7 @@ export const useBookingContext = () => {
   const context = useContext(BookingContext);
   if (!context) {
     throw new Error("useBookingContext must be used within a BookingProvider");
-  }
+   }
   return context;
  };
 
@@ -15,15 +17,30 @@ export const BookingProvider = ({ children }) => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
+  // Load from localStorage or fallback to default
+const storedCheckIn = localStorage.getItem("checkInDate");
+const storedCheckOut = localStorage.getItem("checkOutDate");
 
-  const [checkInDate, setCheckInDate] = useState(today);
-  const [checkOutDate, setCheckOutDate] = useState(tomorrow);
+  // const [checkInDate, setCheckInDate] = useState(today);
+  // const [checkOutDate, setCheckOutDate] = useState(tomorrow);
+  const [checkInDate, setCheckInDate] = useState(
+    storedCheckIn ? new Date(storedCheckIn) : today
+  );
+  const [checkOutDate, setCheckOutDate] = useState(
+    storedCheckOut ? new Date(storedCheckOut) : tomorrow
+  );
+
   const [roomsData, setRoomsData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [availabilityMessage, setAvailabilityMessage] = useState("");
   const [isRoomsSelected, setIsRoomSelected] = useState(false);
   const [invalidRooms, setInvalidRooms] = useState([]);
 
+
+  useEffect(() => {
+  localStorage.setItem("checkInDate", checkInDate);
+  localStorage.setItem("checkOutDate", checkOutDate);
+}, [checkInDate, checkOutDate]);
   // **Load roomsList from localStorage or use default**
   const getStoredRoomsList = () => {
     const storedRooms = localStorage.getItem("roomsList");
