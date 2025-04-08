@@ -32,6 +32,14 @@ const BookingDetailsComponent = ({ rooms }) => {
     invalidRooms,
     setInvalidRooms,
   } = useContext(BookingContext);
+  useEffect(() => {
+    // If the user reloads on step Personal Details or Payment Confirmation, redirect to step 1
+    if (currentStep > rooms.length) {
+      queryParams.set("step", "1");
+      navigate(`?${queryParams.toString()}`, { replace: true });
+    }
+    // Only run this once when component mounts
+  }, []);
   const totalAmount = selectedRooms.reduce((total, room) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0); // Reassign room IDs sequentially

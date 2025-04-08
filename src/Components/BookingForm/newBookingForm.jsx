@@ -28,7 +28,6 @@ const NewBookingSection = ({ disableControls = false }) => {
   } = useContext(BookingContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [tempRoomsList, setTempRoomsList] = useState([...roomsList]);
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
@@ -296,25 +295,24 @@ const NewBookingSection = ({ disableControls = false }) => {
           <label className="block text-gray-700 text-sm font-semibold mb-1">
             Guests & Rooms
           </label>
-          {/* <button
-            onClick={openModal}
-            className="w-full border p-3 text-gray-700 text-sm rounded-md"
-          > */}
-          <button
-            onClick={disableControls ? undefined : openModal}
-            className={`w-full border p-3 text-gray-700 text-sm rounded-md ${
-              disableControls ? "cursor-not-allowed bg-gray-100" : ""
-            }`}
-            disabled={disableControls}
-          >
-            {isRoomsSelected
-              ? `${roomsList.length} Room(s), ${roomsList.reduce(
-                  (total, room) =>
-                    total + room.persons + room.adults + room.children,
-                  0
-                )} Guest(s)`
-              : "Select Rooms & Guests"}
-          </button>
+              <button
+                onClick={disableControls ? undefined : openModal}
+                className={`w-full border p-3 text-gray-700 text-sm rounded-md ${
+                  disableControls ? "cursor-not-allowed bg-gray-100" : ""
+                }`}
+                disabled={disableControls}
+              >
+                {tempRoomsList.length > 0
+                  ? `${tempRoomsList.length} Room(s), ${tempRoomsList.reduce(
+                      (total, room) =>
+                        total +
+                        (room.persons || 0) +
+                        (room.adults || 0) +
+                        (room.children || 0),
+                      0
+                    )} Guest(s)`
+                  : "Select Rooms & Guests"}
+              </button>
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState,useEffect, forwardRef, useImperativeHandle } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import YourStay from "../YourStay/YourStay";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,8 +13,9 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
   const errors = useSelector((state) => state.booking.personalDetails.errors);
   const { roomsList, checkInDate, checkOutDate } = useBookingContext();
 
-  console.log("personaldetails", personalDetails);
+// Detect page refresh and redirect to /plans
 
+  console.log("personaldetails", personalDetails);
   const [formData, setFormData] = useState({
     firstName: personalDetails.firstName || "",
     lastName: personalDetails.lastName || "",
