@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  checkInDate: null,
-  checkOutDate: null,
   selectedPlan: {}, // Store plans for multiple rooms
   rooms: [], // Initialize rooms array
   totalPrice: 0,
