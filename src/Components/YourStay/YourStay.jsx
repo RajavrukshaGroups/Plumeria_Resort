@@ -5,6 +5,9 @@ import "./YourStay.css";
 import { useSelector } from "react-redux";
 import { FaCheckCircle } from "react-icons/fa";
 import { BsCircle } from "react-icons/bs";
+// import { AiOutlineInfoCircle } from "react-icons/ai";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+
 const YourStay = ({ selectedPlan, offer }) => {
   const dispatch = useDispatch();
   // const [isPartialPayment, setIsPartialPayment] = useState(false);
@@ -82,9 +85,19 @@ const YourStay = ({ selectedPlan, offer }) => {
             </span>
           </div>
 
-          <div className="stay-taxes text-gray-800 text-base font-semibold flex justify-between items-center">
+          {/* <div className="stay-taxes text-gray-800 text-base font-semibold flex justify-between items-center">
             <span className="text-gray-600">Taxes and Fees:</span>
             <span className="text-red-500">₹ 0.00</span>
+          </div> */}
+          {/* <div className="stay-taxes flex items-center text-sm font-medium text-gray-700">
+            <AiOutlineInfoCircle className="text-gray-500 text-base mr-2 relative top-[1px]" />
+            <span className="text-gray-600">
+              Price is inclusive of all taxes.
+            </span>
+          </div> */}
+          <div className="stay-taxes flex items-center custom-info-text">
+            <AiOutlineInfoCircle className="info-icon" />
+            <span>Price is inclusive of all taxes.</span>
           </div>
         </div>
       ))}
