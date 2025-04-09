@@ -9,6 +9,24 @@
   /* z-index: 10; */
 }
 
+.custom-info-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563; /* Tailwind's gray-700 */
+}
+
+.custom-info-text span {
+  color: #4b5563; /* Adjust text color */
+}
+
+.info-icon {
+  font-size: 16px;
+  color: #6b7280; /* Tailwind's gray-500 */
+  margin-right: 6px;
+  position: relative;
+  top: 1px; /* Slight vertical alignment */
+}
+
 .your-stay-title {
   font-size: 1.2rem;
   font-weight: bold;
@@ -31,8 +49,9 @@
 .stay-total {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  /* justify-content: space-between; */
+  /* gap: 10px; */
+  gap: 0px;
 }
 
 .stay-price span,
@@ -47,7 +66,7 @@
   color: #a77a3a;
 }
 
-.room-head{
+.room-head {
   display: flex;
   justify-content: center;
   align-items: center;
