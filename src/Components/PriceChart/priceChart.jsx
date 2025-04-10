@@ -269,6 +269,7 @@ const PriceChart = () => {
             resort stays, designed for a perfect getaway.
           </p>
         </div>
+        
         <div className="price-chart-content grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
           {plans.map((plan, index) => (
             <div
@@ -300,7 +301,7 @@ const PriceChart = () => {
       {modalData && (
         <div className="modal-overlay modal-price">
           <div className="modal-content">
-            <h2>{modalData.name} Pricing</h2>
+            <h2>{modalData.name}Pricing</h2>
             <table>
               <thead>
                 <tr>

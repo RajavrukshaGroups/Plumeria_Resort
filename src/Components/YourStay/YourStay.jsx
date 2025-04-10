@@ -154,7 +154,7 @@ const YourStay = ({ selectedPlan, offer }) => {
           >
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
-                <span className="text-[#a77a3a] font-bold">PAY NOW</span>
+                <span className="text-[#a77a3a] font-bold">PAY HALF</span>
               </div>
               {paymentOption === "partial" ? (
                 <FaCheckCircle className="text-[#a77a3a]" />

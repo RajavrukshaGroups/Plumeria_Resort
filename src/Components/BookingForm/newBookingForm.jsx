@@ -6,7 +6,7 @@ import { BookingContext } from "./BookingContext";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
-
+import '../BookingForm/booking.css'
 const NewBookingSection = ({ disableControls = false }) => {
   const navigate = useNavigate();
   const {
@@ -334,23 +334,26 @@ const NewBookingSection = ({ disableControls = false }) => {
                 <label className="block text-gray-700 text-sm font-semibold mb-2">
                   Room Type
                 </label>
+            
+
                 <select
-                  className={`w-full border p-3 text-gray-700 text-sm rounded-md mb-4 focus:ring-2 focus:outline-none
-          ${
-            invalidRooms.includes(room.id)
-              ? "border-red-500"
-              : "focus:ring-yellow-400"
-          }`}
-                  value={room.selectedRoom?.roomType || ""}
-                  onChange={(event) => handleRoomChange(room.id, event)}
-                >
-                  <option value="">Select Room</option>
-                  {roomsData.map((r) => (
-                    <option key={r.roomType} value={r.roomType}>
-                      {r.roomType}
-                    </option>
-                  ))}
-                </select>
+                    className={`w-full border p-3 font-semibold text-[#a77a3a] bg-[#f8f1e3] text-sm rounded-md mb-4 focus:ring-2 focus:outline-none 
+                    ${
+                      invalidRooms.includes(room.id)
+                        ? "border-red-500"
+                        : "focus:ring-yellow-400"
+                    } custom-dropdown`}
+                    value={room.selectedRoom?.roomType || ""}
+                    onChange={(event) => handleRoomChange(room.id, event)}
+                  >
+                    <option value="">Select Room</option>
+                    {roomsData.map((r) => (
+                      <option className="" key={r.roomType} value={r.roomType}>
+                        {r.roomType}
+                      </option>
+                    ))}
+                  </select>
+
                 {invalidRooms.includes(room.id) && (
                   <p
                     className="text-red-500"
@@ -381,7 +384,7 @@ const NewBookingSection = ({ disableControls = false }) => {
                       </span>
                       <button
                         onClick={() => updateGuestCount(room.id, type, 1)}
-                        className="w-8 h-8 flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white rounded-md transition"
+                        className="w-8 h-8 flex items-center justify-center bg-[#a77a3a] hover:bg-[#8c5f2a] hover:bg duration-300  text-white rounded-md transition"
                       >
                         +
                       </button>
@@ -405,7 +408,7 @@ const NewBookingSection = ({ disableControls = false }) => {
               className={`w-full p-3 rounded-md mb-4 transition ${
                 tempRoomsList.length >= 2
                   ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600 text-white"
+                  : " bg-transparent text-[#a77a3a] border border-[#a77a3a] hover:text-white hover:bg-[#a77a3a] transition-all duration-300"
               }`}
               disabled={tempRoomsList.length >= 2}
             >
@@ -426,14 +429,14 @@ const NewBookingSection = ({ disableControls = false }) => {
                   setIsModalOpen(false);
                   setAvailabilityMessage(""); // Clear error/success message when closing the modal
                 }}
-                className="w-1/2 bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-md transition"
+                className="w-1/2 bg-white border  border-black hover:bg-black hover:text-white text-black px-4 py-2 rounded-md transition"
               >
                 Close
               </button>
 
               <button
                 onClick={confirmSelection}
-                className="w-1/2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md transition ml-3"
+                className="w-1/2 bg-[#a77a3a] hover:bg-[#8c5f2a] text-white px-4 py-2 rounded-md hover:bg duration-300 transition-all ml-3"
               >
                 {loading ? "Checking..." : "Confirm"}
               </button>

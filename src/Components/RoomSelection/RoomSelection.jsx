@@ -143,7 +143,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
               >
                 <div className="w-full md:w-2/3">
                   <h3 className="text-lg font-semibold text-[#a77a3a] bg-[#f8f1e3] px-3 py-1 rounded-md">
-                    {planName.toUpperCase()}
+                    { planName.toUpperCase()}
                   </h3>
                   <ul className="text-xs text-gray-700 mt-1">
                     {plan.complimentary.length > 0 ? (

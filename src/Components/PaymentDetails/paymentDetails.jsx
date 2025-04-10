@@ -6,7 +6,7 @@ const Payment = ({ offer }) => {
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
+    <div className="flex justify-center items-center min-h">
       <div className="flex flex-col md:flex-row gap-6 p-6 rounded-lg w-full max-w-4xl justify-center">
         <YourStay selectedPlan={selectedPlan} offer={offer} />
 

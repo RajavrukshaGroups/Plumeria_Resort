@@ -72,6 +72,7 @@ const BookingDetailsComponent = ({ rooms }) => {
   console.log("total amount", totalAmount);
 
   const handleNextStep = () => {
+      window.scrollTo(0, 0);
     if (currentStep === 1) {
       if (!selectedRooms[0]?.planName) {
         toast.error(
@@ -130,6 +131,8 @@ const BookingDetailsComponent = ({ rooms }) => {
   };
 
   const handlePrevStep = () => {
+    window.scrollTo(0, 0);
+
     if (currentStep > 1) {
       dispatch(setErrors({}));
       queryParams.set("step", currentStep - 1);
