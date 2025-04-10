@@ -15,6 +15,10 @@ import "react-toastify/dist/ReactToastify.css";
 const BookingDetailsComponent = ({ rooms }) => {
   const dispatch = useDispatch();
   const selectedRooms = useSelector((state) => state.booking.rooms);
+  const roomSelectionRef = useRef();
+  const personalDetailsRef = useRef();
+  const paymentDetailsRef = useRef();
+
   const {
     checkInDate,
     checkOutDate,
@@ -61,18 +65,45 @@ const BookingDetailsComponent = ({ rooms }) => {
   );
   const [isProcessingBooking, setIsProcessingBooking] = useState(false);
 
-  console.log("checkInDate for post", checkInDate);
-  console.log("checkOutDate for post", checkOutDate);
-  console.log("guestDetails for post", guestDetails);
-  console.log("selectedPlan for post", selectedPlan);
-  console.log("selectedRooms for post", selectedRooms);
-  console.log("advancepayment for post", advancePayment);
-  console.log("remainingamount for post", remainingAmount);
-  console.log("total guests", totalGuests);
-  console.log("total amount", totalAmount);
+  useEffect(() => {
+    scrollToCurrentSection();
+  }, [currentStep]);
+
+  // console.log("checkInDate for post", checkInDate);
+  // console.log("checkOutDate for post", checkOutDate);
+  // console.log("guestDetails for post", guestDetails);
+  // console.log("selectedPlan for post", selectedPlan);
+  // console.log("selectedRooms for post", selectedRooms);
+  // console.log("advancepayment for post", advancePayment);
+  // console.log("remainingamount for post", remainingAmount);
+  // console.log("total guests", totalGuests);
+  // console.log("total amount", totalAmount);
+
+  const scrollToWithOffset = (ref, offset = 400) => {
+    if (ref.current) {
+      const elementPosition =
+        ref.current.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollToCurrentSection = () => {
+    if (currentStep <= rooms.length) {
+      scrollToWithOffset(roomSelectionRef);
+    } else if (currentStep === totalSteps - 1) {
+      scrollToWithOffset(personalDetailsRef);
+    } else {
+      scrollToWithOffset(paymentDetailsRef);
+    }
+  };
 
   const handleNextStep = () => {
-      window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     if (currentStep === 1) {
       if (!selectedRooms[0]?.planName) {
         toast.error(
@@ -128,6 +159,10 @@ const BookingDetailsComponent = ({ rooms }) => {
     // Proceed to the next step
     queryParams.set("step", currentStep + 1);
     navigate(`?${queryParams.toString()}`, { replace: true });
+
+    setTimeout(() => {
+      scrollToCurrentSection();
+    }, 100);
   };
 
   const handlePrevStep = () => {
@@ -137,6 +172,10 @@ const BookingDetailsComponent = ({ rooms }) => {
       dispatch(setErrors({}));
       queryParams.set("step", currentStep - 1);
       navigate(`?${queryParams.toString()}`, { replace: true });
+
+      setTimeout(() => {
+        scrollToCurrentSection();
+      }, 100);
     }
   };
 
@@ -145,8 +184,8 @@ const BookingDetailsComponent = ({ rooms }) => {
     try {
       // Load Razorpay script dynamically (if not already loaded)
       const checkRoomsAvailability = await axios.post(
-        "https://server.plumeriaresort.in/rooms/check-availability",
-        // "http://localhost:3000/rooms/check-availability",
+        // "https://server.plumeriaresort.in/rooms/check-availability",
+        "http://localhost:3000/rooms/check-availability",
         {
           checkInDate,
           checkOutDate,
@@ -179,84 +218,13 @@ const BookingDetailsComponent = ({ rooms }) => {
     }
   };
 
-  // const handlePayment = async () => {
-  //   try {
-  //     const amountToPay = advancePayment > 0 ? advancePayment : totalAmount;
-  //     // Create an order from your backend
-  //     const { data } = await axios.post(
-  //       "http://localhost:3000/payments/create-order",
-  //       {
-  //         // amount: {totalAmount},
-  //         amount: amountToPay,
-  //         currency: "INR",
-  //       }
-  //     );
-
-  //     const options = {
-  //       key: "rzp_test_yb7RLsIfkH5SIq", // Replace with your Razorpay Key
-  //       amount: data.amount,
-  //       currency: data.currency,
-  //       name: "Plumeria Resort",
-  //       description: "Booking Payment",
-  //       order_id: data.id,
-  //       handler: async (response) => {
-  //         // Verify payment with backend
-  //         const verifyRes = await axios.post(
-  //           "http://localhost:3000/payments/verify-payment",
-  //           {
-  //             razorpay_order_id: response.razorpay_order_id,
-  //             razorpay_payment_id: response.razorpay_payment_id,
-  //             razorpay_signature: response.razorpay_signature,
-  //           }
-  //         );
-
-  //         if (verifyRes.data.success) {
-  //           // alert("✅ Payment Successful!");
-  //           await axios.post("http://localhost:3000/rooms/booking", {
-  //             checkInDate: checkInDate,
-  //             checkOutDate: checkOutDate,
-  //             selectedRooms: selectedRooms,
-  //             selectedPlan: selectedPlan,
-  //             totalGuests: totalGuests,
-  //             guestDetails: guestDetails,
-  //             advancePayment: advancePayment,
-  //             remainingAmount: remainingAmount,
-  //             totalAmount: totalAmount,
-  //             amountToPay: amountToPay,
-  //           });
-  //           // toast.success("Payment Successful!");
-  //           navigate("/booking-success");
-  //         } else {
-  //           // alert("❌ Payment Verification Failed!");
-  //           toast.error("Payment Verification Failed!");
-  //         }
-  //       },
-  //       prefill: {
-  //         name: `${guestDetails.firstName} ${guestDetails.lastName}`,
-  //         email: `${guestDetails.email}`,
-  //         contact: `${guestDetails.phone}`,
-  //       },
-  //       theme: {
-  //         color: "#A77A3A",
-  //       },
-  //     };
-
-  //     const razorpay = new window.Razorpay(options);
-  //     razorpay.open();
-  //   } catch (error) {
-  //     console.error("Payment Error:", error);
-  //     // alert("❌ Error processing payment");
-  //     toast.error("Error processing payment");
-  //   }
-  // };
-
   const handlePayment = async () => {
     try {
       const amountToPay = advancePayment > 0 ? advancePayment : totalAmount;
 
       const { data } = await axios.post(
-        // "http://localhost:3000/payments/create-order",
-        "https://server.plumeriaresort.in/payments/create-order",
+        "http://localhost:3000/payments/create-order",
+        // "https://server.plumeriaresort.in/payments/create-order",
         {
           amount: amountToPay,
           currency: "INR",
@@ -273,8 +241,8 @@ const BookingDetailsComponent = ({ rooms }) => {
         handler: async (response) => {
           try {
             const verifyRes = await axios.post(
-              // "http://localhost:3000/payments/verify-payment",
-              "https://server.plumeriaresort.in/payments/verify-payment",
+              "http://localhost:3000/payments/verify-payment",
+              // "https://server.plumeriaresort.in/payments/verify-payment",
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -284,8 +252,8 @@ const BookingDetailsComponent = ({ rooms }) => {
 
             if (verifyRes.data.success) {
               setIsProcessingBooking(true); // show loader
-              // await axios.post("http://localhost:3000/rooms/booking", {
-              await axios.post("https://server.plumeriaresort.in/rooms/booking", {
+              await axios.post("http://localhost:3000/rooms/booking", {
+                // await axios.post("https://server.plumeriaresort.in/rooms/booking", {
                 checkInDate,
                 checkOutDate,
                 selectedRooms,
@@ -306,8 +274,8 @@ const BookingDetailsComponent = ({ rooms }) => {
             toast.error("Failed to complete booking. Please try again.");
           } finally {
             setIsProcessingBooking(false); // hide loader
-           }
-         },
+          }
+        },
         prefill: {
           name: `${guestDetails.firstName} ${guestDetails.lastName}`,
           email: `${guestDetails.email}`,
@@ -394,19 +362,23 @@ const BookingDetailsComponent = ({ rooms }) => {
       </div>
 
       {currentStep <= rooms.length ? (
-        <RoomSelection
-          rooms={rooms}
-          currentStep={currentStep}
-          totalGuests={totalGuests}
-        />
+        <div ref={roomSelectionRef}>
+          <RoomSelection
+            rooms={rooms}
+            currentStep={currentStep}
+            totalGuests={totalGuests}
+          />
+        </div>
       ) : currentStep === totalSteps - 1 ? (
-        <PersonalDetails
-          onNext={handleNextStep}
-          selectedPlan={selectedPlan}
-          ref={personnelDetailRef}
-        />
+        <div ref={personalDetailsRef}>
+          <PersonalDetails
+            onNext={handleNextStep}
+            selectedPlan={selectedPlan}
+            ref={personnelDetailRef}
+          />
+        </div>
       ) : (
-        <div>
+        <div ref={paymentDetailsRef}>
           <PaymentDetails selectedPlan={selectedPlan} offer={true} />
         </div>
       )}

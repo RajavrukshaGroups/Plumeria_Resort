@@ -58,7 +58,7 @@ const BookingSuccess = () => {
     <div className="booking-success-container">
       <h1>🎉 Booking Successful!</h1>
       <p>Thank you for booking with Plumeria Resort.</p>
-      <p>You will be redirected to the homepage shortly...</p>
+      <p>Please check your email...</p>
       <div className="loader"></div> {/* 👈 Loader */}
     </div>
   );
