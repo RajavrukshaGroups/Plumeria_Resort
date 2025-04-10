@@ -20,7 +20,8 @@ const CheckBookingCompStatus = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/bookings/check-status/${bookingId}`
+        // `http://localhost:3000/bookings/check-status/${bookingId}`
+        `https://server.plumeriaresort.in/bookings/check-status/${bookingId}`
       );
       const data = await response.json();
 

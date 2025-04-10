@@ -145,7 +145,8 @@ const BookingDetailsComponent = ({ rooms }) => {
     try {
       // Load Razorpay script dynamically (if not already loaded)
       const checkRoomsAvailability = await axios.post(
-        "http://localhost:3000/rooms/check-availability",
+        "https://server.plumeriaresort.in/rooms/check-availability",
+        // "http://localhost:3000/rooms/check-availability",
         {
           checkInDate,
           checkOutDate,
@@ -254,7 +255,8 @@ const BookingDetailsComponent = ({ rooms }) => {
       const amountToPay = advancePayment > 0 ? advancePayment : totalAmount;
 
       const { data } = await axios.post(
-        "http://localhost:3000/payments/create-order",
+        // "http://localhost:3000/payments/create-order",
+        "https://server.plumeriaresort.in/payments/create-order",
         {
           amount: amountToPay,
           currency: "INR",
@@ -271,7 +273,8 @@ const BookingDetailsComponent = ({ rooms }) => {
         handler: async (response) => {
           try {
             const verifyRes = await axios.post(
-              "http://localhost:3000/payments/verify-payment",
+              // "http://localhost:3000/payments/verify-payment",
+              "https://server.plumeriaresort.in/payments/verify-payment",
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -281,7 +284,8 @@ const BookingDetailsComponent = ({ rooms }) => {
 
             if (verifyRes.data.success) {
               setIsProcessingBooking(true); // show loader
-              await axios.post("http://localhost:3000/rooms/booking", {
+              // await axios.post("http://localhost:3000/rooms/booking", {
+              await axios.post("https://server.plumeriaresort.in/rooms/booking", {
                 checkInDate,
                 checkOutDate,
                 selectedRooms,
@@ -302,8 +306,8 @@ const BookingDetailsComponent = ({ rooms }) => {
             toast.error("Failed to complete booking. Please try again.");
           } finally {
             setIsProcessingBooking(false); // hide loader
-          }
-        },
+           }
+         },
         prefill: {
           name: `${guestDetails.firstName} ${guestDetails.lastName}`,
           email: `${guestDetails.email}`,
