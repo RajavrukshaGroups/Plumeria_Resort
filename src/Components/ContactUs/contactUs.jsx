@@ -62,8 +62,8 @@ const ContactUs = () => {
     try {
       const response = await fetch(
         // "https://servermain.rajavrukshagroup.in/plumeriacontact",
-        "https://server.plumeriaresort.in/plumeriacontact",
-        // "http://localhost:3000/plumeriacontact",
+        // "https://server.plumeriaresort.in/plumeriacontact",
+        "http://localhost:3000/plumeriacontact",
         {
           method: "POST",
           headers: {
