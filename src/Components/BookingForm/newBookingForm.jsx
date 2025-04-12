@@ -6,7 +6,8 @@ import { BookingContext } from "./BookingContext";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
-import '../BookingForm/booking.css'
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import "../BookingForm/booking.css";
 const NewBookingSection = ({ disableControls = false }) => {
   const navigate = useNavigate();
   const {
@@ -296,24 +297,24 @@ const NewBookingSection = ({ disableControls = false }) => {
           <label className="block text-gray-700 text-sm font-semibold mb-1">
             Guests & Rooms
           </label>
-              <button
-                onClick={disableControls ? undefined : openModal}
-                className={`w-full border p-3 text-gray-700 text-sm rounded-md ${
-                  disableControls ? "cursor-not-allowed bg-gray-100" : ""
-                }`}
-                disabled={disableControls}
-              >
-                {tempRoomsList.length > 0
-                  ? `${tempRoomsList.length} Room(s), ${tempRoomsList.reduce(
-                      (total, room) =>
-                        total +
-                        (room.persons || 0) +
-                        (room.adults || 0) +
-                        (room.children || 0),
-                      0
-                    )} Guest(s)`
-                  : "Select Rooms & Guests"}
-              </button>
+          <button
+            onClick={disableControls ? undefined : openModal}
+            className={`w-full border p-3 text-gray-700 text-sm rounded-md ${
+              disableControls ? "cursor-not-allowed bg-gray-100" : ""
+            }`}
+            disabled={disableControls}
+          >
+            {tempRoomsList.length > 0
+              ? `${tempRoomsList.length} Room(s), ${tempRoomsList.reduce(
+                  (total, room) =>
+                    total +
+                    (room.persons || 0) +
+                    (room.adults || 0) +
+                    (room.children || 0),
+                  0
+                )} Guest(s)`
+              : "Select Rooms & Guests"}
+          </button>
         </div>
       </div>
 
@@ -335,25 +336,24 @@ const NewBookingSection = ({ disableControls = false }) => {
                 <label className="block text-gray-700 text-sm font-semibold mb-2">
                   Room Type
                 </label>
-            
 
                 <select
-                    className={`w-full border p-3 font-semibold text-[#a77a3a] bg-[#f8f1e3] text-sm rounded-md mb-4 focus:ring-2 focus:outline-none 
+                  className={`w-full border p-3 font-semibold text-[#a77a3a] bg-[#f8f1e3] text-sm rounded-md mb-4 focus:ring-2 focus:outline-none 
                     ${
                       invalidRooms.includes(room.id)
                         ? "border-red-500"
                         : "focus:ring-yellow-400"
                     } custom-dropdown`}
-                    value={room.selectedRoom?.roomType || ""}
-                    onChange={(event) => handleRoomChange(room.id, event)}
-                  >
-                    <option value="">Select Room</option>
-                    {roomsData.map((r) => (
-                      <option className="" key={r.roomType} value={r.roomType}>
-                        {r.roomType}
-                      </option>
-                    ))}
-                  </select>
+                  value={room.selectedRoom?.roomType || ""}
+                  onChange={(event) => handleRoomChange(room.id, event)}
+                >
+                  <option value="">Select Room</option>
+                  {roomsData.map((r) => (
+                    <option className="" key={r.roomType} value={r.roomType}>
+                      {r.roomType}
+                    </option>
+                  ))}
+                </select>
 
                 {invalidRooms.includes(room.id) && (
                   <p
@@ -364,7 +364,7 @@ const NewBookingSection = ({ disableControls = false }) => {
                   </p>
                 )}
 
-                {["persons", "adults", "children"].map((type, index) => (
+                {/* {["persons", "adults", "children"].map((type, index) => (
                   <div
                     key={index}
                     className="mb-3 flex items-center justify-between"
@@ -386,6 +386,42 @@ const NewBookingSection = ({ disableControls = false }) => {
                       <button
                         onClick={() => updateGuestCount(room.id, type, 1)}
                         className="w-8 h-8 flex items-center justify-center bg-[#a77a3a] hover:bg-[#8c5f2a] hover:bg duration-300  text-white rounded-md transition"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                ))} */}
+                {["persons", "adults", "children"].map((type, index) => (
+                  <div
+                    key={index}
+                    className="mb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      <label className="text-gray-800 text-sm font-semibold">
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                      </label>
+                      {type === "adults" && (
+                        <span className="text-xs text-gray-600">
+                          (above 5 years of age)
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-3 mt-2 sm:mt-0">
+                      <button
+                        onClick={() => updateGuestCount(room.id, type, -1)}
+                        className="w-8 h-8 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-gray-900 rounded-md transition disabled:opacity-50"
+                        disabled={room[type] <= (type === "persons" ? 1 : 0)}
+                      >
+                        −
+                      </button>
+                      <span className="text-lg font-medium text-gray-900">
+                        {room[type]}
+                      </span>
+                      <button
+                        onClick={() => updateGuestCount(room.id, type, 1)}
+                        className="w-8 h-8 flex items-center justify-center bg-[#a77a3a] hover:bg-[#8c5f2a] duration-300 text-white rounded-md transition"
                       >
                         +
                       </button>

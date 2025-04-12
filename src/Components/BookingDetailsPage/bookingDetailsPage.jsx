@@ -185,7 +185,7 @@ const BookingDetailsComponent = ({ rooms }) => {
       // Load Razorpay script dynamically (if not already loaded)
       const checkRoomsAvailability = await axios.post(
         "https://server.plumeriaresort.in/rooms/check-availability",
-        // "http://localhost:3000/r/ooms/check-availability",
+        // "http://localhost:3000/rooms/check-availability",
         {
           checkInDate,
           checkOutDate,
