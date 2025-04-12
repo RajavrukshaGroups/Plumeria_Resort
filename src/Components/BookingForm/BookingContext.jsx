@@ -9,9 +9,9 @@ export const useBookingContext = () => {
   const context = useContext(BookingContext);
   if (!context) {
     throw new Error("useBookingContext must be used within a BookingProvider");
-   }
+  }
   return context;
- };
+};
 
 export const BookingProvider = ({ children }) => {
   const today = new Date();
@@ -35,15 +35,16 @@ export const BookingProvider = ({ children }) => {
   const [isRoomsSelected, setIsRoomSelected] = useState(false);
   const [invalidRooms, setInvalidRooms] = useState([]);
 
-
   useEffect(() => {
-  localStorage.setItem("checkInDate", checkInDate);
-  localStorage.setItem("checkOutDate", checkOutDate);
-}, [checkInDate, checkOutDate]);
+    localStorage.setItem("checkInDate", checkInDate);
+    localStorage.setItem("checkOutDate", checkOutDate);
+  }, [checkInDate, checkOutDate]);
   // **Load roomsList from localStorage or use default**
   const getStoredRoomsList = () => {
     const storedRooms = localStorage.getItem("roomsList");
-    return storedRooms ? JSON.parse(storedRooms) : [{ id: 1, selectedRoom: null, persons: 1, adults: 0, children: 0 }];
+    return storedRooms
+      ? JSON.parse(storedRooms)
+      : [{ id: 1, selectedRoom: null, persons: 1, adults: 0, children: 0 }];
   };
   const [roomsList, setRoomsList] = useState(getStoredRoomsList);
   const [bookingData, setBookingData] = useState({
@@ -107,5 +108,3 @@ export const BookingProvider = ({ children }) => {
     </BookingContext.Provider>
   );
 };
-
-
