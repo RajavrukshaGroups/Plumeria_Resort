@@ -188,8 +188,8 @@ const NewBookingSection = ({ disableControls = false }) => {
 
     try {
       const response = await axios.post(
-        // "http://localhost:3000/rooms/check-availability",
-        "https://server.plumeriaresort.in/rooms/check-availability",
+        "http://localhost:3000/rooms/check-availability",
+        // "https://server.plumeriaresort.in/rooms/check-availability",
         requestData
       );
       setLoading(false);
