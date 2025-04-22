@@ -231,6 +231,7 @@ const BookingDetailsComponent = ({ rooms }) => {
         }
       );
 
+
       const options = {
         key: "rzp_test_yb7RLsIfkH5SIq",
         amount: data.amount,
@@ -286,6 +287,15 @@ const BookingDetailsComponent = ({ rooms }) => {
         theme: {
           color: "#A77A3A",
         },
+        method: {
+          netBanking: true,
+          card: true,
+          upi: true,
+          wallet: true,
+          emi: false,
+          paylater: false,
+        },
+        timeout: 300, //5mins
       };
 
       const razorpay = new window.Razorpay(options);
