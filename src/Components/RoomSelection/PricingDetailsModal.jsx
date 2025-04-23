@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const PricingDetailsModal = ({ planName, onClose }) => {
+  console.log(planName,'thissssssssssssssssss');
+  
   const [roomsData, setRoomsData] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
 
+  console.log(roomsData, "this is rooms data in pricing modal");
+  
   useEffect(() => {
     const fetchRoomsData = async () => {
       try {
@@ -25,6 +29,9 @@ const PricingDetailsModal = ({ planName, onClose }) => {
     .map((room) => room.plans[planName.toLowerCase()]?.menuDetails)
     .find((details) => details);
 
+    console.log(menuDetails, "this is menu details in pricing modal");
+    
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
       <div className="bg-white rounded-lg shadow-lg w-96 max-h-[80vh] overflow-y-auto">
@@ -41,13 +48,13 @@ const PricingDetailsModal = ({ planName, onClose }) => {
         {/* Pricing Table */}
         <div className="overflow-x-auto p-4">
           <table className="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr className="bg-[#f8f1e3]">
-                <th className="border p-2 text-left">Room Type</th>
-                <th className="border p-2 text-left">2 Persons</th>
-                <th className="border p-2 text-left">Extra Adult</th>
-              </tr>
-            </thead>
+              <thead>
+                <tr className="bg-[#f8f1e3]">
+                  <th className="border p-2 text-left">Room Type</th>
+                  <th className="border p-2 text-left">2 Persons</th>
+                  <th className="border p-2 text-left">Extra Adult</th>
+                </tr>
+              </thead>
             <tbody>
               {roomsData.map((room) => {
                 const planData = room.plans[planName.toLowerCase()];
@@ -61,7 +68,7 @@ const PricingDetailsModal = ({ planName, onClose }) => {
                     </td>
                     <td className="border p-2">
                       ₹ {planData.price.extraAdult.withGst}
-                    </td>
+                   </td>
                   </tr>
                 );
               })}
@@ -75,6 +82,7 @@ const PricingDetailsModal = ({ planName, onClose }) => {
 
         {/* Show View Menu Details Button if menuDetails exist */}
         {menuDetails && (
+          
           <div className="mt-4 text-center p-4">
             <button
               onClick={() => setShowMenu(!showMenu)}

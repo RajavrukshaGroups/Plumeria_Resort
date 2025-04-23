@@ -23,6 +23,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
     setRoomImageIndex((prev) => {
       const currentIndex = prev[roomId] || 0;
       const room = rooms.find((r) => r.id === roomId);
+      console.log(room,"rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
       const images = room.selectedRoom.images;
       const newIndex =
         direction === "next"
@@ -72,6 +73,8 @@ const RoomSelection = ({ rooms, currentStep }) => {
   if (roomIndex < 0 || roomIndex >= rooms.length) return null;
   const room = rooms[roomIndex];
   const currentRoomGuests = room.persons + room.adults + room.children;
+
+  console.log(room.selectedRoom.plans,'tttttttttttttttttttttttttttttttttttttt')
 
   const openPricingModal = (plan, planName) => {
     setSelectedPlanForPricing(plan);
@@ -133,52 +136,53 @@ const RoomSelection = ({ rooms, currentStep }) => {
 
           <div className="w-full md:w-2/3">
             <h2 className="text-lg font-bold text-[#a77a3a] mb-3">
-              {room.selectedRoom.roomType}
+              {room.selectedRoom.planName}
             </h2>
 
-            {Object.entries(room.selectedRoom.plans).map(([planName, plan]) => (
-              <div
-                key={planName}
-                className="flex flex-col md:flex-row justify-between items-center border border-gray-300 p-3 rounded-lg bg-white shadow-sm mb-3"
-              >
-                <div className="w-full md:w-2/3">
-                  <h3 className="text-lg font-semibold text-[#a77a3a] bg-[#f8f1e3] px-3 py-1 rounded-md">
-                    { planName.toUpperCase()}
-                  </h3>
-                  <ul className="text-xs text-gray-700 mt-1">
-                    {plan.complimentary.length > 0 ? (
-                      plan.complimentary.map((desc, i) => (
-                        <li
-                          key={i}
-                          className="text-base font-medium flex items-center gap-2"
-                        >
-                          <span className="text-[#a77a3a]">➤</span> {desc}
-                        </li>
-                      ))
-                    ) : (
-                      <li className="text-gray-500 italic">No complimentary</li>
-                    )}
-                  </ul>
-                </div>
-                <div className="w-full md:w-1/3 text-center mt-2 md:mt-0">
-                  <div className="text-sm font-bold mb-1 text-gray-900">
-                    ₹ {plan.price.twoGuests.withGst}
-                  </div>
-                  <button
-                    onClick={() => handleRoomSelect(room.id, planName, plan)}
-                    className="bg-[#a77a3a] text-white py-2 px-4 rounded text-xs hover:bg-[#8c5f2a] transition-all duration-300"
-                  >
-                    Select
-                  </button>
-                  <button
-                    onClick={() => openPricingModal(plan, planName)}
-                    className="mt-2 w-full bg-transparent text-[#a77a3a] border border-[#a77a3a] py-2 px-4 rounded text-xs hover:bg-[#a77a3a] hover:text-white transition-all duration-300"
-                  >
-                    View Price
-                  </button>
-                </div>
-              </div>
-            ))}
+          
+            {room.selectedRoom.plans.map((plan, index) => (
+  <div
+    key={index}
+    className="flex flex-col md:flex-row justify-between items-center border border-gray-300 p-3 rounded-lg bg-white shadow-sm mb-3"
+  >
+    <div className="w-full md:w-2/3">
+      <h3 className="text-lg font-semibold text-[#a77a3a] bg-[#f8f1e3] px-3 py-1 rounded-md">
+        {plan.name} {/* Access the proper plan name */}
+      </h3>
+      <ul className="text-xs text-gray-700 mt-1">
+        {plan.complimentary.length > 0 ? (
+          plan.complimentary.map((desc, i) => (
+            <li
+              key={i}
+              className="text-base font-medium flex items-center gap-2"
+            >
+              <span className="text-[#a77a3a]">➤</span> {desc}
+            </li>
+          ))
+        ) : (
+          <li className="text-gray-500 italic">No complimentary</li>
+        )}
+      </ul>
+    </div>
+    <div className="w-full md:w-1/3 text-center mt-2 md:mt-0">
+      <div className="text-sm font-bold mb-1 text-gray-900">
+        ₹ {plan.price.twoGuests.withGst}
+      </div>
+      <button
+        onClick={() => handleRoomSelect(room.id, plan.name, plan)}
+        className="bg-[#a77a3a] text-white py-2 px-4 rounded text-xs hover:bg-[#8c5f2a] transition-all duration-300"
+      >
+        Select
+      </button>
+      <button
+        onClick={() => openPricingModal(plan, plan.name)}
+        className="mt-2 w-full bg-transparent text-[#a77a3a] border border-[#a77a3a] py-2 px-4 rounded text-xs hover:bg-[#a77a3a] hover:text-white transition-all duration-300"
+      >
+        View Price
+      </button>
+    </div>
+  </div>
+))}
           </div>
         </div>
       </div>
