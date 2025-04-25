@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const PricingDetailsModal = ({ planName, onClose }) => {
-  console.log(planName,'thissssssssssssssssss');
-  
+  console.log(planName, "thissssssssssssssssss");
+
   const [roomsData, setRoomsData] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
 
   console.log(roomsData, "this is rooms data in pricing modal");
-  
+
   useEffect(() => {
     const fetchRoomsData = async () => {
       try {
@@ -25,12 +25,18 @@ const PricingDetailsModal = ({ planName, onClose }) => {
   if (!roomsData.length) return null;
 
   // Get menu details for the selected plan
+  // const menuDetails = roomsData
+  //   .map((room) => room.plans[planName.toLowerCase()]?.menuDetails)
+  //   .find((details) => details);
   const menuDetails = roomsData
-    .map((room) => room.plans[planName.toLowerCase()]?.menuDetails)
+    .map(
+      (room) =>
+        room.plans.find(
+          (plan) => plan.name.toLowerCase() === planName.toLowerCase()
+        )?.menuDetails
+    )
     .find((details) => details);
-
-    console.log(menuDetails, "this is menu details in pricing modal");
-    
+  console.log(menuDetails, "this is menu details in pricing modal");
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
@@ -48,16 +54,17 @@ const PricingDetailsModal = ({ planName, onClose }) => {
         {/* Pricing Table */}
         <div className="overflow-x-auto p-4">
           <table className="w-full border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-[#f8f1e3]">
-                  <th className="border p-2 text-left">Room Type</th>
-                  <th className="border p-2 text-left">2 Persons</th>
-                  <th className="border p-2 text-left">Extra Adult</th>
-                </tr>
-              </thead>
+            <thead>
+              <tr className="bg-[#f8f1e3]">
+                <th className="border p-2 text-left">Room Type</th>
+                <th className="border p-2 text-left">2 Persons</th>
+                <th className="border p-2 text-left">Extra Adult</th>
+              </tr>
+            </thead>
             <tbody>
-              {roomsData.map((room) => {
+              {/* {roomsData.map((room) => {
                 const planData = room.plans[planName.toLowerCase()];
+                console.log("plan data price", planData);
                 if (!planData) return null;
 
                 return (
@@ -68,7 +75,25 @@ const PricingDetailsModal = ({ planName, onClose }) => {
                     </td>
                     <td className="border p-2">
                       ₹ {planData.price.extraAdult.withGst}
-                   </td>
+                    </td>
+                  </tr>
+                );
+              })} */}
+              {roomsData.map((room) => {
+                const planData = room.plans.find(
+                  (plan) => plan.name.toLowerCase() === planName.toLowerCase()
+                );
+                if (!planData) return null;
+
+                return (
+                  <tr key={room._id}>
+                    <td className="border p-2 font-bold">{room.roomType}</td>
+                    <td className="border p-2">
+                      ₹ {planData.price.twoGuests.withGst}
+                    </td>
+                    <td className="border p-2">
+                      ₹ {planData.price.extraAdult.withGst}
+                    </td>
                   </tr>
                 );
               })}
@@ -81,8 +106,7 @@ const PricingDetailsModal = ({ planName, onClose }) => {
         </p>
 
         {/* Show View Menu Details Button if menuDetails exist */}
-        {menuDetails && (
-          
+        {menuDetails && planName.toLowerCase() !== "lite" && (
           <div className="mt-4 text-center p-4">
             <button
               onClick={() => setShowMenu(!showMenu)}
@@ -122,7 +146,7 @@ const PricingDetailsModal = ({ planName, onClose }) => {
               </div>
             )}
 
-            {menuDetails.dinner && (
+            {planName.toLowerCase() !== "plus" && menuDetails.dinner && (
               <div className="mb-2">
                 <h4 className="font-semibold text-gray-700">Dinner</h4>
                 <ul className="list-disc ml-5 text-sm text-gray-600">
@@ -133,7 +157,7 @@ const PricingDetailsModal = ({ planName, onClose }) => {
               </div>
             )}
 
-            {menuDetails.snacks && (
+            {planName.toLowerCase() !== "plus" && menuDetails.snacks && (
               <div>
                 <h4 className="font-semibold text-gray-700">Snacks</h4>
                 <ul className="list-disc ml-5 text-sm text-gray-600">
