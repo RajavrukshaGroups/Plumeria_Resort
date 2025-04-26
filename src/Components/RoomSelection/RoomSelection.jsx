@@ -75,7 +75,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
   const currentRoomGuests = room.persons + room.adults + room.children;
 
   console.log(
-    room.selectedRoom.plans,
+    room,
     "tttttttttttttttttttttttttttttttttttttt"
   );
 
@@ -142,7 +142,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
 
           <div className="w-full md:w-2/3">
             <h2 className="text-lg font-bold text-[#a77a3a] mb-3">
-              {room.selectedRoom.planName}
+              {room.selectedRoom.roomType}
             </h2>
 
             {room.selectedRoom.plans.map((plan, index) => (
