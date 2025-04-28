@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const RoomDetailsModal = ({ roomData, onClose }) => {
-  console.log("room-data", roomData);
   const [activeTab, setActiveTab] = useState("details");
 
   if (!roomData) return null; // Handle case where no data is passed

@@ -1,7 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setDates, setRoom } from "../../store/bookingSlice"; // Import Redux actions
 
 export const BookingContext = createContext();
 
@@ -20,8 +18,6 @@ export const BookingProvider = ({ children }) => {
   // Load from localStorage or fallback to default
   const storedCheckIn = localStorage.getItem("checkInDate");
   const storedCheckOut = localStorage.getItem("checkOutDate");
-  // const [checkInDate, setCheckInDate] = useState(today);
-  // const [checkOutDate, setCheckOutDate] = useState(tomorrow);
   const [checkInDate, setCheckInDate] = useState(
     storedCheckIn ? new Date(storedCheckIn) : today
   );
@@ -52,8 +48,6 @@ export const BookingProvider = ({ children }) => {
     checkOut: tomorrow,
     rooms: roomsList,
   });
-
-  console.log("rooms-list12", roomsList);
 
   useEffect(() => {
     const fetchRoomsData = async () => {

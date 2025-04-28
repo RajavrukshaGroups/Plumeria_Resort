@@ -26,10 +26,8 @@ import HomeImg from "../../assets/plumeriaresortimages/homeimg.jpg";
 // All activities in a single array
 const activities = [
   { name: "Table Tennis", img: TableTennis, icon: <IconPingPong size={24} /> },
-  // { name: "Carrom", img: Carrom, icon: <IconDirectionArrows size={24} /> },
   { name: "Camp Fire", img: Campfire, icon: <IconCampfire size={24} /> },
   { name: "Chess", img: Chess, icon: <IconChess size={24} /> },
-  // { name: "Darts", img: Darts, icon: <IconChartRadar size={24} /> },
   {
     name: "Volleyball",
     img: Volleyball,
@@ -41,16 +39,7 @@ const activities = [
   { name: "Badminton", img: Badminton, icon: <IconPingPong size={24} /> },
 
   { name: "Cricket", img: Cricket, icon: <IconCricket size={24} /> },
-  // { name: "Darts", img: Darts, icon: <IconChartRadar size={24} /> },
-
   { name: "Carrom", img: Carrom, icon: <IconDirectionArrows size={24} /> },
-  // {
-  //   name: "Volleyball",
-  //   img: Volleyball,
-  //   icon: <IconBallVolleyball size={24} />,
-  // },
-  // { name: "Kids Pool", img: Pool, icon: <IconSwimming size={24} /> },
-  // { name: "Camp Fire", img: Campfire, icon: <IconCampfire size={24} /> },
 ];
 
 const ActivitiesComp = () => {

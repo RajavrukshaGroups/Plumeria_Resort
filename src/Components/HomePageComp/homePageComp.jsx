@@ -10,7 +10,6 @@ const HomePageComponent = () => {
       <section className="hero">
         <div className="hero-overlay">
           <h1 className="fade-in">
-            {/* Comfort at Our <span>Luxury</span> <span>Resort</span> */}
             Home Away from Home with Added Comfort at Our{" "}
             <span>Luxury Resort</span>
           </h1>
@@ -19,9 +18,6 @@ const HomePageComponent = () => {
             truly enchanting experience that caters to every aspect of your
             stay.
           </p>
-          {/* <button className="accommodation-btn pulse">
-            <Link to="/book-now">BOOK NOW</Link>
-          </button> */}
           <BookingForm />
         </div>
       </section>

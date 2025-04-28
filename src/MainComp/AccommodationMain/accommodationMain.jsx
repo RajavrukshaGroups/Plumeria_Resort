@@ -60,10 +60,6 @@ const AccommodationMain = () => {
     });
   }, [checkIn, checkOut, combinedRooms, setBookingData]);
 
-  console.log("Rooms from Query Params:", roomsFromQuery);
-  console.log("Rooms from Context:", roomsList);
-  console.log("Final Combined Rooms:", combinedRooms);
-
   return (
     <div>
       <HeaderComponent />

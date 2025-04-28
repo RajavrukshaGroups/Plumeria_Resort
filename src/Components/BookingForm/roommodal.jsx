@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const RoomModal = ({ rooms, setRooms, setIsModalOpen }) => {
   useEffect(() => {
-    console.log("Updated Rooms:", rooms);
+    // console.log("Updated Rooms:", rooms);
   }, [rooms]);
 
   const handleRoomTypeChange = (id, type) => {

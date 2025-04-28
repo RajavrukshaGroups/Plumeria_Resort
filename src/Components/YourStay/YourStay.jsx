@@ -5,33 +5,18 @@ import "./YourStay.css";
 import { useSelector } from "react-redux";
 import { FaCheckCircle } from "react-icons/fa";
 import { BsCircle } from "react-icons/bs";
-// import { AiOutlineInfoCircle } from "react-icons/ai";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const YourStay = ({ selectedPlan, offer }) => {
   const dispatch = useDispatch();
-  // const [isPartialPayment, setIsPartialPayment] = useState(false);
   const [paymentOption, setPaymentOption] = useState("full"); // 'partial' or 'full'
-  const [calculatedAmount, setCalculatedAmount] = useState(0);
   const [advancePayment, setAdvancePayment] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState(0);
-  const selectedPlansArray = Object.entries(selectedPlan);
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const totalAmount = selectedRooms.reduce((total, room) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0); // Reassign room IDs sequentially
 
-  console.log("selected rooms for redux payment", selectedRooms);
-
-  // useEffect(() => {
-  //   if (paymentOption === "full") {
-  //     setAdvancePayment(totalAmount);
-  //     setRemainingAmount(0);
-  //   } else {
-  //     setAdvancePayment(totalAmount / 2);
-  //     setRemainingAmount(totalAmount / 2);
-  //   }
-  // }, [paymentOption, totalAmount]);
   useEffect(() => {
     const advance = paymentOption === "full" ? totalAmount : totalAmount / 2;
     const remaining = paymentOption === "full" ? 0 : totalAmount / 2;
@@ -42,8 +27,6 @@ const YourStay = ({ selectedPlan, offer }) => {
     // Dispatch updated values to Redux
     dispatch(setPaymentAmounts({ advance, remaining }));
   }, [paymentOption, totalAmount, dispatch]);
-
-  console.log(selectedRooms, "this is selected rooms");
 
   return (
     <div className="your-stay-container shadow-lg rounded-lg p-5 bg-white">
@@ -85,16 +68,6 @@ const YourStay = ({ selectedPlan, offer }) => {
             </span>
           </div>
 
-          {/* <div className="stay-taxes text-gray-800 text-base font-semibold flex justify-between items-center">
-            <span className="text-gray-600">Taxes and Fees:</span>
-            <span className="text-red-500">₹ 0.00</span>
-          </div> */}
-          {/* <div className="stay-taxes flex items-center text-sm font-medium text-gray-700">
-            <AiOutlineInfoCircle className="text-gray-500 text-base mr-2 relative top-[1px]" />
-            <span className="text-gray-600">
-              Price is inclusive of all taxes.
-            </span>
-          </div> */}
           <div className="stay-taxes flex items-center custom-info-text">
             <AiOutlineInfoCircle className="info-icon" />
             <span>Price is inclusive of all taxes.</span>
@@ -105,7 +78,6 @@ const YourStay = ({ selectedPlan, offer }) => {
       <div className="stay-total text-lg font-bold flex justify-between items-center border-t pt-3">
         <span className="text-gray-700">Total Amount:</span>
         <span className="text-[#a77a3a]">₹ {totalAmount}</span>
-        {/* <span className="text-[#a77a3a]">₹ {calculatedAmount}</span> */}
       </div>
       {paymentOption === "partial" && (
         <>

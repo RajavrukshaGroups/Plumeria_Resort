@@ -17,13 +17,10 @@ const RoomSelection = ({ rooms, currentStep }) => {
   const [selectedPlanNameForPricing, setSelectedPlanNameForPricing] =
     useState(null);
 
-  console.log("selectedRoom-book-now", rooms);
-
   const handleImageChange = (roomId, direction) => {
     setRoomImageIndex((prev) => {
       const currentIndex = prev[roomId] || 0;
       const room = rooms.find((r) => r.id === roomId);
-      console.log(room, "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
       const images = room.selectedRoom.images;
       const newIndex =
         direction === "next"
@@ -73,16 +70,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
   if (roomIndex < 0 || roomIndex >= rooms.length) return null;
   const room = rooms[roomIndex];
   const currentRoomGuests = room.persons + room.adults + room.children;
-
-  console.log(
-    room,
-    "tttttttttttttttttttttttttttttttttttttt"
-  );
-
   const openPricingModal = (plan, planName) => {
-    console.log("modal plan", plan);
-    console.log("modal plan name", planName);
-
     setSelectedPlanForPricing(plan);
     setSelectedPlanNameForPricing(planName);
     setIsPricingModalOpen(true);

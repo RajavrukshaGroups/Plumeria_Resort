@@ -153,18 +153,6 @@
   padding: 1rem;
 }
 
-/* .menu-category {
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 0.5rem;
-  background-color: #ffeb99;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-} */
-
 .menu-category {
   font-size: 1.2rem;
   font-weight: bold;
@@ -192,14 +180,6 @@
   color: #f59e0b; /* Yellowish color for food icons */
 }
 
-/* .menu-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding-left: 1.2rem;
-  margin-top: 0.5rem;
-} */
-
 .menu-list {
   display: flex;
   flex-direction: column;
@@ -211,21 +191,11 @@
   border-radius: 6px;
 }
 
-/* .menu-list li {
-  list-style-type: disc;
-  margin-bottom: 4px;
-} */
-
 .menu-list li {
   list-style-type: disc;
   margin-bottom: 4px;
   transition: transform 0.2s ease, color 0.2s ease;
 }
-
-/* .menu-list li:hover {
-  color: #ffd700;
-  transform: translateX(5px);
-} */
 
 .modal-content {
   position: fixed; /* Ensure it stays on top */
@@ -242,15 +212,6 @@
   z-index: 1001; /* Ensure it's above everything */
   white-space: nowrap;
 }
-
-/* Modal Title */
-/* .modal-content h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-align: center;
-  color: #b8860b;
-} */
 
 .modal-content h2 {
   font-size: 1.6rem;
@@ -310,18 +271,6 @@
   font-size: 0.9rem;
   text-align: center;
 }
-
-/* Modal Close Button */
-/* .modal-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: red;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 50%;
-  cursor: pointer;
-} */
 
 .modal-close {
   position: absolute;

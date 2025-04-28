@@ -3,13 +3,7 @@ import EPPlan from "../../assets/plumeriaresortimages/pathway.jpg";
 import CPPlan from "../../assets/plumeriaresortimages/cp-plan.jpg";
 import MapPlan from "../../assets/plumeriaresortimages/meditaion.jpg";
 import ResortBrochure from "../../assets/plumeriaresortimages/PlumeriaResortBrochureNew.pdf";
-import {
-  FaUtensils,
-  FaInfoCircle,
-  FaCocktail,
-  FaUtensilSpoon,
-  FaClipboardList,
-} from "react-icons/fa";
+import { FaUtensils, FaCocktail, FaUtensilSpoon } from "react-icons/fa";
 import "./PriceChart.css";
 import ContactModal from "../../Utils/contactModal";
 
@@ -82,16 +76,6 @@ const PriceChart = () => {
         <>
           <FaUtensils className="inline-block mr-2 text-yellow-500" />
           It includes breakfast.
-          {/* <FaInfoCircle
-            className="inline-block ml-2 text-gray-500 cursor-pointer hover:text-yellow-500"
-            onClick={() => setInfoModal("plus")}
-          /> */}
-          {/* <button
-            className="ml-2 bg-yellow-500 text-white px-2 py-1 rounded text-sm hover:bg-yellow-600"
-            onClick={() => setInfoModal("plus")}
-          >
-            View Menu
-          </button> */}
           <span
             className="ml-2 bg-yellow-100 text-yellow-600 text-xs font-semibold px-2 py-1 rounded-full cursor-pointer hover:bg-yellow-200"
             onClick={() => setInfoModal("plus")}
@@ -269,7 +253,7 @@ const PriceChart = () => {
             resort stays, designed for a perfect getaway.
           </p>
         </div>
-        
+
         <div className="price-chart-content grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl">
           {plans.map((plan, index) => (
             <div
@@ -281,8 +265,6 @@ const PriceChart = () => {
                 <img src={plan.image} alt={plan.name} />
               </div>
               <div className="price-card-content">
-                {/* <h2>{plan.name}</h2>
-              <p>Click to view pricing details.</p> */}
                 <button className="price-card-button">{plan.name}</button>
               </div>
             </div>
@@ -307,7 +289,6 @@ const PriceChart = () => {
                 <tr>
                   <th>Room Type</th>
                   <th>Without GST</th>
-                  {/* <th>With GST 18%</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -315,7 +296,6 @@ const PriceChart = () => {
                   <tr key={index}>
                     <td>{item.type}</td>
                     <td>{item.withoutGST}</td>
-                    {/* <td>{item.withGST}</td> */}
                   </tr>
                 ))}
               </tbody>

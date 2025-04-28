@@ -69,16 +69,6 @@ const BookingDetailsComponent = ({ rooms }) => {
     scrollToCurrentSection();
   }, [currentStep]);
 
-  // console.log("checkInDate for post", checkInDate);
-  // console.log("checkOutDate for post", checkOutDate);
-  // console.log("guestDetails for post", guestDetails);
-  console.log("selectedPlan for post", selectedPlan);
-  // console.log("selectedRooms for post", selectedRooms);
-  // console.log("advancepayment for post", advancePayment);
-  // console.log("remainingamount for post", remainingAmount);
-  // console.log("total guests", totalGuests);
-  // console.log("total amount", totalAmount);
-
   const scrollToWithOffset = (ref, offset = 400) => {
     if (ref.current) {
       const elementPosition =
@@ -116,9 +106,6 @@ const BookingDetailsComponent = ({ rooms }) => {
         selectedRooms[0]?.roomPrice === 0 ||
         selectedRooms[0]?.roomPrice == null
       ) {
-        // alert(
-        //   "The room price for the first room cannot be zero. Please select a valid plan."
-        // );
         toast.error(
           "The room price for the first room cannot be zero. Please select a valid plan."
         );
@@ -129,7 +116,6 @@ const BookingDetailsComponent = ({ rooms }) => {
     if (currentStep === 2 && rooms.length > 1) {
       // Check if planName is missing or roomPrice is 0 for the second room
       if (!selectedRooms[1]?.planName) {
-        // alert("Please select a plan for the second room before proceeding.");
         toast.error(
           "Please select a plan for the second room before proceeding."
         );
@@ -140,9 +126,6 @@ const BookingDetailsComponent = ({ rooms }) => {
         selectedRooms[1]?.roomPrice === 0 ||
         selectedRooms[1]?.roomPrice == null
       ) {
-        // alert(
-        //   "The room price for the second room cannot be zero. Please select a valid plan."
-        // );
         toast.error(
           "The room price for the second room cannot be zero. Please select a valid plan."
         );

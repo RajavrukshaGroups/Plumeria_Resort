@@ -2,12 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const PricingDetailsModal = ({ planName, onClose }) => {
-  console.log(planName, "thissssssssssssssssss");
-
   const [roomsData, setRoomsData] = useState([]);
   const [showMenu, setShowMenu] = useState(false);
-
-  console.log(roomsData, "this is rooms data in pricing modal");
 
   useEffect(() => {
     const fetchRoomsData = async () => {
@@ -26,10 +22,6 @@ const PricingDetailsModal = ({ planName, onClose }) => {
 
   if (!roomsData.length) return null;
 
-  // Get menu details for the selected plan
-  // const menuDetails = roomsData
-  //   .map((room) => room.plans[planName.toLowerCase()]?.menuDetails)
-  //   .find((details) => details);
   const menuDetails = roomsData
     .map(
       (room) =>
@@ -38,7 +30,6 @@ const PricingDetailsModal = ({ planName, onClose }) => {
         )?.menuDetails
     )
     .find((details) => details);
-  console.log(menuDetails, "this is menu details in pricing modal");
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
@@ -64,23 +55,6 @@ const PricingDetailsModal = ({ planName, onClose }) => {
               </tr>
             </thead>
             <tbody>
-              {/* {roomsData.map((room) => {
-                const planData = room.plans[planName.toLowerCase()];
-                console.log("plan data price", planData);
-                if (!planData) return null;
-
-                return (
-                  <tr key={room._id}>
-                    <td className="border p-2 font-bold">{room.roomType}</td>
-                    <td className="border p-2">
-                      ₹ {planData.price.twoGuests.withGst}
-                    </td>
-                    <td className="border p-2">
-                      ₹ {planData.price.extraAdult.withGst}
-                    </td>
-                  </tr>
-                );
-              })} */}
               {roomsData.map((room) => {
                 const planData = room.plans.find(
                   (plan) => plan.name.toLowerCase() === planName.toLowerCase()

@@ -26,11 +26,6 @@ const Payment = ({ offer }) => {
                 <li>
                   No refunds will be issued for no-shows or early check-out.
                 </li>
-                {/* <li>
-                  Free cancellation by <strong>2PM - 1 day prior</strong> to
-                  arrival to avoid a penalty of 1 night charge plus any
-                  applicable taxes & fees.
-                </li> */}
               </ul>
             </div>
 
