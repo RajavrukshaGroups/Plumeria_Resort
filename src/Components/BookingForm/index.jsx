@@ -5,20 +5,17 @@ import { useNavigate } from "react-router-dom";
 import "./booking.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-const BookingSection = ({ 
-  accommodation, 
-  initialCheckIn, 
-  initialCheckOut, 
-  initialRooms, 
+const BookingSection = ({
+  accommodation,
+  initialCheckIn,
+  initialCheckOut,
+  initialRooms,
 }) => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [rooms, setRooms] = useState(
     initialRooms || [{ id: 1, persons: 1, adults: 0, children: 0 }]
   );
-
-  console.log(rooms,'this is rooms inside the booking form section')
-  console.log(initialRooms)
 
   const today = new Date();
   const tomorrow = new Date(today);

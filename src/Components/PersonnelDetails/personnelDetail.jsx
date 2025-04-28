@@ -1,26 +1,18 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
+import { useNavigate } from "react-router-dom";
 import YourStay from "../YourStay/YourStay";
 import { useSelector, useDispatch } from "react-redux";
 import { useBookingContext } from "../BookingForm/BookingContext";
 import { setErrors, setPersonalDetails } from "../../store/bookingSlice";
 
-const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
+const PersonalDetails = forwardRef(({ selectedPlan }, ref) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const selectedRooms = useSelector((state) => state.booking.rooms);
   const personalDetails = useSelector((state) => state.booking.personalDetails);
   const errors = useSelector((state) => state.booking.personalDetails.errors);
-  const { roomsList, checkInDate, checkOutDate } = useBookingContext();
+  const { roomsList } = useBookingContext();
 
   // Detect page refresh and redirect to /plans
-
-  console.log("personaldetails", personalDetails);
   const [formData, setFormData] = useState({
     firstName: personalDetails.firstName || "",
     lastName: personalDetails.lastName || "",
@@ -77,22 +69,16 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
   }));
 
   return (
-    // <div className="personal-details-container flex gap-8 p-6">
     <div className="personal-details-container flex flex-col md:flex-row gap-6 p-4 md:p-6">
-      {/* <div className="w-2/3 bg-white p-6 shadow-md rounded-lg"> */}
       <div className="w-full md:w-2/3 bg-white p-4 md:p-6 shadow-md rounded-lg">
-        {/* <h2 className="text-2xl font-semibold">GUEST DETAILS</h2> */}
         <h2 className="text-xl md:text-2xl font-semibold">GUEST DETAILS</h2>
 
-        {/* <p className="text-gray-600 mb-4"> */}
         <p className="text-gray-600 mb-4 text-sm md:text-base">
           Please fill all relevant fields to proceed further.
         </p>
 
         <form className="space-y-4">
-          {/* <div className="flex gap-4"> */}
           <div className="flex flex-col md:flex-row gap-4">
-            {/* <div className="w-1/2"> */}
             <div className="w-full md:w-1/2">
               <input
                 type="text"
@@ -112,14 +98,11 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
               placeholder="Last Name"
               value={formData.lastName || personalDetails.lastName}
               onChange={handleChange}
-              // className="border p-2 rounded w-1/2"
               className="border p-2 rounded w-full md:w-1/2"
             />
           </div>
 
-          {/* <div className="flex gap-4"> */}
           <div className="flex flex-col md:flex-row gap-4">
-            {/* <div className="w-1/2"> */}
             <div className="w-full md:w-1/2">
               <input
                 type="email"
@@ -133,7 +116,6 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
                 <p className="text-red-500 text-sm">{errors.email}</p>
               )}
             </div>
-            {/* <div className="w-1/2"> */}
             <div className="w-full md:w-1/2">
               <input
                 type="tel"
@@ -154,20 +136,17 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
             placeholder="Special Requests"
             value={formData.specialRequests || personalDetails.specialRequests}
             onChange={handleChange}
-            // className="border p-2 rounded w-full h-20"
             className="border p-2 rounded w-full h-24"
             maxLength={500}
           />
           <p className="text-right text-gray-500 text-sm">0/500</p>
 
-          {/* <div className="flex items-center"> */}
           <div className="flex items-start gap-2">
             <input
               type="checkbox"
               name="agreeTerms"
               checked={formData.agreeTerms || personalDetails.agreeTerms}
               onChange={handleChange}
-              // className="mr-2"
               className="mt-1"
             />
             <label className="text-gray-700 text-sm">
@@ -193,7 +172,6 @@ const PersonalDetails = forwardRef(({ onNext, selectedPlan }, ref) => {
           )}
         </form>
       </div>
-      {/* <YourStay selectedPlan={selectedPlan} /> */}
       <div className="w-full md:w-1/3">
         <YourStay selectedPlan={selectedPlan} />
       </div>

@@ -1,7 +1,5 @@
 import "./footer.css";
-import RRPL_logo from "../../assets/plumeriaresortimages/RRPL_logo.webp";
 import { Link } from "react-router-dom";
-// import logo from "../../assets/plumeriaresortimages/plumeriaresort_logo.png";
 import logo from "../../assets/plumeriaresortimages/plumeria_footer_logo.png";
 import RRPL_Group from "../../assets/plumeriaresortimages/Logo_RRPL_New.png";
 import {
@@ -57,9 +55,6 @@ const Footer = () => {
         <div className="footer-links">
           <h3>Information Links</h3>
           <ul>
-            {/* <li>
-              <FaBed className="footer-link-icon" /> Accommodations
-            </li> */}
             <li>
               <FaImages className="footer-link-icon" />
               <Link to="/gallery">Photos & Videos</Link>

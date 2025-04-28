@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,7 +6,6 @@ import { BookingContext } from "./BookingContext";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import "../BookingForm/booking.css";
 const NewBookingSection = ({ disableControls = false }) => {
   const navigate = useNavigate();
@@ -32,9 +31,6 @@ const NewBookingSection = ({ disableControls = false }) => {
   const [tempRoomsList, setTempRoomsList] = useState([...roomsList]);
   const selectedRooms = useSelector((state) => state.booking.rooms);
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
-
-  console.log(selectedRooms, "this is selectedRoom in new booking form");
-  //  console.log(tempRoomsList[0]?.selectedRoom.roomType,'this is the temp rooms list')
 
   const dispatch = useDispatch();
   const openModal = () => {
@@ -364,34 +360,6 @@ const NewBookingSection = ({ disableControls = false }) => {
                   </p>
                 )}
 
-                {/* {["persons", "adults", "children"].map((type, index) => (
-                  <div
-                    key={index}
-                    className="mb-3 flex items-center justify-between"
-                  >
-                    <label className="text-gray-800 text-sm font-semibold">
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </label>
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => updateGuestCount(room.id, type, -1)}
-                        className="w-8 h-8 flex items-center justify-center bg-gray-300 hover:bg-gray-400 text-gray-900 rounded-md transition disabled:opacity-50"
-                        disabled={room[type] <= (type === "persons" ? 1 : 0)}
-                      >
-                        −
-                      </button>
-                      <span className="text-lg font-medium text-gray-900">
-                        {room[type]}
-                      </span>
-                      <button
-                        onClick={() => updateGuestCount(room.id, type, 1)}
-                        className="w-8 h-8 flex items-center justify-center bg-[#a77a3a] hover:bg-[#8c5f2a] hover:bg duration-300  text-white rounded-md transition"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                ))} */}
                 {["persons", "adults", "children"].map((type, index) => (
                   <div
                     key={index}

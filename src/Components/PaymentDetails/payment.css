@@ -4,11 +4,6 @@
   align-items: center;
 }
 
-/* .cancellation-policy,
-.checkin-policy {
-  background-color: floralwhite;
-} */
-
 .cancellation-policy,
 .checkin-policy {
   background-color: rgb(249, 246, 239);

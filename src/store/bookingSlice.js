@@ -19,10 +19,9 @@ const initialState = {
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
-  
+
   reducers: {
     setRoom: (state, action) => {
-      
       const { roomId, roomPrice, extraAdultPrice, ...updates } = action.payload;
 
       const existingRoom = state.rooms.find((room) => room.roomId === roomId);
@@ -48,12 +47,6 @@ const bookingSlice = createSlice({
         0
       );
     },
-
-    // removeRoom: (state, action) => {
-    //   const roomId = action.payload;
-    //   state.rooms = state.rooms.filter((room) => room.roomId !== roomId);
-    //   state.totalPrice = state.rooms.reduce((total, room) => total + (room.roomPrice || 0) + (room.extraAdultPrice || 0), 0);
-    // },
     setPlan: (state, action) => {
       const { roomId, plan } = action.payload;
       state.selectedPlan[roomId] = plan;
@@ -98,6 +91,6 @@ export const {
   setPaymentAmounts,
   setErrors,
   setDates,
-  resetDates
+  resetDates,
 } = bookingSlice.actions;
 export default bookingSlice.reducer;
