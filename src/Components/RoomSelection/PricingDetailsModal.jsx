@@ -12,8 +12,10 @@ const PricingDetailsModal = ({ planName, onClose }) => {
   useEffect(() => {
     const fetchRoomsData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/rooms");
-        // const response = await axios.get("https://server.plumeriaresort.in/rooms");
+        // const response = await axios.get("http://localhost:3000/rooms");
+        const response = await axios.get(
+          "https://server.plumeriaresort.in/rooms"
+        );
         setRoomsData(response.data.data);
       } catch (err) {
         console.error("Error fetching rooms data", err);
