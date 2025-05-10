@@ -22,7 +22,8 @@ const bookingSlice = createSlice({
 
   reducers: {
     setRoom: (state, action) => {
-      const { roomId, roomPrice, extraAdultPrice, ...updates } = action.payload;
+      const { roomId, roomPrice, extraAdultPrice, duration, ...updates } =
+        action.payload;
 
       const existingRoom = state.rooms.find((room) => room.roomId === roomId);
 
@@ -31,12 +32,15 @@ const bookingSlice = createSlice({
         existingRoom.roomPrice = roomPrice ?? existingRoom.roomPrice ?? 0;
         existingRoom.extraAdultPrice =
           extraAdultPrice ?? existingRoom.extraAdultPrice ?? 0;
+        existingRoom.duration = duration ?? existingRoom.duration ?? 0;
+
         Object.assign(existingRoom, updates);
       } else {
         state.rooms.push({
           roomId,
           roomPrice: roomPrice ?? 0,
           extraAdultPrice: extraAdultPrice ?? 0,
+          duration: duration ?? 0,
           ...updates,
         });
       }

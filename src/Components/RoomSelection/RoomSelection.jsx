@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUsers, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { setPlan, setRoom } from "../../store/bookingSlice";
 import RoomDetailsModal from "./RoomDetails";
 import YourStay from "../YourStay/YourStay";
 import PricingDetailsModal from "./PricingDetailsModal";
+import { BookingContext } from "../BookingForm/BookingContext";
 
 const RoomSelection = ({ rooms, currentStep }) => {
+  const { checkInDate, checkOutDate } = useContext(BookingContext);
   const dispatch = useDispatch();
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
   const [roomImageIndex, setRoomImageIndex] = useState({});
@@ -16,6 +18,12 @@ const RoomSelection = ({ rooms, currentStep }) => {
   const [selectedPlanForPricing, setSelectedPlanForPricing] = useState(null);
   const [selectedPlanNameForPricing, setSelectedPlanNameForPricing] =
     useState(null);
+
+  const stayDuration = (checkInDate, checkOutDate) => {
+    return Math.round(
+      (new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 60 * 60 * 24)
+    );
+  };
 
   const handleImageChange = (roomId, direction) => {
     setRoomImageIndex((prev) => {
@@ -31,14 +39,16 @@ const RoomSelection = ({ rooms, currentStep }) => {
     });
   };
 
-  const handleRoomSelect = (roomId, planName, plan) => {
+  const handleRoomSelect = (roomId, planName, plan, duration) => {
     let selectedRoomData = {};
     rooms.forEach((val) => {
       if (roomId === val.id) {
         let extraAdultPrice =
-          val.adults > 0 ? val.adults * plan.price.extraAdult.withGst : 0;
+          val.adults > 0
+            ? val.adults * plan.price.extraAdult.withGst * duration
+            : 0;
         let roomType = val.selectedRoom.roomType;
-        let roomPrice = plan.price.twoGuests.withGst;
+        let roomPrice = duration * plan.price.twoGuests.withGst;
 
         selectedRoomData = {
           roomId,
@@ -49,6 +59,7 @@ const RoomSelection = ({ rooms, currentStep }) => {
           persons: val.persons,
           adults: val.adults,
           children: val.children,
+          duration,
         };
       }
     });
@@ -159,10 +170,17 @@ const RoomSelection = ({ rooms, currentStep }) => {
                 </div>
                 <div className="w-full md:w-1/3 text-center mt-2 md:mt-0">
                   <div className="text-sm font-bold mb-1 text-gray-900">
-                    ₹ {plan.price.twoGuests.withGst}
+                    ₹ {plan.price.twoGuests.withGst} /night
                   </div>
                   <button
-                    onClick={() => handleRoomSelect(room.id, plan.name, plan)}
+                    onClick={() =>
+                      handleRoomSelect(
+                        room.id,
+                        plan.name,
+                        plan,
+                        stayDuration(checkInDate, checkOutDate)
+                      )
+                    }
                     className="bg-[#a77a3a] text-white py-2 px-4 rounded text-xs hover:bg-[#8c5f2a] transition-all duration-300"
                   >
                     Select

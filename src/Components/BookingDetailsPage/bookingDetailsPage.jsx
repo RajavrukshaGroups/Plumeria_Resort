@@ -18,6 +18,7 @@ const BookingDetailsComponent = ({ rooms }) => {
   const roomSelectionRef = useRef();
   const personalDetailsRef = useRef();
   const paymentDetailsRef = useRef();
+  console.log("selected rooms",selectedRooms);
 
   const {
     checkInDate,
@@ -238,6 +239,7 @@ const BookingDetailsComponent = ({ rooms }) => {
               // await axios.post("http://localhost:3000/rooms/booking", {
               await axios.post(
                 "https://server.plumeriaresort.in/rooms/booking",
+                // "http://localhost:3000/rooms/booking",
                 {
                   checkInDate,
                   checkOutDate,
