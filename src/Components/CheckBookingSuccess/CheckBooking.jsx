@@ -130,7 +130,8 @@ const CheckBookingCompStatus = () => {
                       <p className="font-medium">Room {idx + 1}</p>
                       <p>
                         {g.persons} Person(s), {g.adult} Adult(s), {g.children}{" "}
-                        Child(ren), Plan: {g.planName}
+                        Child(ren), Plan: {g.planName} , Duration: {g.duration}
+                        Night/s
                       </p>
                     </div>
                   ))}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { setPaymentAmounts } from "../../store/bookingSlice";
 import "./YourStay.css";
@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 import { FaCheckCircle } from "react-icons/fa";
 import { BsCircle } from "react-icons/bs";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { BookingContext } from "../BookingForm/BookingContext";
 
 const YourStay = ({ selectedPlan, offer }) => {
   const dispatch = useDispatch();
+  const { checkInDate, checkOutDate } = useContext(BookingContext);
   const [paymentOption, setPaymentOption] = useState("full"); // 'partial' or 'full'
   const [advancePayment, setAdvancePayment] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState(0);
@@ -27,6 +29,14 @@ const YourStay = ({ selectedPlan, offer }) => {
     // Dispatch updated values to Redux
     dispatch(setPaymentAmounts({ advance, remaining }));
   }, [paymentOption, totalAmount, dispatch]);
+
+  const stayDuration = (checkInDate, checkOutDate) => {
+    return Math.round(
+      (new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 60 * 60 * 24)
+    );
+  };
+
+  console.log(stayDuration, "stay");
 
   return (
     <div className="your-stay-container shadow-lg rounded-lg p-5 bg-white">
@@ -65,6 +75,13 @@ const YourStay = ({ selectedPlan, offer }) => {
             <span className="text-gray-600">Extra Adult Price:</span>
             <span className="text-[#a77a3a]">
               ₹ {room.extraAdultPrice || "0.00"}
+            </span>
+          </div>
+
+          <div className="stay-price text-gray-800 text-base font-semibold flex justify-between items-center">
+            <span className="text-gray-600">Stay Duration:</span>
+            <span className="text-[#a77a3a]">
+              {stayDuration(checkInDate, checkOutDate)} Night/s
             </span>
           </div>
 
