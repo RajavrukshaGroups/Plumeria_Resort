@@ -18,7 +18,7 @@ const BookingDetailsComponent = ({ rooms }) => {
   const roomSelectionRef = useRef();
   const personalDetailsRef = useRef();
   const paymentDetailsRef = useRef();
-  console.log("selected rooms",selectedRooms);
+  console.log("selected rooms", selectedRooms);
 
   const {
     checkInDate,

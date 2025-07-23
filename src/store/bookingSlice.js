@@ -82,6 +82,9 @@ const bookingSlice = createSlice({
       state.checkInDate = null;
       state.checkOutDate = null;
     },
+    resetSelectedPlans: (state) => {
+      state.selectedPlan = {};
+    },
   },
 });
 
@@ -91,6 +94,7 @@ export const {
   removeRoom,
   resetRooms,
   resetBooking,
+  resetSelectedPlans,
   setPersonalDetails,
   setPaymentAmounts,
   setErrors,

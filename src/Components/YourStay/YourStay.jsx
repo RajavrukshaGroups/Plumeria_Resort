@@ -19,6 +19,8 @@ const YourStay = ({ selectedPlan, offer }) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0); // Reassign room IDs sequentially
 
+  console.log("selected rooms", selectedRooms);
+
   useEffect(() => {
     const advance = paymentOption === "full" ? totalAmount : totalAmount / 2;
     const remaining = paymentOption === "full" ? 0 : totalAmount / 2;
@@ -35,8 +37,7 @@ const YourStay = ({ selectedPlan, offer }) => {
       (new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 60 * 60 * 24)
     );
   };
-
-  console.log(stayDuration, "stay");
+  // console.log("stay duration", stayDuration);
 
   return (
     <div className="your-stay-container shadow-lg rounded-lg p-5 bg-white">

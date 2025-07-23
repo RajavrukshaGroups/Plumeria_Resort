@@ -5,10 +5,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BookingContext } from "./BookingContext";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { setRoom, resetRooms } from "../../store/bookingSlice"; // Import your Redux actions
+import {
+  setRoom,
+  resetRooms,
+  resetSelectedPlans,
+} from "../../store/bookingSlice"; // Import your Redux actions
+import { useLocation } from "react-router-dom";
 import "../BookingForm/booking.css";
 const NewBookingSection = ({ disableControls = false }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isBookNowRoute = location.pathname === "/book-now";
   const {
     checkInDate,
     checkOutDate,
@@ -33,8 +40,26 @@ const NewBookingSection = ({ disableControls = false }) => {
   const selectedPlan = useSelector((state) => state.booking.selectedPlan);
 
   const dispatch = useDispatch();
+  // const openModal = () => {
+  //   setTempRoomsList([...roomsList]);
+  //   setAvailabilityMessage("");
+  //   setIsModalOpen(true);
+  // };
   const openModal = () => {
-    setTempRoomsList([...roomsList]);
+    // Reset plans and rooms when opening modal
+    dispatch(resetSelectedPlans());
+    dispatch(resetRooms());
+
+    setTempRoomsList([
+      {
+        id: 1,
+        selectedRoom: null,
+        persons: 1,
+        adults: 0,
+        children: 0,
+      },
+    ]);
+
     setAvailabilityMessage("");
     setIsModalOpen(true);
   };
@@ -117,6 +142,144 @@ const NewBookingSection = ({ disableControls = false }) => {
     updatedSelectedRooms.forEach((room) => dispatch(setRoom(room)));
   };
 
+  // const confirmSelection = async () => {
+  //   setLoading(true);
+  //   setAvailabilityMessage("");
+  //   const unselectedRooms = tempRoomsList.filter((room) => !room.selectedRoom);
+  //   if (unselectedRooms.length > 0) {
+  //     setLoading(false);
+  //     setInvalidRooms(unselectedRooms.map((room) => room.id));
+  //     return;
+  //   }
+
+  //   setInvalidRooms([]);
+  //   const currentPlanMap = selectedRooms.reduce((acc, room) => {
+  //     acc[room.roomId] = room.roomType;
+  //     return acc;
+  //   }, {});
+
+  //   const requestData = {
+  //     checkInDate: checkInDate.toISOString().split("T")[0],
+  //     checkOutDate: checkOutDate.toISOString().split("T")[0],
+  //     totalRooms: tempRoomsList.length,
+  //     rooms: tempRoomsList.map((room) => {
+  //       const plan = selectedPlan[room.id];
+  //       const previousRoomType = currentPlanMap[room.id] || null;
+  //       let roomPrice = room.roomPrice;
+  //       if (
+  //         previousRoomType &&
+  //         previousRoomType !== room.selectedRoom.roomType
+  //       ) {
+  //         roomPrice = 0;
+  //       }
+  //       let extraAdultPrice = 0;
+  //       if (plan && room.adults > 0) {
+  //         extraAdultPrice =
+  //           room.adults * (plan.price?.extraAdult?.withGst || 0);
+  //       }
+  //       return {
+  //         roomId: room.id,
+  //         roomType: room.selectedRoom?.roomType,
+  //         persons: room.persons,
+  //         adults: room.adults,
+  //         children: room.children,
+  //         extraAdultPrice,
+  //         roomPrice,
+  //       };
+  //     }),
+  //   };
+  //   requestData.rooms.forEach((room) => {
+  //     const plan = selectedPlan[room.roomId];
+  //     if (plan) {
+  //       const extraAdultPrice =
+  //         room.adults * (plan.price?.extraAdult?.withGst || 0);
+  //       dispatch(
+  //         setRoom({
+  //           roomId: room.roomId,
+  //           extraAdultPrice,
+  //           adults: room.adults,
+  //           roomType: room.roomType,
+  //           roomPrice: room.roomPrice,
+  //           children: room.children,
+  //           persons: room.persons,
+  //         })
+  //       );
+  //     }
+  //   });
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:3000/rooms/check-availability",
+  //       // "https://server.plumeriaresort.in/rooms/check-availability",
+  //       requestData
+  //     );
+  //     setLoading(false);
+
+  //     if (
+  //       response.data.message === "Rooms are available for the selected dates."
+  //     ) {
+  //       setIsRoomSelected(true);
+  //       setRoomsList(tempRoomsList);
+  //       setIsModalOpen(false);
+
+  //       const roomsQuery = tempRoomsList
+  //         .map(
+  //           (room) =>
+  //             `${room.selectedRoom.roomType}-${room.persons}-${room.adults}-${room.children}`
+  //         )
+  //         .join(",");
+
+  //       navigate(
+  //         `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
+  //           requestData.checkOutDate
+  //         }&rooms=${encodeURIComponent(roomsQuery)}`
+  //       );
+  //       return;
+  //     }
+
+  //     let message = "Some rooms are unavailable.\n";
+  //     if (response.data.unavailableDates?.length > 0) {
+  //       message += "❌ Unavailable Rooms:\n";
+  //       response.data.unavailableDates.forEach((room) => {
+  //         message += `- ${room.roomType} on ${room.date}\n`;
+  //       });
+  //     }
+
+  //     if (response.data.availableRooms?.length > 0) {
+  //       message += "\n✅ Available Alternatives:\n";
+  //       response.data.availableRooms.forEach((room) => {
+  //         message += `- ${room.roomType} (${
+  //           room.availableRooms
+  //         } available on ${new Date(room.date).toDateString()})\n`;
+  //       });
+  //     }
+
+  //     setAvailabilityMessage(message);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     let message =
+  //       error.response?.data?.error ||
+  //       "Error checking availability. Please try again.";
+
+  //     if (error.response?.data?.unavailableDates?.length > 0) {
+  //       message += "\n❌ Unavailable Rooms:\n";
+  //       error.response.data.unavailableDates.forEach((room) => {
+  //         message += `- ${room.roomType} on ${room.date}\n`;
+  //       });
+  //     }
+
+  //     if (error.response?.data?.availableRooms?.length > 0) {
+  //       message += "\n✅ Available Alternatives:\n";
+  //       error.response.data.availableRooms.forEach((room) => {
+  //         message += `- ${room.roomType} (${
+  //           room.availableRooms
+  //         } available on ${new Date(room.date).toDateString()})\n`;
+  //       });
+  //     }
+  //     setAvailabilityMessage(message);
+  //   }
+  // };
+
   const confirmSelection = async () => {
     setLoading(true);
     setAvailabilityMessage("");
@@ -128,10 +291,11 @@ const NewBookingSection = ({ disableControls = false }) => {
     }
 
     setInvalidRooms([]);
-    const currentPlanMap = selectedRooms.reduce((acc, room) => {
-      acc[room.roomId] = room.roomType;
-      return acc;
-    }, {});
+
+    // Calculate duration
+    const duration = Math.round(
+      (new Date(checkOutDate) - new Date(checkInDate)) / (1000 * 60 * 60 * 24)
+    );
 
     const requestData = {
       checkInDate: checkInDate.toISOString().split("T")[0],
@@ -139,44 +303,37 @@ const NewBookingSection = ({ disableControls = false }) => {
       totalRooms: tempRoomsList.length,
       rooms: tempRoomsList.map((room) => {
         const plan = selectedPlan[room.id];
-        const previousRoomType = currentPlanMap[room.id] || null;
-        let roomPrice = room.roomPrice;
-        if (
-          previousRoomType &&
-          previousRoomType !== room.selectedRoom.roomType
-        ) {
-          roomPrice = 0;
-        }
-        let extraAdultPrice = 0;
-        if (plan && room.adults > 0) {
-          extraAdultPrice =
-            room.adults * (plan.price?.extraAdult?.withGst || 0);
-        }
         return {
           roomId: room.id,
           roomType: room.selectedRoom?.roomType,
           persons: room.persons,
           adults: room.adults,
           children: room.children,
-          extraAdultPrice,
-          roomPrice,
+          extraAdultPrice:
+            plan && room.adults > 0
+              ? room.adults * (plan.price?.extraAdult?.withGst || 0) * duration
+              : 0,
+          roomPrice: plan ? plan.price.withGst * duration : 0,
+          duration,
         };
       }),
     };
+
+    // Update Redux state with the new room selections
     requestData.rooms.forEach((room) => {
       const plan = selectedPlan[room.roomId];
       if (plan) {
-        const extraAdultPrice =
-          room.adults * (plan.price?.extraAdult?.withGst || 0);
         dispatch(
           setRoom({
             roomId: room.roomId,
-            extraAdultPrice,
-            adults: room.adults,
             roomType: room.roomType,
             roomPrice: room.roomPrice,
-            children: room.children,
+            extraAdultPrice: room.extraAdultPrice,
             persons: room.persons,
+            adults: room.adults,
+            children: room.children,
+            duration: room.duration,
+            planName: plan.name,
           })
         );
       }
@@ -184,8 +341,8 @@ const NewBookingSection = ({ disableControls = false }) => {
 
     try {
       const response = await axios.post(
-        // "http://localhost:3000/rooms/check-availability",
         "https://server.plumeriaresort.in/rooms/check-availability",
+        // "http://localhost:3000/rooms/check-availability",
         requestData
       );
       setLoading(false);
@@ -204,6 +361,9 @@ const NewBookingSection = ({ disableControls = false }) => {
           )
           .join(",");
 
+        // Reset the selected plans after successful confirmation
+        dispatch(resetSelectedPlans());
+
         navigate(
           `/book-now?checkIn=${requestData.checkInDate}&checkOut=${
             requestData.checkOutDate
@@ -212,6 +372,7 @@ const NewBookingSection = ({ disableControls = false }) => {
         return;
       }
 
+      // Handle unavailable rooms case
       let message = "Some rooms are unavailable.\n";
       if (response.data.unavailableDates?.length > 0) {
         message += "❌ Unavailable Rooms:\n";
@@ -259,7 +420,9 @@ const NewBookingSection = ({ disableControls = false }) => {
     <div className="flex flex-col items-center mt-8 gap-4">
       <div
         className={`relative bg-white p-6 rounded-lg shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 w-full max-w-6xl ${
-          disableControls ? "opacity-50 pointer-events-none" : ""
+          disableControls || isBookNowRoute
+            ? "opacity-50 pointer-events-none"
+            : ""
         }`}
       >
         {" "}

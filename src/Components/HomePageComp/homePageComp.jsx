@@ -18,7 +18,7 @@ const HomePageComponent = () => {
             truly enchanting experience that caters to every aspect of your
             stay.
           </p>
-          {/* <BookingForm /> */}
+          <BookingForm />
         </div>
       </section>
     </div>
