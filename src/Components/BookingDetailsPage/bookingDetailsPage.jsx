@@ -216,7 +216,8 @@ const BookingDetailsComponent = ({ rooms }) => {
       );
 
       const options = {
-        key: "rzp_test_yb7RLsIfkH5SIq",
+        // key: "rzp_test_yb7RLsIfkH5SIq",--->test key
+        key: "rzp_live_2Km6twwg2C2mX2",
         amount: data.amount,
         currency: data.currency,
         name: "Plumeria Resort",
