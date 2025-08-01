@@ -20,6 +20,10 @@ const PersonalDetails = forwardRef(({ selectedPlan }, ref) => {
     phone: personalDetails.phone || "",
     specialRequests: personalDetails.specialRequests || "",
     agreeTerms: personalDetails.agreeTerms || false,
+    customerAddress: personalDetails.customerAddress || "",
+    customerPanNumber: personalDetails.customerPanNumber || "",
+    customerAadharNumber: personalDetails.customerAadharNumber || "",
+    gstNumber: personalDetails.gstNumber || "",
   });
 
   const totalGuests = roomsList.reduce(
@@ -44,9 +48,18 @@ const PersonalDetails = forwardRef(({ selectedPlan }, ref) => {
     let newErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9]{10}$/; // Assumes a 10-digit phone number
+    const aadharRegex = /^\d{12}$/;
 
     if (!formData.firstName.trim())
       newErrors.firstName = "First Name is required.";
+    if (!formData.customerAddress.trim())
+      newErrors.customerAddress = "Address is required";
+    if (!formData.customerAadharNumber.trim()) {
+      newErrors.customerAadharNumber = "Aadhar number is required";
+    } else if (!aadharRegex.test(formData.customerAadharNumber)) {
+      newErrors.customerAadharNumber =
+        "Aadhar number must be exactly 12 digits.";
+    }
     if (!formData.email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!emailRegex.test(formData.email)) {
@@ -130,6 +143,89 @@ const PersonalDetails = forwardRef(({ selectedPlan }, ref) => {
               )}
             </div>
           </div>
+
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-1/2">
+              {/* <input
+                type="number"
+                name="customerAadharNumber"
+                placeholder="Aadhar Number"
+                value={
+                  formData.customerAadharNumber ||
+                  personalDetails.customerAadharNumber
+                }
+                onChange={handleChange}
+                className="border p-2 rounded w-full"
+              /> */}
+              <input
+                type="text"
+                name="customerAadharNumber"
+                placeholder="Aadhar Number"
+                value={
+                  formData.customerAadharNumber ||
+                  personalDetails.customerAadharNumber
+                }
+                onChange={(e) => {
+                  const { value } = e.target;
+                  if (/^\d{0,12}$/.test(value)) {
+                    handleChange(e);
+                  }
+                }}
+                maxLength={12}
+                className="border p-2 rounded w-full"
+              />
+
+              {errors.customerAadharNumber && (
+                <p className="text-red-500 text-sm">
+                  {errors.customerAadharNumber}
+                </p>
+              )}
+            </div>
+            <div className="w-full md:w-1/2">
+              <input
+                type="text"
+                name="customerPanNumber"
+                placeholder="PAN Number (Optional)"
+                value={
+                  formData.customerPanNumber ||
+                  personalDetails.customerPanNumber
+                }
+                onChange={handleChange}
+                className="border p-2 rounded w-full"
+              />
+              {/* {errors.customerPanNumber && (
+                <p className="text-red-500 text-sm">
+                  {errors.customerPanNumber}
+                </p>
+              )} */}
+            </div>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <input
+              type="text"
+              name="gstNumber"
+              placeholder="GST Number (Optional)"
+              value={formData.gstNumber || personalDetails.gstNumber}
+              onChange={handleChange}
+              className="border p-2 rounded w-full"
+            />
+            {/* {errors.gstNumber && (
+              <p className="text-red-500 text-sm">{errors.gstNumber}</p>
+            )} */}
+          </div>
+
+          <textarea
+            name="customerAddress"
+            placeholder="Address"
+            value={formData.customerAddress || personalDetails.customerAddress}
+            onChange={handleChange}
+            className="border p-2 rounded w-full h-24"
+            maxLength={500}
+          />
+          {errors.customerAddress && (
+            <p className="text-red-500 text-sm">{errors.customerAddress}</p>
+          )}
 
           <textarea
             name="specialRequests"

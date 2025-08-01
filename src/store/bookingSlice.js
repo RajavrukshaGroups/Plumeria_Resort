@@ -12,6 +12,10 @@ const initialState = {
     phone: "",
     specialRequests: "",
     agreeTerms: false,
+    customerAddress: "",
+    customerPanNumber: "",
+    customerAadharNumber: "",
+    gstNumber: "",
     errors: {},
   },
 };
