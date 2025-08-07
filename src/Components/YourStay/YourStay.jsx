@@ -19,18 +19,26 @@ const YourStay = ({ selectedPlan, offer }) => {
     return total + (room.roomPrice || 0) + (room.extraAdultPrice || 0);
   }, 0); // Reassign room IDs sequentially
 
+  //gst calculation
+  let gstRate = totalAmount < 7000 ? 0.12 : 0.18;
+  let gstAmount = Math.round(totalAmount * gstRate);
+  let grandTotal = totalAmount + gstAmount;
+
   console.log("selected rooms", selectedRooms);
 
   useEffect(() => {
-    const advance = paymentOption === "full" ? totalAmount : totalAmount / 2;
-    const remaining = paymentOption === "full" ? 0 : totalAmount / 2;
+    // const advance = paymentOption === "full" ? totalAmount : totalAmount / 2;
+    // const remaining = paymentOption === "full" ? 0 : totalAmount / 2;
+
+    const advance = paymentOption === "full" ? grandTotal : grandTotal / 2;
+    const remaining = paymentOption === "full" ? 0 : grandTotal / 2;
 
     setAdvancePayment(advance);
     setRemainingAmount(remaining);
 
     // Dispatch updated values to Redux
     dispatch(setPaymentAmounts({ advance, remaining }));
-  }, [paymentOption, totalAmount, dispatch]);
+  }, [paymentOption, grandTotal, dispatch]);
 
   const stayDuration = (checkInDate, checkOutDate) => {
     return Math.round(
@@ -86,17 +94,30 @@ const YourStay = ({ selectedPlan, offer }) => {
             </span>
           </div>
 
-          <div className="stay-taxes flex items-center custom-info-text">
+          {/* <div className="stay-taxes flex items-center custom-info-text">
             <AiOutlineInfoCircle className="info-icon" />
-            <span>Price is inclusive of all taxes.</span>
-          </div>
+            <span>Price is exclusive of all taxes.</span>
+          </div> */}
         </div>
       ))}
 
-      <div className="stay-total text-lg font-bold flex justify-between items-center border-t pt-3">
-        <span className="text-gray-700">Total Amount:</span>
+      <div className="stay-total text-lg font-bold flex justify-between items-center pt-3">
+        <span className="text-gray-700">Subtotal:</span>
         <span className="text-[#a77a3a]">₹ {totalAmount}</span>
       </div>
+      {totalAmount > 0 && (
+        <>
+          <div className="stay-total text-base font-semibold flex justify-between items-center">
+            <span className="text-gray-600">GST ({gstRate * 100}%):</span>
+            <span className="text-[#a77a3a]">₹ {gstAmount}</span>
+          </div>
+          <div className="stay-total text-lg font-bold flex justify-between items-center">
+            <span className="text-gray-700">Total with GST:</span>
+            <span className="text-[#a77a3a]">₹ {grandTotal}</span>
+          </div>
+        </>
+      )}
+
       {paymentOption === "partial" && (
         <>
           <div className="stay-total text-base font-semibold flex justify-between items-center">
