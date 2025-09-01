@@ -123,6 +123,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>Copyright © 2025 All rights reserved.</p>
+        <p className="mt-2">Designed by Digital Elite Services</p>
       </div>
     </footer>
   );
