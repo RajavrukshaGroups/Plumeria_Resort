@@ -118,4 +118,17 @@
 .footer-bottom {
   margin-top: 1rem;
   font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-credit {
+  font-size: 0.85rem;
+  color: #d1d5db; /* gray-300 */
+}
+
+.footer-credit span {
+  color: #ffffff; /* highlight */
 }

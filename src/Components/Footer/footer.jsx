@@ -122,8 +122,11 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>Copyright © 2025 All rights reserved.</p>
-        <p className="mt-2">Designed by Digital Elite Services</p>
+        <p>Copyright © {new Date().getFullYear()} All rights reserved.</p>
+        <div className="footer-credit">
+          Designed by{" "}
+          <span className="font-semibold">Digital Elite Services</span>
+        </div>
       </div>
     </footer>
   );
