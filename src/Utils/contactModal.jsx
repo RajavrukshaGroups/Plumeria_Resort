@@ -5,12 +5,14 @@ const ContactModal = ({ show, handleClose, onSubmitSuccess, project }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhoneNo] = useState("");
+  const [city, setCityName] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
     if (!name.trim()) newErrors.name = "Name is required";
+    if (!city.trim()) newErrors.city = "City is required";
     if (!email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -40,6 +42,7 @@ const ContactModal = ({ show, handleClose, onSubmitSuccess, project }) => {
       phone: phone,
       isModal: true,
       project,
+      city,
     };
 
     // fetch("http://localhost:3000/plumeriacontact", {
@@ -54,6 +57,7 @@ const ContactModal = ({ show, handleClose, onSubmitSuccess, project }) => {
         setName("");
         setEmail("");
         setPhoneNo("");
+        setCityName("");
         onSubmitSuccess();
         handleClose();
       })
@@ -117,6 +121,20 @@ const ContactModal = ({ show, handleClose, onSubmitSuccess, project }) => {
             />
             {errors.phone && (
               <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              City
+            </label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCityName(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
+            />
+            {errors.city && (
+              <p className="text-red-500 text-xs mt-1">{errors.city}</p>
             )}
           </div>
           <div className="flex justify-end gap-2">

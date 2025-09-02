@@ -15,6 +15,7 @@ const ContactUs = () => {
     email: "",
     subject: "",
     notes: "",
+    city: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -42,6 +43,7 @@ const ContactUs = () => {
     if (!formData.email.trim()) newErrors.email = "Email is required";
     if (!formData.subject.trim()) newErrors.subject = "Subject is required";
     if (!formData.notes.trim()) newErrors.notes = "Notes cannot be empty";
+    if (!formData.city.trim()) newErrors.city = "City cannot be empty";
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else if (!/^\d{10}$/.test(formData.phone)) {
@@ -83,6 +85,7 @@ const ContactUs = () => {
           email: "",
           subject: "",
           notes: "",
+          city: "",
         });
         setErrors({});
       } else {
@@ -221,6 +224,18 @@ const ContactUs = () => {
               />
               {errors.subject && (
                 <p className="text-red-500 text-sm">{errors.subject}</p>
+              )}
+
+              <input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="City"
+                className="w-full p-3 border border-yellow-500 rounded-md focus:outline-none"
+              />
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city}</p>
               )}
 
               <textarea
