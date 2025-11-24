@@ -4,6 +4,7 @@ import { resetBooking } from "../../store/bookingSlice";
 import { useNavigate } from "react-router-dom";
 import { useBookingContext } from "../BookingForm/BookingContext";
 import "./bookingSuccess.css"; // Make sure to include loader styles here
+import SeoHelmet from "../../seo/SeoHelmet";
 
 const BookingSuccess = () => {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const BookingSuccess = () => {
 
   return (
     <div className="booking-success-container">
+      <SeoHelmet page="bookingSuccess" />
       <h1>🎉 Booking Successful!</h1>
       <p>Thank you for booking with Plumeria Resort.</p>
       <p>Please check your email...</p>

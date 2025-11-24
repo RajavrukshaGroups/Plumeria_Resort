@@ -8,6 +8,7 @@ import HeaderComponent from "../../Components/HeaderComp/header";
 import "../../Components/BookingForm/booking.css";
 import BookingDetailsComponent from "../../Components/BookingDetailsPage/bookingDetailsPage";
 import NewBookingSection from "../../Components/BookingForm/newBookingForm";
+import SeoHelmet from "../../seo/SeoHelmet";
 
 const AccommodationMain = () => {
   const location = useLocation();
@@ -62,6 +63,7 @@ const AccommodationMain = () => {
 
   return (
     <div>
+      <SeoHelmet page="book" />
       <HeaderComponent />
       <AccommodationComp />
       <NewBookingSection disableControls={isPastRoomSelection} />
