@@ -22,13 +22,15 @@ const rooms = [
     id: 2,
     image: DeluxeRoom2,
     title: "Deluxe Room (Plus Plan)",
-    price: "₹6000 / Day",
+    // price: "₹6000 / Day",
+    price: "₹6400 / Day",
   },
   {
     id: 3,
     image: DeluxeRoom3,
     title: "Deluxe Room (Max Plan)",
-    price: "₹7100 / Day",
+    // price: "₹7100 / Day",
+    price: "₹7500 / Day",
   },
 ];
 

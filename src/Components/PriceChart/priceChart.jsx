@@ -36,8 +36,10 @@ const PriceChart = () => {
         },
         {
           type: "Villa Rooms (2 Persons)",
-          withoutGST: "Rs. 4400/-",
-          withGST: "Rs. 4400/-",
+          // withoutGST: "Rs. 4400/-",
+          // withGST: "Rs. 4400/-",
+          withoutGST: "Rs. 4000/-",
+          withGST: "Rs. 4720/-",
         },
         {
           type: "Extra Adult (5+ years of age)",
@@ -53,8 +55,10 @@ const PriceChart = () => {
       prices: [
         {
           type: "Deluxe Rooms (2 Persons)",
-          withoutGST: "Rs. 6000/-",
-          withGST: "Rs. 7080/-",
+          // withoutGST: "Rs. 6000/-",
+          // withGST: "Rs. 7080/-",
+          withoutGST: "Rs. 6400/-",
+          withGST: "Rs. 7552/-",
         },
         {
           type: "Extra Adult (5+ years of age)",
@@ -63,6 +67,8 @@ const PriceChart = () => {
         },
         {
           type: "Villa Rooms (2 Persons)",
+          // withoutGST: "Rs. 6400/-",
+          // withGST: "Rs. 7552/-",
           withoutGST: "Rs. 6400/-",
           withGST: "Rs. 7552/-",
         },
@@ -91,8 +97,10 @@ const PriceChart = () => {
       prices: [
         {
           type: "Deluxe Rooms (2 Persons)",
-          withoutGST: "Rs. 7100/-",
-          withGST: "Rs. 8378/-",
+          // withoutGST: "Rs. 7100/-",
+          // withGST: "Rs. 8378/-",
+          withoutGST: "Rs. 7500/-",
+          withGST: "Rs. 8850/-",
         },
         {
           type: "Extra Adult (5+ years of age)",
@@ -101,7 +109,9 @@ const PriceChart = () => {
         },
         {
           type: "Villa Rooms (2 Persons)",
-          withoutGST: "Rs. 7499/-",
+          // withoutGST: "Rs. 7499/-",
+          // withGST: "Rs. 8850/-",
+          withoutGST: "Rs. 7500/-",
           withGST: "Rs. 8850/-",
         },
         {
