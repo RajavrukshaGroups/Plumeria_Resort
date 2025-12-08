@@ -16,22 +16,19 @@ const rooms = [
     id: 1,
     image: VillaRoom1,
     title: "Villa Room (Lite Plan)",
-    // price: "₹4400 / Day",
-    price: "₹4000 / Day",
+    // price: "₹4000 / Day",
   },
   {
     id: 2,
     image: VillaRoom2,
     title: "Villa Room (Plus Plan)",
     // price: "₹6400 / Day ",
-    price: "₹6400 / Day ",
   },
   {
     id: 3,
     image: VillaRoom3,
     title: "Villa Room (Max Plan)",
-    // price: "₹7499 / Day",
-    price: "₹7500 / Day",
+    // price: "₹7500 / Day",
   },
 ];
 
@@ -79,7 +76,8 @@ const VillaRooms = () => {
                 {rooms[currentIndex].originalPrice}
               </span>{" "}
               <span className="price-with-star">
-                {rooms[currentIndex].price} <sup className="price-star">*</sup>
+                {rooms[currentIndex].price}
+                {/* <sup className="price-star">*</sup> */}
               </span>
             </p>
             <h3 className="room-title">{rooms[currentIndex].title}</h3>
@@ -102,10 +100,13 @@ const VillaRooms = () => {
               <sup className="price-star">*</sup> Suitable for couples.
             </p> */}
             <p className="price-disclaimer">
-              <sup className="price-star">*</sup> Prices may vary based on
-              season and availability.
+              {/* <sup className="price-star">*</sup> Prices may vary based on
+              season and availability. */}
               <br />
-              <span className="indent">Suitable for couples.</span>
+              <span className="indent">
+                <sup className="price-star">*</sup>
+                Suitable for couples.
+              </span>
             </p>
           </div>
 

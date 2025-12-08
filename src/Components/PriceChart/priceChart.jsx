@@ -302,12 +302,25 @@ const PriceChart = () => {
                 </tr>
               </thead>
               <tbody>
-                {modalData.prices.map((item, index) => (
+                {/* {modalData.prices.map((item, index) => (
                   <tr key={index}>
                     <td>{item.type}</td>
                     <td>{item.withoutGST}</td>
+                    
                   </tr>
-                ))}
+                ))} */}
+                <td>
+                  {modalData.prices.map((item, index) => (
+                    <div key={index} className="room-type-row">
+                      {item.type}
+                    </div>
+                  ))}
+                </td>
+                <td rowSpan={modalData.prices.length} className="contact-cell">
+                  Contact
+                  <br />
+                  <a href={`tel:+916366930172`}>+91 63669 30172</a>
+                </td>
               </tbody>
             </table>
             <p className="price-note">{modalData.note}</p>
@@ -317,6 +330,7 @@ const PriceChart = () => {
           </div>
         </div>
       )}
+
       {infoModal && (
         <div className="modal-overlay" onClick={() => setInfoModal(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

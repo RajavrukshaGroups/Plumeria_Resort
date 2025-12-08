@@ -16,21 +16,19 @@ const rooms = [
     id: 1,
     image: DeluxeRoom1,
     title: "Deluxe Room (Lite Plan)",
-    price: "₹4000 / Day",
+    // price: "₹4000 / Day",
   },
   {
     id: 2,
     image: DeluxeRoom2,
     title: "Deluxe Room (Plus Plan)",
-    // price: "₹6000 / Day",
-    price: "₹6400 / Day",
+    // price: "₹6400 / Day",
   },
   {
     id: 3,
     image: DeluxeRoom3,
     title: "Deluxe Room (Max Plan)",
-    // price: "₹7100 / Day",
-    price: "₹7500 / Day",
+    // price: "₹7500 / Day",
   },
 ];
 
@@ -81,7 +79,8 @@ const DeluxeRooms = () => {
                 {rooms[currentIndex].originalPrice}
               </span>{" "}
               <span className="price-with-star">
-                {rooms[currentIndex].price} <sup className="price-star">*</sup>
+                {rooms[currentIndex].price} 
+                {/* <sup className="price-star">*</sup> */}
               </span>
             </p>
 
@@ -97,10 +96,10 @@ const DeluxeRooms = () => {
                 <IconBath size={16} /> 1 bath
               </span>
             </div>
-            <p className="price-disclaimer">
+            {/* <p className="price-disclaimer">
               <sup className="price-star">*</sup> Prices may vary based on
               season and availability.
-            </p>
+            </p> */}
           </div>
 
           {/* Arrows for Mobile - Placed inside Main Room */}
